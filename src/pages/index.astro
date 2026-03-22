@@ -1,17 +1,63 @@
 ---
-import '../styles/global.css';
+// Landing Page for GuRain
+// Main homepage with Hero, Features, and CTA sections
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import FeatureCards from '../components/FeatureCards.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="GuRain - グラニュラシンセサイザー">
+  <!-- Hero Section -->
+  <Hero />
+
+  <!-- App Overview Section -->
+  <section class="py-16 px-4 bg-cream">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center space-y-6">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold text-text-dark text-shadow-soft">
+          GuRainについて
+        </h2>
+        <p class="text-lg md:text-xl font-body text-text-dark leading-relaxed opacity-90">
+          GuRainは、iOS/macOS対応の高度なグラニュラシンセサイザーAUv3（Audio Unit Extension）プラグインです。
+          音源を小さな「グレイン」というセグメントに分割し、それらを重ね合わせて音を生成するグラニュラ合成技法を採用しています。
+          最大128個のグレインを同時再生し、MIDIモードとGenerativeモードの2つの再生モードをサポートしています。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Cards Section -->
+  <FeatureCards />
+
+  <!-- CTA Section -->
+  <section class="py-20 px-4 gradient-organic">
+    <div class="max-w-4xl mx-auto text-center space-y-8">
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-text-dark text-shadow-soft">
+        始めましょう
+      </h2>
+      <p class="text-lg md:text-xl font-body text-text-dark opacity-90 max-w-2xl mx-auto">
+        GuRainの詳細な機能と使用方法をマニュアルで確認してください。
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
+        <a
+          href="/manual"
+          class="px-8 py-4 bg-terracotta text-text-light font-heading font-semibold rounded-lg hover:bg-terracotta/90 transition-all transform hover:scale-105 shadow-lg"
+        >
+          マニュアルを見る
+        </a>
+        <a
+          href="#"
+          target="_blank"
+          class="px-8 py-4 bg-transparent border-2 border-text-dark text-text-dark font-heading font-semibold rounded-lg hover:bg-text-dark hover:text-cream transition-all transform hover:scale-105"
+        >
+          購入する
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meta Tags (already in BaseLayout, but adding specific ones for SEO) -->
+  <meta name="description" content="iOS/macOS対応グラニュラシンセサイザーAUv3プラグイン。最大128グレイン、2再生モード、ADSRエンベロープ、LFOモーフィング機能。" />
+  <meta name="keywords" content="granular, synthesizer, audio, music production, AUv3, iOS, macOS, MIDI, generative" />
+</BaseLayout>

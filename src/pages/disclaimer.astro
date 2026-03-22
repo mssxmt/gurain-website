@@ -1,0 +1,117 @@
+---
+// Disclaimer Page for GuRain
+// Legal disclaimer with standard sections
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ManualSection from '../components/ManualSection.astro';
+import ManualSubSection from '../components/ManualSubSection.astro';
+---
+
+<BaseLayout title="免責事項 - GuRain">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Page Title -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-text-dark text-shadow-soft mb-4">
+        免責事項
+      </h1>
+      <p class="text-lg md:text-xl font-body text-text-dark opacity-80">
+        本ソフトウェアの使用に関する法的な免責事項
+      </p>
+    </div>
+
+    <!-- Disclaimer Content -->
+    <article class="space-y-12">
+      <!-- Section 1: As-Is Provision -->
+      <ManualSection>
+        <ManualSubSection title="「現状有姿」の提供であること">
+          <p>
+            本ソフトウェア（GuRainグラニュラシンセサイザーAUv3プラグインおよび関連ドキュメント）は、「現状有姿」で提供されます。
+            開発者は、本ソフトウェアの完全性、正確性、信頼性、適合性、または非侵害性について、明示または黙示を問わず、いかなる保証も行いません。
+          </p>
+          <p>
+            特に、商業的利用可能性、特定の目的への適合性、または権利の非侵害に関する黙示の保証は含まれません。
+          </p>
+        </ManualSubSection>
+      </ManualSection>
+
+      <!-- Section 2: Disclaimer of Warranties -->
+      <ManualSection>
+        <ManualSubSection title="保証の否認">
+          <p>
+            開発者は、以下の点について保証いたしません：
+          </p>
+          <ul>
+            <li>本ソフトウェアがユーザーの要件を満たすこと</li>
+            <li>本ソフトウェアが中断なく、タイムリーに、安全に、またはエラーフリーで動作すること</li>
+            <li>本ソフトウェアを通じて提供される情報の正確性、信頼性、または完全性</li>
+            <li>本ソフトウェアから取得した成果の品質または完全性</li>
+            <li>本ソフトウェアのエラーが修正されること</li>
+          </ul>
+          <p>
+            本ソフトウェアおよびそのコンテンツには、技術的不正確さ、タイピングミス、またはその他のエラーが含まれている可能性があります。
+          </p>
+        </ManualSubSection>
+      </ManualSection>
+
+      <!-- Section 3: Limitation of Liability -->
+      <ManualSection>
+        <ManualSubSection title="責任制限">
+          <p>
+            法令で認められる最大限の範囲において、開発者は、いかなる場合も、以下の損害について責任を負いません：
+          </p>
+          <ul>
+            <li>本ソフトウェアの使用または使用不能に起因する直接損害</li>
+            <li>本ソフトウェアの使用または使用不能に起因する間接損害、付随的損害、特別損害、結果的損害、または懲罰的損害</li>
+            <li>データの損失、利益の損失、機会の損失、またはビジネスの中断</li>
+            <li>契約、不法行為（過失を含む）、またはその他の行為の理論に基づく損害賠償責任</li>
+          </ul>
+          <p>
+            たとえ開発者にそのような損害の可能性について通知されたとしても、責任は制限されます。
+          </p>
+        </ManualSubSection>
+      </ManualSection>
+
+      <!-- Section 4: Third-Party Rights -->
+      <ManualSection>
+        <ManualSubSection title="第三者の権利の尊重">
+          <p>
+            本ソフトウェアの使用に際して、ユーザーは以下のことを遵守する必要があります：
+          </p>
+          <ul>
+            <li>第三者の知的財産権、プライバシー権、またはその他の権利を侵害しないこと</li>
+            <li>本ソフトウェアを違法な目的または不正な目的で使用しないこと</li>
+            <li>本ソフトウェアを使用してウイルス、マルウェア、またはその他の有害なコードを作成、配布しないこと</li>
+            <li>本ソフトウェアをスパム、ハッキング、またはその他の不正な活動に使用しないこと</li>
+          </ul>
+          <p>
+            第三者の権利を侵害する行為があった場合、開発者は一切の責任を負いません。
+            ユーザーは、自身の行為について全面的な責任を負うものとします。
+          </p>
+        </ManualSubSection>
+      </ManualSection>
+
+      <!-- Section 5: Governing Law and Dispute Resolution -->
+      <ManualSection>
+        <ManualSubSection title="準拠法と紛争解決">
+          <p>
+            本免責事項および本ソフトウェアの使用に関する一切の事項は、日本法に準拠し、解釈されます。
+          </p>
+          <p>
+            本ソフトウェアの使用に関連して生じるいかなる紛争も、日本の裁判所の専属的管轄に属するものとします。
+          </p>
+          <p>
+            紛争が生じた場合、当事者は誠意を持って協議し、友好的な解決を図るものとします。
+            協議によって解決できない場合、当事者は東京地方裁判所に訴訟を提起することができます。
+          </p>
+        </ManualSubSection>
+      </ManualSection>
+
+      <!-- Last Updated -->
+      <div class="mt-16 pt-8 border-t border-moss/20 text-center">
+        <p class="text-text-dark font-body opacity-75">
+          最終更新: 2026年3月23日
+        </p>
+      </div>
+    </article>
+  </div>
+</BaseLayout>

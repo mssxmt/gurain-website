@@ -1,0 +1,374 @@
+---
+// Manual Page for GuRain
+// User manual with table of contents and detailed sections
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ManualSection from '../components/ManualSection.astro';
+import ManualSubSection from '../components/ManualSubSection.astro';
+import ParameterTable from '../components/ParameterTable.astro';
+
+const tocSections = [
+  { name: 'はじめに', href: '#introduction' },
+  { name: 'インターフェース', href: '#interface' },
+  { name: 'グローバルパラメータ', href: '#global-parameters' },
+  { name: 'グレインエンジン', href: '#grain-engine' },
+  { name: 'LFO機能', href: '#lfo' },
+  { name: '使用例', href: '#examples' },
+  { name: 'トラブルシューティング', href: '#troubleshooting' },
+];
+
+const globalParameters = [
+  {
+    name: 'gain',
+    range: '0.0 - 1.0',
+    description: 'マスターゲイン。全体的な出力音量を制御します。',
+  },
+  {
+    name: 'grainPitch',
+    range: '-24.0 to +24.0 semitones',
+    description: 'グローバルピッチオフセット。全グレインのピッチをセミトーン単位で調整します。',
+  },
+  {
+    name: 'playbackMode',
+    range: '0 = MIDI, 1 = Generative',
+    description: '再生モードの切り替え。MIDIモードではMIDIノートでグレインを生成、Generativeモードでは自動生成します。',
+  },
+  {
+    name: 'attackTime',
+    range: '0.001 - 2.0s',
+    description: 'ADSRエンベロープのアタックタイム。ノートオンから最大音量に達するまでの時間。',
+  },
+  {
+    name: 'decayTime',
+    range: '0.001 - 2.0s',
+    description: 'ADSRエンベロープのディケイタイム。最大音量からサステインレベルに達するまでの時間。',
+  },
+  {
+    name: 'sustainLevel',
+    range: '0.0 - 1.0',
+    description: 'ADSRエンベロープのサステインレベル。ノートが押されている間の維持音量。',
+  },
+  {
+    name: 'releaseTime',
+    range: '0.001 - 5.0s',
+    description: 'ADSRエンベロープのリリースタイム。ノートオフから無音になるまでの時間。',
+  },
+];
+
+const regionParameters = [
+  {
+    name: 'grainDensity',
+    range: '0.0 - 1.0',
+    description: 'グレイン密度。グレインの生成頻度を制御します。',
+  },
+  {
+    name: 'grainDuration',
+    range: '0.01 - 2.0s',
+    description: 'グレイン持続時間。各グレインの再生時間を設定します。',
+  },
+  {
+    name: 'grainPosition',
+    range: '0.0 - 1.0',
+    description: 'グレイン位置。オーディオバッファ内の再生位置（0.0 = 先頭、1.0 = 末尾）。',
+  },
+  {
+    name: 'pitchSpread',
+    range: '0.0 - 2.0 octaves',
+    description: 'ピッチスプレッド。グレインのピッチのばらつき具合をオクターブ単位で設定します。',
+  },
+  {
+    name: 'positionSpread',
+    range: '0.0 - 1.0',
+    description: '位置スプレッド。グレインの開始位置のばらつき具合を設定します。',
+  },
+  {
+    name: 'panSpread',
+    range: '0.0 - 1.0',
+    description: 'パンスプレッド。グレインのステレオパンのばらつき具合を設定します。',
+  },
+];
+
+const lfoParameters = [
+  {
+    name: 'lfoTarget',
+    range: 'off / gain / density / duration / position / pitch / positionSpread / panSpread',
+    description: 'LFO変調ターゲット。LFOで変調するパラメータを選択します。',
+  },
+  {
+    name: 'lfoType',
+    range: '0.0 - 5.0',
+    description: 'LFO波形タイプ。0.0（Sine）から5.0（SineRandom）までの連続的なモーフィングが可能です。',
+  },
+  {
+    name: 'lfoBpmSync',
+    range: 'false / true',
+    description: 'BPM同期モード。DAWのテンポに同期するかどうかを設定します。',
+  },
+  {
+    name: 'lfoDepth',
+    range: '0.0 - 1.0',
+    description: 'LFOデプス。変調の深さを制御します。',
+  },
+  {
+    name: 'lfoFrequency',
+    range: '0.0 - 1.0',
+    description: 'LFO周波数。BPM同期モードでは16thノートから16小節までの範囲になります。',
+  },
+];
+---
+
+<BaseLayout title="GuRain 使用マニュアル">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Page Title -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-text-dark text-shadow-soft mb-4">
+        GuRain 使用マニュアル
+      </h1>
+      <p class="text-lg md:text-xl font-body text-text-dark opacity-80">
+        GuRainグラニュラシンセサイザーの詳細な使用ガイド
+      </p>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="mb-12 sticky top-20 z-40 glass-card rounded-lg p-6 border border-moss/20 bg-white/60">
+      <h2 class="text-2xl font-heading font-bold text-text-dark mb-4 text-shadow-soft">
+        目次
+      </h2>
+      <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {tocSections.map((section) => (
+          <a
+            href={section.href}
+            class="text-text-dark hover:text-terracotta transition-colors font-body py-2 px-3 rounded hover:bg-moss/10"
+          >
+            {section.name}
+          </a>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Manual Content -->
+    <article class="space-y-16">
+      <!-- Section 1: Introduction -->
+      <ManualSection title="はじめに" id="introduction">
+        <ManualSubSection title="GuRainとは">
+          <p>
+            GuRainは、iOS/macOS対応の高度なグラニュラシンセサイザーAUv3プラグインです。
+            音源を小さな「グレイン」というセグメントに分割し、それらを重ね合わせて音を生成するグラニュラ合成技法を採用しています。
+          </p>
+          <p>
+            最大128個のグレインを同時再生し、MIDIモードとGenerativeモードの2つの再生モードをサポートしています。
+            また、最大8つの独立したリージョンを管理でき、それぞれのリージョンで異なるパラメータ設定が可能です。
+          </p>
+        </ManualSubSection>
+
+        <ManualSubSection title="主な特徴">
+          <ul>
+            <li>128グレインプール（√N正規化で音圧制御）</li>
+            <li>2再生モード（MIDIモードとGenerativeモード）</li>
+            <li>8リージョン対応</li>
+            <li>ADSRエンベロープ（Attack、Decay、Sustain、Release）</li>
+            <li>6種類のLFO波形連続モーフィング</li>
+            <li>BPM同期機能</li>
+            <li>58種類のグラデーションプリセット</li>
+            <li>音声反応型背景アニメーション</li>
+          </ul>
+        </ManualSubSection>
+
+        <ManualSubSection title="システム要件">
+          <ul>
+            <li>iOS 14.0以上</li>
+            <li>iPadOS 14.0以上</li>
+            <li>macOS（Mac Catalyst）</li>
+            <li>AUv3対応のDAWまたはホストアプリ</li>
+          </ul>
+        </ManualSubSection>
+      </ManualSection>
+
+      <!-- Section 2: Interface -->
+      <ManualSection title="インターフェース" id="interface">
+        <ManualSubSection title="メイン画面">
+          <p>
+            GuRainのメイン画面は、グローバルパラメータエリアとリージョンエリアで構成されています。
+            グローバルパラメータでは全体の設定を管理し、リージョンエリアでは各リージョンごとの詳細設定を行います。
+          </p>
+        </ManualSubSection>
+
+        <ManualSubSection title="グローバルパラメータエリア">
+          <p>
+            画面上部にはグローバルパラメータが配置されています。これらのパラメータはすべてのリージョンに影響します。
+          </p>
+          <p>主なグローバルパラメータには以下があります：</p>
+          <ul>
+            <li>マスターゲイン（出力音量）</li>
+            <li>グローバルピッチオフセット</li>
+            <li>再生モード切り替え</li>
+            <li>ADSRエンベロープ</li>
+          </ul>
+        </ManualSubSection>
+
+        <ManualSubSection title="リージョンエリア">
+          <p>
+            画面下部には最大8つのリージョンが表示されます。各リージョンは独立したパラメータ設定を持つことができ、
+            複雑なサウンドデザインを可能にします。
+          </p>
+        </ManualSubSection>
+      </ManualSection>
+
+      <!-- Section 3: Global Parameters -->
+      <ManualSection title="グローバルパラメータ" id="global-parameters">
+        <ManualSubSection>
+          <p>
+            グローバルパラメータは、すべてのリージョンに適用される全体的な設定です。
+            これらのパラメータはメイン画面の上部で調整できます。
+          </p>
+        </ManualSubSection>
+
+        <ParameterTable parameters={globalParameters} />
+      </ManualSection>
+
+      <!-- Section 4: Grain Engine -->
+      <ManualSection title="グレインエンジン" id="grain-engine">
+        <ManualSubSection title="グラニュラ合成の仕組み">
+          <p>
+            グラニュラ合成は、音源を小さな「グレイン」というセグメント（通常数ミリ秒から数百ミリ秒）に分割し、
+            それらを重ね合わせて音を生成する技法です。GuRainは最大128個のグレインを同時再生可能です。
+          </p>
+          <p>
+            グレインはHanning窓関数で包まれ、境界でのアーティファクトを低減しています。
+            また、複数のグレインが同時再生される場合、音圧を防ぐために√N正規化が自動的に適用されます。
+          </p>
+        </ManualSubSection>
+
+        <ManualSubSection title="リージョンパラメータ">
+          <p>
+            各リージョンには以下のパラメータがあり、個別に設定できます：
+          </p>
+        </ManualSubSection>
+
+        <ParameterTable parameters={regionParameters} />
+      </ManualSection>
+
+      <!-- Section 5: LFO -->
+      <ManualSection title="LFO機能" id="lfo">
+        <ManualSubSection title="LFOとは">
+          <p>
+            LFO（低周波オシレータ）は、パラメータを周期的に変調するために使用されます。
+            GuRainのLFOは高度な機能を持ち、6種類の波形間で連続的にモーフィング可能です。
+          </p>
+        </ManualSubSection>
+
+        <ManualSubSection title="連続モーフィング波形">
+          <p>
+            LFOタイプは0.0から5.0の範囲で連続的に変化し、以下の波形をモーフィングします：
+          </p>
+          <ul>
+            <li>0.0: Sine（正弦波）</li>
+            <li>1.0: Sawtooth（のこ歯状波）</li>
+            <li>2.0: Square（矩形波）</li>
+            <li>3.0: SquareRandom（矩形波 + ランダム）</li>
+            <li>4.0: SawtoothRandom（のこ歯状波 + ランダム）</li>
+            <li>5.0: SineRandom（正弦波 + ランダム）</li>
+          </ul>
+        </ManualSubSection>
+
+        <ManualSubSection title="BPM同期モード">
+          <p>
+            BPM同期モードを有効にすると、DAWのテンポに同期してLFOが動作します。
+            16thノートから16小節までの広範囲な同期をサポートしています。
+          </p>
+        </ManualSubSection>
+
+        <ParameterTable parameters={lfoParameters} />
+      </ManualSection>
+
+      <!-- Section 6: Examples -->
+      <ManualSection title="使用例" id="examples">
+        <ManualSubSection title="基本的な使用方法">
+          <ol>
+            <li>DAWまたはホストアプリでGuRainをインスタンス化します</li>
+            <li>オーディオファイルをロードします</li>
+            <li>グローバルパラメータを調整します（ゲイン、ピッチなど）</li>
+            <li>MIDIキーボードで演奏するか、Generativeモードで自動生成を開始します</li>
+            <li>リージョンパラメータを調整してサウンドをカスタマイズします</li>
+          </ol>
+        </ManualSubSection>
+
+        <ManualSubSection title="アンビエントなパッドサウンドを作成する">
+          <ul>
+            <li>Generativeモードに設定します</li>
+            <li>grainDensityを低めに設定します（0.2〜0.4）</li>
+            <li>grainDurationを長めに設定します（0.5〜1.5秒）</li>
+            <li>pitchSpreadを中程度に設定します（0.5〜1.0オクターブ）</li>
+            <li>ADSRエンベロープを設定して、緩やかな変化を付けます</li>
+          </ul>
+        </ManualSubSection>
+
+        <ManualSubSection title="リズミックなテクスチャを作成する">
+          <ul>
+            <li>MIDIモードに設定します</li>
+            <li>grainDensityを高めに設定します（0.6〜0.9）</li>
+            <li>grainDurationを短めに設定します（0.05〜0.2秒）</li>
+            <li>positionSpreadを中程度に設定します（0.3〜0.6）</li>
+            <li>LFOでグレイン密度を変調して動的な変化を付けます</li>
+          </ul>
+        </ManualSubSection>
+      </ManualSection>
+
+      <!-- Section 7: Troubleshooting -->
+      <ManualSection title="トラブルシューティング" id="troubleshooting">
+        <ManualSubSection title="音が出ない場合">
+          <ul>
+            <li>DAWのオーディオ出力がミュートになっていないか確認してください</li>
+            <li>マスターゲイン（gain）が0になっていないか確認してください</li>
+            <li>オーディオファイルが正常にロードされているか確認してください</li>
+            <li>MIDIモードの場合、MIDIキーボードまたはDAWからMIDIが送られているか確認してください</li>
+          </ul>
+        </ManualSubSection>
+
+        <ManualSubSection title="グレインが生成されない場合">
+          <ul>
+            <li>Generativeモードの場合、grainDensityが0になっていないか確認してください</li>
+            <li>MIDIモードの場合、ノートが送られているか確認してください</li>
+            <li>grainDurationが極端に短くないか確認してください（最低0.01秒）</li>
+          </ul>
+        </ManualSubSection>
+
+        <ManualSubSection title="サウンドがクリップする場合">
+          <ul>
+            <li>マスターゲインを下げてください</li>
+            <li>複数のリージョンを使用している場合、各リージョンのゲインを下げてください</li>
+            <li>DAWの出力メーターを確認してください</li>
+          </ul>
+        </ManualSubSection>
+
+        <ManualSubSection title="CPU負荷が高い場合">
+          <ul>
+            <li>grainDensityを下げてください</li>
+            <li>リージョンの数を減らしてください</li>
+            <li>grainDurationを短くしてください</li>
+            <li>オーディオバッファサイズを大きくしてください</li>
+          </ul>
+        </ManualSubSection>
+
+        <ManualSubSection title="LFOが期待通りに動作しない場合">
+          <ul>
+            <li>lfoTargetが適切に設定されているか確認してください</li>
+            <li>lfoDepthが0になっていないか確認してください</li>
+            <li>BPM同期モードを使用している場合、DAWのテンポが正しく設定されているか確認してください</li>
+          </ul>
+        </ManualSubSection>
+      </ManualSection>
+    </article>
+
+    <!-- Back to Top Button -->
+    <div class="fixed bottom-8 right-8 z-50">
+      <button
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+        class="px-4 py-3 bg-terracotta text-text-light font-heading font-semibold rounded-lg hover:bg-terracotta/90 transition-all transform hover:scale-105 shadow-lg"
+        aria-label="トップに戻る"
+      >
+        ↑ トップ
+      </button>
+    </div>
+  </div>
+</BaseLayout>
