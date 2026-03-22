@@ -1,0 +1,33 @@
+---
+// Manual Section Component
+// Container for manual sections with heading and content area
+// Props: title (optional), id (optional for anchor linking)
+
+interface Props {
+  title?: string;
+  id?: string;
+}
+
+const { title, id } = Astro.props;
+---
+
+<section
+  class:id={id}
+  class="py-12 px-4 md:px-6 lg:px-8 scroll-mt-20"
+>
+  <div class="max-w-4xl mx-auto">
+    {title && (
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-text-dark mb-8 text-shadow-soft">
+        {title}
+      </h2>
+    )}
+    <slot />
+  </div>
+</section>
+
+<style>
+  /* Smooth scroll offset for sticky header */
+  section {
+    scroll-margin-top: 5rem;
+  }
+</style>

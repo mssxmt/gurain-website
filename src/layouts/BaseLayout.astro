@@ -1,0 +1,155 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+const navItems = [
+  { name: 'ホーム', href: '/' },
+  { name: 'マニュアル', href: '/manual' },
+  { name: '免責事項', href: '/disclaimer' },
+];
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} - GuRain</title>
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="/favicon-512x512.png" sizes="512x512" />
+  </head>
+  <body>
+    <!-- Sticky Header with Glass Effect -->
+    <header class="sticky top-0 z-50 glass-card border-b border-moss/20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <a href="/" class="flex-shrink-0">
+            <img
+              src="/images/logo.png"
+              alt="GuRain Logo"
+              class="h-8 w-8 rounded-lg"
+            />
+          </a>
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex space-x-8">
+            {navItems.map((item) => (
+              <a
+                href={item.href}
+                class="text-text-dark hover:text-terracotta transition-colors font-medium"
+              >
+                {item.name}
+              </a>
+            ))}
+            <a
+              href="#"
+              target="_blank"
+              class="text-text-dark hover:text-terracotta transition-colors font-medium"
+            >
+              購入する
+            </a>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <button
+            id="mobile-menu-button"
+            class="md:hidden p-2 rounded-md text-text-dark hover:text-terracotta transition-colors"
+            aria-label="メニューを開く"
+            aria-expanded="false"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div
+          id="mobile-menu"
+          class="hidden md:hidden pb-4"
+        >
+          <div class="flex flex-col space-y-3">
+            {navItems.map((item) => (
+              <a
+                href={item.href}
+                class="text-text-dark hover:text-terracotta transition-colors font-medium py-2"
+              >
+                {item.name}
+              </a>
+            ))}
+            <a
+              href="#"
+              target="_blank"
+              class="text-text-dark hover:text-terracotta transition-colors font-medium py-2"
+            >
+              購入する
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="min-h-screen">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-moss text-text-light py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="flex items-center space-x-2 mb-4 md:mb-0">
+            <img
+              src="/images/logo.png"
+              alt="GuRain Logo"
+              class="h-6 w-6 rounded-lg"
+            />
+            <span class="font-heading text-lg font-bold">GuRain</span>
+          </div>
+          <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-sm">
+            <a href="/" class="hover:text-cream transition-colors">ホーム</a>
+            <a href="/manual" class="hover:text-cream transition-colors">マニュアル</a>
+            <a href="/disclaimer" class="hover:text-cream transition-colors">免責事項</a>
+          </div>
+        </div>
+        <div class="mt-8 text-center text-sm opacity-75">
+          &copy; 2026 GuRain. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+      const menuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      menuButton?.addEventListener('click', () => {
+        const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+        menuButton.setAttribute('aria-expanded', !isExpanded);
+        mobileMenu?.classList.toggle('hidden');
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  /* Import global styles */
+  @import '../styles/global.css';
+  @import '../styles/design-system.css';
+</style>

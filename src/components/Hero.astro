@@ -1,0 +1,52 @@
+---
+// Hero Component
+// Large hero section with heading, subheading, and CTA buttons
+// Uses organic gradient background
+---
+
+<section class="gradient-organic py-20 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center space-y-8">
+      <!-- Main Heading -->
+      <h1 class="text-5xl md:text-7xl font-heading font-bold text-text-dark text-shadow-soft">
+        GuRain - グラニュラシンセサイザー
+      </h1>
+
+      <!-- Sub-heading -->
+      <p class="text-xl md:text-2xl font-body text-text-dark opacity-90 max-w-2xl mx-auto">
+        音の粒で紡ぐ、無限の創造性
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
+        <a
+          href="/manual"
+          class="px-8 py-4 bg-terracotta text-text-light font-heading font-semibold rounded-lg hover:bg-terracotta/90 transition-all transform hover:scale-105 shadow-lg"
+        >
+          マニュアルを見る
+        </a>
+        <a
+          href="#"
+          target="_blank"
+          class="px-8 py-4 bg-transparent border-2 border-text-dark text-text-dark font-heading font-semibold rounded-lg hover:bg-text-dark hover:text-cream transition-all transform hover:scale-105"
+        >
+          購入する
+        </a>
+      </div>
+    </div>
+
+    <!-- Placeholder Image -->
+    <div class="mt-16 flex justify-center">
+      <div class="w-full max-w-4xl aspect-[2/1] bg-white/50 rounded-2xl flex items-center justify-center border-2 border-dashed border-moss/30">
+        <p class="text-text-dark font-body text-lg opacity-60">画像プレースホルダー (1200x600)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Ensure gradient-organic is applied */
+  .gradient-organic {
+    background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-cream) 100%);
+  }
+</style>

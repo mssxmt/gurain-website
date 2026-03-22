@@ -1,0 +1,63 @@
+---
+// Feature Cards Grid
+// Displays 8 feature cards with content from project documentation
+
+import FeatureCard from './FeatureCard.astro';
+
+const features = [
+  {
+    title: '128グレインプール',
+    description: '最大128個のグレインを同時再生可能。√N正規化で音圧を適切に制御します。',
+  },
+  {
+    title: '2再生モード',
+    description: 'MIDIモードとGenerativeモードの2つの再生モードをサポート。演奏と自動生成のどちらも可能。',
+  },
+  {
+    title: '8リージョン対応',
+    description: '最大8つの独立したリージョンを管理。それぞれのリージョンで異なるパラメータ設定が可能。',
+  },
+  {
+    title: 'ADSRエンベロープ',
+    description: 'Attack、Decay、Sustain、Releaseの4段階で音量を制御する精密なエンベロープ。',
+  },
+  {
+    title: '6種波形LFOモーフィング',
+    description: 'Sine、Sawtooth、Squareなど6種類の波形を連続的にモーフィング可能。',
+  },
+  {
+    title: 'BPM同期機能',
+    description: 'DAWのテンポに同期可能。16thノートから16小節までの広範囲な同期をサポート。',
+  },
+  {
+    title: '58種類グラデーションプリセット',
+    description: '58種類の美しいグラデーションプリセットをプリインストール。視覚的表現の幅を広げます。',
+  },
+  {
+    title: '音声反応型背景',
+    description: 'オーディオエネルギーに反応して動的に変化する背景アニメーション。',
+  },
+];
+---
+
+<section class="py-16 px-4 bg-cream">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-4xl font-heading font-bold text-text-dark text-center mb-12">
+      主要な特徴
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {features.map((feature) => (
+        <FeatureCard
+          title={feature.title}
+          description={feature.description}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  h2 {
+    text-shadow: 0 1px 2px rgba(44, 62, 45, 0.1);
+  }
+</style>

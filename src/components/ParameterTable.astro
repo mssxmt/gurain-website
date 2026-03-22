@@ -1,0 +1,83 @@
+---
+// Parameter Table Component
+// Displays parameter information in a table format
+// Columns: パラメータ | 範囲 | 説明
+
+interface Parameter {
+  name: string;
+  range: string;
+  description: string;
+}
+
+interface Props {
+  parameters: Parameter[];
+}
+
+const { parameters } = Astro.props;
+---
+
+<div class="overflow-x-auto my-6">
+  <table class="w-full border-collapse">
+    <thead>
+      <tr class="bg-moss text-white">
+        <th class="py-3 px-4 text-left font-heading font-semibold text-sm md:text-base">
+          パラメータ
+        </th>
+        <th class="py-3 px-4 text-left font-heading font-semibold text-sm md:text-base">
+          範囲
+        </th>
+        <th class="py-3 px-4 text-left font-heading font-semibold text-sm md:text-base">
+          説明
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {parameters.map((param, index) => (
+        <tr
+          class={`border-b border-moss/20 ${
+            index % 2 === 0 ? 'bg-white/40' : 'bg-white/20'
+          } hover:bg-cream/60 transition-colors`}
+        >
+          <td class="py-3 px-4 font-mono text-sm md:text-base font-medium text-terracotta">
+            {param.name}
+          </td>
+          <td class="py-3 px-4 font-body text-sm md:text-base">
+            {param.range}
+          </td>
+          <td class="py-3 px-4 font-body text-sm md:text-base leading-relaxed">
+            {param.description}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  table {
+    font-family: var(--font-body);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  th {
+    font-weight: 600;
+    letter-spacing: 0.025em;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+  /* Responsive table */
+  @media (max-width: 768px) {
+    table {
+      font-size: 0.875rem;
+    }
+
+    th,
+    td {
+      padding: 0.5rem;
+    }
+  }
+</style>

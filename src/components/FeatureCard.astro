@@ -1,0 +1,56 @@
+---
+// Feature Card Component
+// Reusable card component with organic design, glass-effect, and hover animations
+// Props: title, description
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<div class="feature-card glass-card p-6 transition-transform duration-300">
+  <h3 class="text-xl font-heading font-bold text-text-dark mb-3">{title}</h3>
+  <p class="text-text-dark font-body opacity-80 leading-relaxed">{description}</p>
+</div>
+
+<style>
+  .feature-card {
+    /* Organic border-radius */
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+
+    /* Glass-effect */
+    background: rgba(244, 241, 222, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(107, 142, 35, 0.1);
+
+    /* Transition for hover lift */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .feature-card:hover {
+    /* Subtle lift animation */
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(44, 62, 45, 0.15);
+  }
+
+  /* Add some texture/variation to make cards look more organic */
+  .feature-card:nth-child(odd) {
+    border-radius: 40% 60% 70% 30% / 60% 30% 70% 40%;
+  }
+
+  .feature-card:nth-child(even) {
+    border-radius: 60% 40% 30% 70% / 40% 60% 30% 70%;
+  }
+
+  .feature-card:nth-child(3n) {
+    border-radius: 30% 70% 60% 40% / 70% 30% 60% 40%;
+  }
+
+  .feature-card:nth-child(4n) {
+    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+  }
+</style>
