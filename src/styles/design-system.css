@@ -1,0 +1,24 @@
+/* Design System Utilities for GuRain */
+
+/* Organic gradient background */
+.gradient-organic {
+  background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-cream) 100%);
+}
+
+/* Glass-effect card */
+.glass-card {
+  background: rgba(244, 241, 222, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(107, 142, 35, 0.1);
+}
+
+/* Soft text shadow */
+.text-shadow-soft {
+  text-shadow: 0 1px 2px rgba(44, 62, 45, 0.1);
+}
+
+/* Organic border radius utility */
+.organic-radius {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}

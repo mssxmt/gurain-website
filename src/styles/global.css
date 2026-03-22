@@ -1,0 +1,46 @@
+/* GuRain Organic/Greenhouse Design System */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Outfit:wght@300;400;600&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  /* Custom Colors */
+  --color-sage: #9CAF88;
+  --color-terracotta: #E07A5F;
+  --color-cream: #F4F1DE;
+  --color-ochre: #E9C46A;
+  --color-moss: #6B8E23;
+  --color-soil: #8B7355;
+  --color-text-dark: #2C3E2D;
+  --color-text-light: #FEFAE0;
+
+  /* Custom Fonts */
+  --font-heading: "Playfair Display", serif;
+  --font-body: "Outfit", sans-serif;
+}
+
+/* Global styles */
+@layer base {
+  :root {
+    /* Color CSS Variables (for direct use in components) */
+    --color-sage: #9CAF88;
+    --color-terracotta: #E07A5F;
+    --color-cream: #F4F1DE;
+    --color-ochre: #E9C46A;
+    --color-moss: #6B8E23;
+    --color-soil: #8B7355;
+    --color-text-dark: #2C3E2D;
+    --color-text-light: #FEFAE0;
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--color-text-dark);
+    background-color: var(--color-cream);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
