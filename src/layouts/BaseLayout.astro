@@ -22,6 +22,24 @@ const navItems = [
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" href="/favicon-512x512.png" sizes="512x512" />
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content="iOS/macOS対応グラニュラシンセサイザーAUv3プラグイン。最大128グレイン、MIDI/Generativeモード、ADSRエンベロープ、LFOモーフィング機能。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:image" content="/images/og-image.png" />
+    <meta property="og:locale" content="ja_JP" />
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content="iOS/macOS対応グラニュラシンセサイザーAUv3プラグイン。最大128グレイン、MIDI/Generativeモード、ADSRエンベロープ、LFOモーフィング機能。" />
+    <meta name="twitter:image" content="/images/og-image.png" />
+
+    <!-- Font Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
     <!-- Sticky Header with Glass Effect -->

@@ -5,9 +5,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import FeatureCards from '../components/FeatureCards.astro';
+
+const metaDescription = 'GuRainはiOS/macOS対応グラニュラシンセサイザーAUv3プラグイン。最大128グレイン、MIDI/Generativeモード、ADSRエンベロープ、LFOモーフィング機能。';
 ---
 
 <BaseLayout title="GuRain - グラニュラシンセサイザー">
+  <meta name="description" content={metaDescription} />
+  <meta name="keywords" content="granular, synthesizer, audio, music production, AUv3, iOS, macOS, MIDI, generative" />
   <!-- Hero Section -->
   <Hero />
 
@@ -54,10 +58,6 @@ import FeatureCards from '../components/FeatureCards.astro';
           購入する
         </a>
       </div>
-    </div>
-  </section>
-
-  <!-- Meta Tags (already in BaseLayout, but adding specific ones for SEO) -->
-  <meta name="description" content="iOS/macOS対応グラニュラシンセサイザーAUv3プラグイン。最大128グレイン、2再生モード、ADSRエンベロープ、LFOモーフィング機能。" />
-  <meta name="keywords" content="granular, synthesizer, audio, music production, AUv3, iOS, macOS, MIDI, generative" />
+      </div>
+    </section>
 </BaseLayout>

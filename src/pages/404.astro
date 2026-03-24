@@ -3,9 +3,12 @@
 // Custom 404 error page with friendly message
 
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const metaDescription = 'お探しのページが見つかりません。GuRainホームページまたはマニュアルへ戻ってください。';
 ---
 
 <BaseLayout title="ページが見つかりません - GuRain">
+  <meta name="description" content={metaDescription} />
   <div class="min-h-screen gradient-organic flex items-center justify-center px-4">
     <div class="max-w-2xl mx-auto text-center space-y-8">
       <!-- 404 Number -->

@@ -5,9 +5,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ManualSection from '../components/ManualSection.astro';
 import ManualSubSection from '../components/ManualSubSection.astro';
+
+const metaDescription = 'GuRainグラニュラシンセサイザーの免責事項。本ソフトウェアの使用に関する法的な免責事項、保証の否認、責任制限、第三者の権利の尊重に関する情報。';
 ---
 
 <BaseLayout title="免責事項 - GuRain">
+  <meta name="description" content={metaDescription} />
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Page Title -->
     <div class="text-center mb-12">

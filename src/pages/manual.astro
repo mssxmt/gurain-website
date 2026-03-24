@@ -7,6 +7,8 @@ import ManualSection from '../components/ManualSection.astro';
 import ManualSubSection from '../components/ManualSubSection.astro';
 import ParameterTable from '../components/ParameterTable.astro';
 
+const metaDescription = 'GuRainグラニュラシンセサイザーの詳細な使用マニュアル。グローバルパラメータ、グレインエンジン、LFO機能、使用例、トラブルシューティングを網羅。';
+
 const tocSections = [
   { name: 'はじめに', href: '#introduction' },
   { name: 'インターフェース', href: '#interface' },
@@ -118,6 +120,7 @@ const lfoParameters = [
 ---
 
 <BaseLayout title="GuRain 使用マニュアル">
+  <meta name="description" content={metaDescription} />
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Page Title -->
     <div class="text-center mb-12">
