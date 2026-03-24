@@ -1,19 +1,27 @@
-/* GuRain Organic/Greenhouse Design System */
+/* GuRain Blue-Teal Design System */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Outfit:wght@300;400;600&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-  /* Custom Colors */
-  --color-sage: #9CAF88;
-  --color-terracotta: #E07A5F;
-  --color-cream: #F4F1DE;
-  --color-ochre: #E9C46A;
-  --color-moss: #6B8E23;
-  --color-soil: #8B7355;
-  --color-text-dark: #2C3E2D;
-  --color-text-light: #FEFAE0;
+  /* Blue-Teal Color Palette from Logo */
+  --color-ocean-light: #7FD4D4;
+  --color-ocean-medium: #5ABCD9;
+  --color-ocean-teal: #4AACC6;
+  --color-blue-medium: #3A8EB9;
+  --color-blue-deep: #2F7FB3;
+  --color-blue-dark: #1E5F8E;
+  --color-blue-navy: #1A4F7A;
+  --color-deep-blue: #0D3B66;
+  --color-midnight: #0A2D4D;
+  
+  /* Supporting Colors */
+  --color-sky-light: #E8F4F8;
+  --color-sky-soft: #F0F8FF;
+  --color-text-primary: #0A2D4D;
+  --color-text-secondary: #1E5F8E;
+  --color-text-light: #F0F8FF;
 
   /* Custom Fonts */
   --font-heading: "Playfair Display", serif;
@@ -23,21 +31,27 @@
 /* Global styles */
 @layer base {
   :root {
-    /* Color CSS Variables (for direct use in components) */
-    --color-sage: #9CAF88;
-    --color-terracotta: #E07A5F;
-    --color-cream: #F4F1DE;
-    --color-ochre: #E9C46A;
-    --color-moss: #6B8E23;
-    --color-soil: #8B7355;
-    --color-text-dark: #2C3E2D;
-    --color-text-light: #FEFAE0;
+    /* Color CSS Variables */
+    --color-ocean-light: #7FD4D4;
+    --color-ocean-medium: #5ABCD9;
+    --color-ocean-teal: #4AACC6;
+    --color-blue-medium: #3A8EB9;
+    --color-blue-deep: #2F7FB3;
+    --color-blue-dark: #1E5F8E;
+    --color-blue-navy: #1A4F7A;
+    --color-deep-blue: #0D3B66;
+    --color-midnight: #0A2D4D;
+    --color-sky-light: #E8F4F8;
+    --color-sky-soft: #F0F8FF;
+    --color-text-primary: #0A2D4D;
+    --color-text-secondary: #1E5F8E;
+    --color-text-light: #F0F8FF;
   }
 
   body {
     font-family: var(--font-body);
-    color: var(--color-text-dark);
-    background-color: var(--color-cream);
+    color: var(--color-text-primary);
+    background-color: var(--color-sky-light);
   }
 
   h1, h2, h3, h4, h5, h6 {

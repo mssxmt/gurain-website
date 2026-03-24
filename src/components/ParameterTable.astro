@@ -19,7 +19,7 @@ const { parameters } = Astro.props;
 <div class="overflow-x-auto my-6">
   <table class="w-full border-collapse">
     <thead>
-      <tr class="bg-moss text-white">
+      <tr class="bg-blue-deep text-white">
         <th class="py-3 px-4 text-left font-heading font-semibold text-sm md:text-base">
           パラメータ
         </th>
@@ -34,11 +34,11 @@ const { parameters } = Astro.props;
     <tbody>
       {parameters.map((param, index) => (
         <tr
-          class={`border-b border-moss/20 ${
+          class={`border-b border-blue-deep/20 ${
             index % 2 === 0 ? 'bg-white/40' : 'bg-white/20'
-          } hover:bg-cream/60 transition-colors`}
+          } hover:bg-ocean-light/60 transition-colors`}
         >
-          <td class="py-3 px-4 font-mono text-sm md:text-base font-medium text-terracotta">
+          <td class="py-3 px-4 font-mono text-sm md:text-base font-medium text-blue-medium">
             {param.name}
           </td>
           <td class="py-3 px-4 font-body text-sm md:text-base">

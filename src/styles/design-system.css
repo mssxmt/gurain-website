@@ -1,21 +1,21 @@
 /* Design System Utilities for GuRain */
 
-/* Organic gradient background */
+/* Blue-Teal gradient background */
 .gradient-organic {
-  background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-cream) 100%);
+  background: linear-gradient(135deg, var(--color-ocean-light) 0%, var(--color-sky-light) 100%);
 }
 
 /* Glass-effect card */
 .glass-card {
-  background: rgba(244, 241, 222, 0.6);
+  background: rgba(232, 244, 248, 0.6);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(107, 142, 35, 0.1);
+  border: 1px solid rgba(58, 142, 185, 0.1);
 }
 
 /* Soft text shadow */
 .text-shadow-soft {
-  text-shadow: 0 1px 2px rgba(44, 62, 45, 0.1);
+  text-shadow: 0 1px 2px rgba(10, 45, 77, 0.1);
 }
 
 /* Organic border radius utility */
