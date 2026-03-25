@@ -133,21 +133,74 @@ const lfoParameters = [
     </div>
 
     <!-- Table of Contents -->
-    <div class="mb-12 sticky top-20 z-40 glass-card rounded-lg p-6 border border-blue-deep/20 bg-white/60">
-      <h2 class="text-2xl font-heading font-bold text-text-primary mb-4 text-shadow-soft">
-        目次
-      </h2>
-      <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+    <div id="toc-container" class="mb-12 glass-card rounded-lg border border-blue-deep/20 bg-white/60 transition-all duration-300">
+      <div class="flex items-center justify-between p-4 cursor-pointer" id="toc-header">
+        <h2 id="toc-title" class="text-2xl font-heading font-bold text-text-primary text-shadow-soft">
+          目次
+        </h2>
+        <button id="toc-toggle" class="text-text-primary hover:text-blue-medium" type="button">
+          <svg id="toc-chevron" class="w-6 h-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+      <nav id="toc-nav" class="grid grid-cols-1 sm:grid-cols-2 gap-2 px-4 pb-4">
         {tocSections.map((section) => (
-          <a
-            href={section.href}
-            class="text-text-primary hover:text-blue-medium transition-colors font-body py-2 px-3 rounded hover:bg-blue-deep/10"
-          >
+          <a href={section.href} class="text-text-primary hover:text-blue-medium transition-colors font-body py-2 px-3 rounded hover:bg-blue-deep/10">
             {section.name}
           </a>
         ))}
       </nav>
     </div>
+
+    <script>
+      let tocExpanded = false;
+      function toggleToc() {
+        const nav = document.getElementById('toc-nav');
+        const chevron = document.getElementById('toc-chevron');
+        tocExpanded = !tocExpanded;
+        if(tocExpanded) {
+          nav.style.maxHeight = '500px';
+          nav.style.opacity = '1';
+          nav.classList.remove('hidden');
+          chevron.classList.remove('rotate-180');
+          chevron.classList.remove('hidden');
+        } else {
+          nav.style.maxHeight = '0';
+          nav.style.opacity = '0';
+          nav.classList.add('hidden');
+          chevron.classList.add('rotate-180');
+          chevron.classList.remove('hidden');
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const tocHeader = document.getElementById('toc-header');
+        const nav = document.getElementById('toc-nav');
+        const chevron = document.getElementById('toc-chevron');
+
+        // Initial state: collapsed
+        nav.style.maxHeight = '0';
+        nav.style.opacity = '0';
+        nav.classList.add('hidden');
+        chevron.classList.add('rotate-180');
+        chevron.classList.remove('hidden');
+
+        // Attach click handler to header
+        tocHeader.addEventListener('click', (e) => {
+          toggleToc();
+        });
+      });
+
+      window.addEventListener('scroll', () => {
+        const c = document.getElementById('toc-container');
+        const t = document.getElementById('toc-title');
+        const n = document.getElementById('toc-nav');
+        const ch = document.getElementById('toc-chevron');
+        if(window.scrollY > 100) { c.classList.remove('p-6'); c.classList.add('py-2','px-3'); t.classList.add('text-sm'); t.classList.remove('text-2xl'); n.classList.add('hidden'); ch.classList.add('hidden'); }
+        else { c.classList.add('p-6'); c.classList.remove('py-2','px-3'); t.classList.remove('text-sm'); t.classList.add('text-2xl'); if(tocExpanded) n.classList.remove('hidden'); ch.classList.remove('hidden'); }
+      });
+    </script>
 
     <!-- Manual Content -->
     <article class="space-y-16">
