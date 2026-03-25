@@ -68,14 +68,24 @@ const { title, description, imageSrc, imageAlt = '' } = Astro.props;
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(107, 142, 35, 0.1);
 
+    /* 3D perspective for transforms */
+    perspective: 1000px;
+
     /* Transition for hover lift */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
   }
 
   .feature-card:hover {
-    /* Subtle lift animation */
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(44, 62, 45, 0.15);
+    /* 3D tilt effect with subtle lift */
+    transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) translateY(-4px);
+
+    /* Enhanced multi-layer box shadow for depth */
+    box-shadow:
+      0 4px 6px -1px rgba(44, 62, 45, 0.05),
+      0 20px 25px -5px rgba(44, 62, 45, 0.12),
+      0 40px 50px -12px rgba(44, 62, 45, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
   }
 
   /* Add some texture/variation to make cards look more organic */
@@ -93,5 +103,23 @@ const { title, description, imageSrc, imageAlt = '' } = Astro.props;
 
   .feature-card:nth-child(4n) {
     border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+  }
+
+  /* Light glow effect on hover */
+  .feature-card::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, rgba(74, 124, 89, 0.3), rgba(79, 195, 247, 0.3));
+    filter: blur(20px);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .feature-card:hover::after {
+    opacity: 1;
   }
 </style>
