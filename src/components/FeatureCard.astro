@@ -8,12 +8,17 @@ interface Props {
   description: string;
   imageSrc?: string;
   imageAlt?: string;
+  class?: string;
+  'data-stagger'?: string;
 }
 
-const { title, description, imageSrc, imageAlt = '' } = Astro.props;
+const { title, description, imageSrc, imageAlt = '', class: additionalClass = '', 'data-stagger': stagger = '' } = Astro.props;
 ---
 
-<div class="feature-card glass-card p-0 transition-transform duration-300">
+<div
+  class={`feature-card glass-card p-0 transition-transform duration-300 ${additionalClass}`}
+  data-stagger={stagger}
+>
   <!-- Image placeholder -->
   <div class="aspect-[4/3] overflow-hidden rounded-t-[inherit] relative">
     {imageSrc ? (

@@ -51,6 +51,8 @@ const features = [
           <FeatureCard
             title={feature.title}
             description={feature.description}
+            class="scroll-hidden"
+            data-stagger={(index * 150).toString()}
           />
         </div>
       ))}
@@ -62,4 +64,46 @@ const features = [
   h2 {
     text-shadow: 0 1px 2px rgba(44, 62, 45, 0.1);
   }
+
+  /* Scroll animation classes */
+  .feature-card.scroll-hidden {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .feature-card.scroll-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const card = entry.target;
+          const stagger = card.getAttribute('data-stagger') || '0';
+          setTimeout(() => {
+            card.classList.remove('scroll-hidden');
+            card.classList.add('scroll-visible');
+            // Remove opacity transition after reveal
+            setTimeout(() => {
+              card.style.opacity = '1';
+            }, 600);
+          }, parseInt(stagger));
+        }
+      });
+    }, observerOptions);
+
+    const cards = document.querySelectorAll('.feature-card');
+    cards.forEach(card => observer.observe(card));
+  });
+</script>
