@@ -89,7 +89,7 @@ const features = [
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const card = entry.target;
+          const card = entry.target as HTMLElement;
           const stagger = card.getAttribute('data-stagger') || '0';
           setTimeout(() => {
             card.classList.remove('scroll-hidden');

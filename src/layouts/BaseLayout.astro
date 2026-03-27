@@ -6,13 +6,13 @@ interface Props {
 const { title } = Astro.props;
 
 const navItems = [
-  { name: 'ホーム', href: '/' },
-  { name: 'マニュアル', href: '/manual' },
-  { name: '免責事項', href: '/disclaimer' },
+  { name: "ホーム", href: "/" },
+  { name: "マニュアル", href: "/manual" },
+  { name: "免責事項", href: "/disclaimer" },
 ];
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
@@ -21,11 +21,19 @@ const navItems = [
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" href="/favicon-512x512.png" sizes="512x512" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/favicon-512x512.png"
+      sizes="512x512"
+    />
 
     <!-- Open Graph Tags -->
     <meta property="og:title" content={title} />
-    <meta property="og:description" content="iOS/macOS対応グラニュラシンセサイザーAUv3プラグイン。最大128グレイン、MIDI/Generativeモード、ADSRエンベロープ、LFOモーフィング機能。" />
+    <meta
+      property="og:description"
+      content="iOS/macOS対応グラニュラシンセサイザーAUv3プラグイン。最大128グレイン、MIDI/Generativeモード、ADSRエンベロープ、LFOモーフィング機能。"
+    />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:image" content="/images/og-image.png" />
@@ -34,7 +42,10 @@ const navItems = [
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content="iOS/macOS対応グラニュラシンセサイザーAUv3プラグイン。最大128グレイン、MIDI/Generativeモード、ADSRエンベロープ、LFOモーフィング機能。" />
+    <meta
+      name="twitter:description"
+      content="iOS/macOS対応グラニュラシンセサイザーAUv3プラグイン。最大128グレイン、MIDI/Generativeモード、ADSRエンベロープ、LFOモーフィング機能。"
+    />
     <meta name="twitter:image" content="/images/og-image.png" />
 
     <!-- Font Preconnect for Performance -->
@@ -43,7 +54,9 @@ const navItems = [
   </head>
   <body>
     <!-- Sticky Header with Glass Effect -->
-    <header class="sticky top-0 z-50 glass-card border-b border-blue-deep/20">
+    <header
+      class="fixed top-0 z-50 glass-card border-b border-blue-deep/20 w-full"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="flex items-center justify-between h-16">
           <!-- Logo -->
@@ -57,14 +70,16 @@ const navItems = [
 
           <!-- Desktop Navigation -->
           <div class="hidden md:flex space-x-8">
-            {navItems.map((item) => (
-              <a
-                href={item.href}
-                class="text-text-primary hover:text-blue-medium transition-colors font-medium"
-              >
-                {item.name}
-              </a>
-            ))}
+            {
+              navItems.map((item) => (
+                <a
+                  href={item.href}
+                  class="text-text-primary hover:text-blue-medium transition-colors font-medium"
+                >
+                  {item.name}
+                </a>
+              ))
+            }
             <a
               href="#"
               target="_blank"
@@ -91,26 +106,24 @@ const navItems = [
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+                d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </button>
         </nav>
 
         <!-- Mobile Menu -->
-        <div
-          id="mobile-menu"
-          class="hidden md:hidden pb-4"
-        >
+        <div id="mobile-menu" class="hidden md:hidden pb-4">
           <div class="flex flex-col space-y-3">
-            {navItems.map((item) => (
-              <a
-                href={item.href}
-                class="text-text-primary hover:text-blue-medium transition-colors font-medium py-2"
-              >
-                {item.name}
-              </a>
-            ))}
+            {
+              navItems.map((item) => (
+                <a
+                  href={item.href}
+                  class="text-text-primary hover:text-blue-medium transition-colors font-medium py-2"
+                >
+                  {item.name}
+                </a>
+              ))
+            }
             <a
               href="#"
               target="_blank"
@@ -140,10 +153,19 @@ const navItems = [
             />
             <span class="font-heading text-lg font-bold">GuRain</span>
           </div>
-          <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-sm">
-            <a href="/" class="hover:text-ocean-light transition-colors">ホーム</a>
-            <a href="/manual" class="hover:text-ocean-light transition-colors">マニュアル</a>
-            <a href="/disclaimer" class="hover:text-ocean-light transition-colors">免責事項</a>
+          <div
+            class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-sm"
+          >
+            <a href="/" class="hover:text-ocean-light transition-colors"
+              >ホーム</a
+            >
+            <a href="/manual" class="hover:text-ocean-light transition-colors"
+              >マニュアル</a
+            >
+            <a
+              href="/disclaimer"
+              class="hover:text-ocean-light transition-colors">免責事項</a
+            >
           </div>
         </div>
         <div class="mt-8 text-center text-sm opacity-75">
@@ -154,13 +176,13 @@ const navItems = [
 
     <!-- Mobile Menu Toggle Script -->
     <script>
-      const menuButton = document.getElementById('mobile-menu-button');
-      const mobileMenu = document.getElementById('mobile-menu');
+      const menuButton = document.getElementById("mobile-menu-button");
+      const mobileMenu = document.getElementById("mobile-menu");
 
-      menuButton?.addEventListener('click', () => {
-        const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
-        menuButton.setAttribute('aria-expanded', !isExpanded);
-        mobileMenu?.classList.toggle('hidden');
+      menuButton?.addEventListener("click", () => {
+        const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
+        menuButton.setAttribute("aria-expanded", String(!isExpanded));
+        mobileMenu?.classList.toggle("hidden");
       });
     </script>
   </body>
@@ -168,6 +190,6 @@ const navItems = [
 
 <style is:global>
   /* Import global styles */
-  @import '../styles/global.css';
-  @import '../styles/design-system.css';
+  @import "../styles/global.css";
+  @import "../styles/design-system.css";
 </style>
