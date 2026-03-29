@@ -1,6 +1,6 @@
 ---
-// Feature Cards Grid
-// Displays 8 feature cards with content from project documentation
+// Feature Cards Grid - Ethereal Mist Theme
+// Responsive grid layout (3/2/1 columns) for feature cards
 
 import FeatureCard from './FeatureCard.astro';
 
@@ -8,102 +8,172 @@ const features = [
   {
     title: '128グレインプール',
     description: '最大128個のグレインを同時再生可能。√N正規化で音圧を適切に制御します。',
+    imageSrc: '/images/features/grain-pool.webp',
+    imageAlt: '128グレインプールのUI',
   },
   {
     title: '2再生モード',
     description: 'MIDIモードとGenerativeモードの2つの再生モードをサポート。演奏と自動生成のどちらも可能。',
+    imageSrc: '/images/features/playback-modes.webp',
+    imageAlt: '再生モード選択UI',
   },
   {
     title: '8リージョン対応',
     description: '最大8つの独立したリージョンを管理。それぞれのリージョンで異なるパラメータ設定が可能。',
+    imageSrc: '/images/features/regions.webp',
+    imageAlt: 'リージョン管理UI',
   },
   {
     title: 'ADSRエンベロープ',
     description: 'Attack、Decay、Sustain、Releaseの4段階で音量を制御する精密なエンベロープ。',
+    imageSrc: '/images/features/adsr.webp',
+    imageAlt: 'ADSRエンベロープコントロール',
   },
   {
     title: '6種波形LFOモーフィング',
     description: 'Sine、Sawtooth、Squareなど6種類の波形を連続的にモーフィング可能。',
+    imageSrc: '/images/features/lfo.webp',
+    imageAlt: 'LFOモーフィングUI',
   },
   {
     title: 'BPM同期機能',
     description: 'DAWのテンポに同期可能。16thノートから16小節までの広範囲な同期をサポート。',
+    imageSrc: '/images/features/bpm-sync.webp',
+    imageAlt: 'BPM同期設定',
   },
   {
     title: '58種類グラデーションプリセット',
     description: '58種類の美しいグラデーションプリセットをプリインストール。視覚的表現の幅を広げます。',
+    imageSrc: '/images/features/gradients.webp',
+    imageAlt: 'グラデーションプリセット',
   },
   {
     title: '音声反応型背景',
     description: 'オーディオエネルギーに反応して動的に変化する背景アニメーション。',
+    imageSrc: '/images/features/audio-reactive.webp',
+    imageAlt: '音声反応型アニメーション',
   },
 ];
 ---
 
-<section class="py-16 px-4 bg-sky-light">
-  <div class="max-w-4xl mx-auto">
-    <h2 class="text-4xl font-heading font-bold text-text-primary text-center mb-12">
-      主要な特徴
-    </h2>
-    <div class="flex flex-col gap-8">
+<section class="features-section section-spacing">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">主要な特徴</h2>
+      <p class="section-subtitle">微細な粒子が奏でる無限の可能性</p>
+    </div>
+
+    <div class="features-grid">
       {features.map((feature, index) => (
-        <div class={`flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-center gap-8`}>
-          <FeatureCard
-            title={feature.title}
-            description={feature.description}
-            class="scroll-hidden"
-            data-stagger={(index * 150).toString()}
-          />
-        </div>
+        <FeatureCard
+          title={feature.title}
+          description={feature.description}
+          imageSrc={feature.imageSrc}
+          imageAlt={feature.imageAlt}
+          class={`fade-in stagger-${index + 1}`}
+          data-stagger={String(index + 1)}
+        />
       ))}
     </div>
   </div>
 </section>
 
 <style>
-  h2 {
-    text-shadow: 0 1px 2px rgba(44, 62, 45, 0.1);
+  .features-section {
+    background: linear-gradient(
+      180deg,
+      var(--color-mist-light) 0%,
+      var(--color-mist-medium) 100%
+    );
+    position: relative;
   }
 
-  /* Scroll animation classes */
-  .feature-card.scroll-hidden {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Subtle rain in background */
+  .features-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(120, 160, 190, 0.05),
+      transparent
+    );
+    pointer-events: none;
   }
 
-  .feature-card.scroll-visible {
-    opacity: 1;
-    transform: translateY(0);
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-primary);
+  }
+
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+  }
+
+  /* Responsive Grid Layout */
+  .features-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Mobile: 1 column */
+  @media (max-width: 639px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Tablet: 2 columns */
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Desktop: 3 columns */
+  @media (min-width: 1024px) {
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Large desktop: 4 columns (optional) */
+  @media (min-width: 1280px) {
+    .features-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
+  // Intersection Observer for fade-in animations
+  const observer = new IntersectionObserver(
+    (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const card = entry.target as HTMLElement;
-          const stagger = card.getAttribute('data-stagger') || '0';
-          setTimeout(() => {
-            card.classList.remove('scroll-hidden');
-            card.classList.add('scroll-visible');
-            // Remove opacity transition after reveal
-            setTimeout(() => {
-              card.style.opacity = '1';
-            }, 600);
-          }, parseInt(stagger));
+          entry.target.classList.add('visible');
         }
       });
-    }, observerOptions);
+    },
+    {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    }
+  );
 
-    const cards = document.querySelectorAll('.feature-card');
-    cards.forEach(card => observer.observe(card));
-  });
+  document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
 </script>

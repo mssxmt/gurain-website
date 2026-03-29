@@ -1,0 +1,113 @@
+<h2>特徴セクション：画像の配置方法</h2>
+<p class="subtitle">8つの特徴をどのようにレイアウトしますか？</p>
+
+<div class="cards">
+  <div class="card" data-choice="alternating-cascade" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(180deg, #f2f8fb 0%, #e8f4f9 100%); padding: 20px; position: relative; overflow: hidden; height: 220px;">
+      <!-- Subtle rain -->
+      <div style="position: absolute; width: 1px; height: 25px; background: linear-gradient(transparent, rgba(120,160,190,0.2), transparent); left: 15%; top: 0%;"></div>
+      <div style="position: absolute; width: 1px; height: 30px; background: linear-gradient(transparent, rgba(120,160,190,0.15), transparent); left: 70%; top: 10%;"></div>
+
+      <!-- Feature items -->
+      <div style="position: relative; z-index: 1;">
+        <!-- Item 1 - Image Left -->
+        <div style="display: flex; gap: 15px; margin-bottom: 15px; align-items: center;">
+          <div style="width: 80px; height: 50px; background: linear-gradient(135deg, #7ab8d4, #98c8dc); border-radius: 8px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(122,184,212,0.2);"></div>
+          <div style="flex: 1;">
+            <div style="font-size: 0.8rem; font-weight: 600; color: #2d3e4a;">特徴タイトル</div>
+            <div style="font-size: 0.6rem; color: #5a7a8e; margin-top: 3px;">説明文がここに入ります</div>
+          </div>
+        </div>
+        <!-- Item 2 - Image Right -->
+        <div style="display: flex; gap: 15px; margin-bottom: 15px; align-items: center; flex-direction: row-reverse;">
+          <div style="width: 80px; height: 50px; background: linear-gradient(135deg, #98c8dc, #b8dce8); border-radius: 8px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(152,200,220,0.2);"></div>
+          <div style="flex: 1; text-align: left;">
+            <div style="font-size: 0.8rem; font-weight: 600; color: #2d3e4a;">特徴タイトル</div>
+            <div style="font-size: 0.6rem; color: #5a7a8e; margin-top: 3px;">説明文がここに入ります</div>
+          </div>
+        </div>
+        <!-- Item 3 - Image Left -->
+        <div style="display: flex; gap: 15px; align-items: center;">
+          <div style="width: 80px; height: 50px; background: linear-gradient(135deg, #7ab8d4, #98c8dc); border-radius: 8px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(122,184,212,0.2);"></div>
+          <div style="flex: 1;">
+            <div style="font-size: 0.8rem; font-weight: 600; color: #2d3e4a;">特徴タイトル</div>
+            <div style="font-size: 0.6rem; color: #5a7a8e; margin-top: 3px;">説明文がここに入ります</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h4>交互カスケード</h4>
+      <p>画像を左右交互に配置。スクロールに合わせてフェードイン。既存のデザインを進化させる形。</p>
+      <ul style="font-size: 0.85rem; color: #5a7a8e; margin-top: 10px; padding-left: 20px;">
+        <li>画像 → テキスト / テキスト → 画像 を繰り返し</li>
+        <li>スクロールで順番に表示</li>
+        <li>最も読みやすいレイアウト</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" data-choice="mosaic-grid" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(180deg, #f2f8fb 0%, #e8f4f9 100%); padding: 20px; position: relative; overflow: hidden; height: 220px;">
+      <!-- Subtle rain -->
+      <div style="position: absolute; width: 1px; height: 25px; background: linear-gradient(transparent, rgba(120,160,190,0.2), transparent); left: 25%; top: 5%;"></div>
+      <div style="position: absolute; width: 1px; height: 30px; background: linear-gradient(transparent, rgba(120,160,190,0.15), transparent); left: 80%; top: 0%;"></div>
+
+      <!-- Mosaic grid -->
+      <div style="position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+        <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, #7ab8d4, #98c8dc); border-radius: 10px; box-shadow: 0 4px 12px rgba(122,184,212,0.2); display: flex; align-items: center; justify-content: center;">
+          <div style="color: #fff; font-size: 0.6rem; font-weight: 600;">1</div>
+        </div>
+        <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, #98c8dc, #b8dce8); border-radius: 10px; box-shadow: 0 4px 12px rgba(152,200,220,0.2); display: flex; align-items: center; justify-content: center;">
+          <div style="color: #fff; font-size: 0.6rem; font-weight: 600;">2</div>
+        </div>
+        <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, #b8dce8, #d0e8f0); border-radius: 10px; box-shadow: 0 4px 12px rgba(184,220,232,0.2); display: flex; align-items: center; justify-content: center;">
+          <div style="color: #2d3e4a; font-size: 0.6rem; font-weight: 600;">3</div>
+        </div>
+        <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, #7ab8d4, #98c8dc); border-radius: 10px; box-shadow: 0 4px 12px rgba(122,184,212,0.2); display: flex; align-items: center; justify-content: center;">
+          <div style="color: #fff; font-size: 0.6rem; font-weight: 600;">4</div>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 10px; font-size: 0.65rem; color: #5a7a8e;">+ 4 more</div>
+    </div>
+    <div class="card-body">
+      <h4>モザイクグリッド</h4>
+      <p>2x2グリッドで特徴を並べる。ホバーで詳細が表示される。コンパクトでモダンな印象。</p>
+      <ul style="font-size: 0.85rem; color: #5a7a8e; margin-top: 10px; padding-left: 20px;">
+        <li>画像中心のグリッドレイアウト</li>
+        <li>ホバー/クリックで詳細展開</li>
+        <li>スクロール量が少ない</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" data-choice="immersive-cards" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(180deg, #c8dde8 0%, #d9ecf4 100%); padding: 20px; position: relative; overflow: hidden; height: 220px;">
+      <!-- Enhanced rain -->
+      <div style="position: absolute; width: 1px; height: 40px; background: linear-gradient(transparent, rgba(120,160,190,0.35), transparent); left: 20%; top: -10%;"></div>
+      <div style="position: absolute; width: 1px; height: 35px; background: linear-gradient(transparent, rgba(120,160,190,0.3), transparent); left: 60%; top: -5%;"></div>
+
+      <!-- Large card preview -->
+      <div style="position: relative; z-index: 1; background: rgba(255,255,255,0.6); backdrop-filter: blur(10px); border-radius: 16px; padding: 15px; box-shadow: 0 8px 32px rgba(120,160,190,0.2); border: 1px solid rgba(255,255,255,0.3);">
+        <div style="aspect-ratio: 16/9; background: linear-gradient(135deg, #7ab8d4, #98c8dc); border-radius: 10px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center;">
+          <div style="color: #fff; font-size: 0.8rem; font-weight: 600;">Feature Image</div>
+        </div>
+        <div style="font-size: 0.85rem; font-weight: 600; color: #2d3e4a;">特徴タイトル</div>
+        <div style="font-size: 0.7rem; color: #5a7a8e; margin-top: 4px;">説明文がここに入ります。特徴の概要を簡潔に説明。</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h4>イマーシブカード</h4>
+      <p>各特徴を大きなカードとして表示。雨と一体化するような半透明デザイン。高級感がある。</p>
+      <ul style="font-size: 0.85rem; color: #5a7a8e; margin-top: 10px; padding-left: 20px;">
+        <li>ガラスモーフィズムを活用</li>
+        <li>画像を大きく表示</li>
+        <li>雨の美学と一体化</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 25px; padding: 20px; background: rgba(232,244,249,0.5); border-radius: 8px;">
+  <p class="subtitle" style="margin: 0;">どのレイアウトがお好みでしょうか？</p>
+</div>

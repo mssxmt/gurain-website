@@ -1,0 +1,126 @@
+---
+// Rain Effect Component - Ethereal Mist Theme
+// Animated rain drops with parallax scroll effect
+---
+
+<div class="rain-container">
+  <div class="rain-layer background" id="rain-background"></div>
+  <div class="rain-layer middle" id="rain-middle"></div>
+  <div class="rain-layer foreground" id="rain-foreground"></div>
+</div>
+
+<style>
+  .rain-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .rain-layer {
+    position: absolute;
+    inset: 0;
+  }
+
+  .rain-layer.background {
+    z-index: 1;
+    opacity: 0.6;
+  }
+
+  .rain-layer.middle {
+    z-index: 2;
+    opacity: 0.8;
+  }
+
+  .rain-layer.foreground {
+    z-index: 3;
+    opacity: 1;
+  }
+
+  .rain-drop {
+    position: absolute;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-rain-drop),
+      transparent
+    );
+    will-change: transform;
+  }
+
+  @keyframes rain-fall {
+    0% {
+      transform: translateY(-100vh);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+  }
+
+  .rain-drop.animate {
+    animation: rain-fall 1.2s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rain-drop {
+      animation: none !important;
+    }
+  }
+</style>
+
+<script define:vars={{ layers: { background: 25, middle: 40, foreground: 55 } }}>
+  // Create rain drops
+  function createRain() {
+    Object.entries(layers).forEach(([layer, count]) => {
+      const container = document.getElementById(`rain-${layer}`);
+      if (!container) return;
+
+      for (let i = 0; i < count; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'rain-drop animate';
+        drop.style.left = `${Math.random() * 100}%`;
+        drop.style.height = `${30 + Math.random() * 35}px`;
+        drop.style.animationDelay = `${Math.random() * 2}s`;
+        drop.style.animationDuration = `${1 + Math.random() * 0.6}s`;
+        container.appendChild(drop);
+      }
+    });
+  }
+
+  // Parallax effect on scroll
+  let ticking = false;
+  function updateParallax() {
+    const scrollY = window.scrollY;
+
+    const background = document.getElementById('rain-background');
+    const middle = document.getElementById('rain-middle');
+    const foreground = document.getElementById('rain-foreground');
+
+    if (background) background.style.transform = `translateY(${scrollY * 0.1}px)`;
+    if (middle) middle.style.transform = `translateY(${scrollY * 0.25}px)`;
+    if (foreground) foreground.style.transform = `translateY(${scrollY * 0.4}px)`;
+
+    ticking = false;
+  }
+
+  // Initialize on load
+  createRain();
+
+  // Set up parallax on scroll
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+</script>

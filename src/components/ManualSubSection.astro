@@ -1,7 +1,6 @@
 ---
-// Manual Sub-Section Component
+// Manual Sub-Section Component - Ethereal Mist Theme
 // Subsection container with optional title and content area
-// Props: title (optional), id (optional for anchor linking)
 
 interface Props {
   title?: string;
@@ -13,58 +12,79 @@ const { title, id } = Astro.props;
 
 <div
   class:id={id}
-  class="mb-8 last:mb-0 scroll-mt-20"
+  class="manual-subsection"
 >
   {title && (
-    <h3 class="text-2xl md:text-3xl font-heading font-semibold text-text-dark mb-4 text-shadow-soft">
-      {title}
-    </h3>
+    <h3 class="subsection-title">{title}</h3>
   )}
-  <div class="prose prose-lg max-w-none">
+  <div class="subsection-content">
     <slot />
   </div>
 </div>
 
 <style>
-  div {
-    scroll-margin-top: 5rem;
+  .manual-subsection {
+    margin-bottom: var(--spacing-lg);
+    scroll-margin-top: 6rem;
   }
 
-  /* Prose-like styling for content */
-  .prose {
-    color: var(--color-text-dark);
-    font-family: var(--font-body);
-    line-height: 1.7;
+  .manual-subsection:last-child {
+    margin-bottom: 0;
   }
 
-  .prose p {
-    margin-bottom: 1rem;
+  .subsection-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: 0.02em;
   }
 
-  .prose ul,
-  .prose ol {
+  .subsection-content {
+    color: var(--color-text-body);
+    line-height: 1.8;
+  }
+
+  .subsection-content :global(p) {
+    margin-bottom: 1em;
+  }
+
+  .subsection-content :global(ul),
+  .subsection-content :global(ol) {
     margin-left: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1em;
   }
 
-  .prose li {
-    margin-bottom: 0.5rem;
+  .subsection-content :global(li) {
+    margin-bottom: 0.5em;
   }
 
-  .prose strong {
-    font-weight: 600;
-    color: var(--color-blue-medium);
+  .subsection-content :global(strong) {
+    font-weight: 500;
+    color: var(--color-text-primary);
   }
 
-  .prose em {
+  .subsection-content :global(em) {
     font-style: italic;
   }
 
-  .prose code {
-    background: rgba(244, 241, 222, 0.8);
-    padding: 0.2rem 0.4rem;
-    border-radius: 0.25rem;
-    font-family: monospace;
-    font-size: 0.9em;
+  .subsection-content :global(code) {
+    background: var(--color-mist-light);
+    color: var(--color-accent-primary);
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+    font-size: 0.875em;
+  }
+
+  @media (max-width: 640px) {
+    .subsection-title {
+      font-size: 1.125rem;
+    }
+
+    .subsection-content {
+      font-size: 0.9375rem;
+    }
   }
 </style>

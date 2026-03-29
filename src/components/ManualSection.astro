@@ -1,33 +1,124 @@
 ---
-// Manual Section Component
-// Container for manual sections with heading and content area
-// Props: title (optional), id (optional for anchor linking)
+// Manual Section Component - Ethereal Mist Theme
+// Glass page design for manual sections
 
 interface Props {
   title?: string;
   id?: string;
+  sectionNumber?: number;
 }
 
-const { title, id } = Astro.props;
+const { title, id, sectionNumber } = Astro.props;
 ---
 
 <section
   class:id={id}
-  class="py-12 px-4 md:px-6 lg:px-8 scroll-mt-20"
+  class="manual-section fade-in"
 >
-  <div class="max-w-4xl mx-auto">
+  <div class="section-inner">
     {title && (
-      <h2 class="text-3xl md:text-4xl font-heading font-bold text-text-dark mb-8 text-shadow-soft">
-        {title}
-      </h2>
+      <div class="section-header">
+        {sectionNumber && (
+          <span class="section-number">{sectionNumber}</span>
+        )}
+        <h2 class="section-title">{title}</h2>
+      </div>
     )}
-    <slot />
+    <div class="section-content">
+      <slot />
+    </div>
   </div>
 </section>
 
 <style>
-  /* Smooth scroll offset for sticky header */
-  section {
-    scroll-margin-top: 5rem;
+  .manual-section {
+    margin-bottom: var(--spacing-lg);
+    scroll-margin-top: 6rem;
+  }
+
+  .section-inner {
+    background: var(--glass-medium);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+  }
+
+  .section-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-soft));
+    color: var(--color-mist-lightest);
+    border-radius: var(--radius-full);
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 400;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    letter-spacing: 0.03em;
+    margin: 0;
+  }
+
+  .section-content {
+    padding: var(--spacing-lg);
+  }
+
+  .section-content :global(p) {
+    margin-bottom: 1em;
+    line-height: 1.8;
+    color: var(--color-text-body);
+  }
+
+  .section-content :global(h3) {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+  }
+
+  .section-content :global(h4) {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 640px) {
+    .manual-section {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .section-header {
+      padding: var(--spacing-md);
+    }
+
+    .section-content {
+      padding: var(--spacing-md);
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+    }
   }
 </style>

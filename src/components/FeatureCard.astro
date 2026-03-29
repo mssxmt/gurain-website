@@ -1,7 +1,7 @@
 ---
-// Feature Card Component
-// Reusable card component with organic design, glass-effect, and hover animations
-// Props: title, description
+// Feature Card Component - Ethereal Mist Theme
+// Immersive glass-morphism card with image support and hover effects
+import { Image } from 'astro:assets';
 
 interface Props {
   title: string;
@@ -15,23 +15,30 @@ interface Props {
 const { title, description, imageSrc, imageAlt = '', class: additionalClass = '', 'data-stagger': stagger = '' } = Astro.props;
 ---
 
-<div
-  class={`feature-card glass-card p-0 transition-transform duration-300 ${additionalClass}`}
+<article
+  class={`feature-card glass-card-light fade-in ${additionalClass}`}
   data-stagger={stagger}
 >
-  <!-- Image placeholder -->
-  <div class="aspect-[4/3] overflow-hidden rounded-t-[inherit] relative">
+  <!-- Image Section -->
+  <div class="card-image-wrapper">
     {imageSrc ? (
-      <img src={imageSrc} alt={imageAlt} class="w-full h-full object-cover" />
+      <Image
+        src={imageSrc}
+        alt={imageAlt}
+        width={1200}
+        height={800}
+        format="webp"
+        quality={85}
+        class="card-image"
+        loading="lazy"
+      />
     ) : (
-      <div class="w-full h-full bg-gradient-to-br from-blue-deep/10 to-sky-light/30 flex flex-col items-center justify-center p-6">
-        <!-- Image placeholder icon -->
+      <div class="card-image-placeholder">
         <svg
-          class="w-16 h-16 mb-4 text-blue-deep/40"
+          class="placeholder-icon"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
         >
           <rect
             x="3"
@@ -50,81 +57,109 @@ const { title, description, imageSrc, imageAlt = '', class: additionalClass = ''
             stroke-linejoin="round"
           />
         </svg>
-        <p class="text-sm text-text-dark/60 font-body">画像を追加予定</p>
+        <p class="placeholder-text">画像準備中</p>
       </div>
     )}
   </div>
 
-  <!-- Content -->
-  <div class="p-6 rounded-b-[inherit]">
-    <h3 class="text-xl font-heading font-bold text-text-dark mb-3">{title}</h3>
-    <p class="text-text-dark font-body opacity-80 leading-relaxed">{description}</p>
+  <!-- Content Section -->
+  <div class="card-content">
+    <h3 class="card-title">{title}</h3>
+    <p class="card-description">{description}</p>
   </div>
-</div>
+</article>
 
 <style>
   .feature-card {
-    /* Organic border-radius */
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-
-    /* Glass-effect */
-    background: rgba(244, 241, 222, 0.6);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(107, 142, 35, 0.1);
-
-    /* 3D perspective for transforms */
-    perspective: 1000px;
-
-    /* Transition for hover lift */
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
   }
 
   .feature-card:hover {
-    /* 3D tilt effect with subtle lift */
-    transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) translateY(-4px);
-
-    /* Enhanced multi-layer box shadow for depth */
-    box-shadow:
-      0 4px 6px -1px rgba(44, 62, 45, 0.05),
-      0 20px 25px -5px rgba(44, 62, 45, 0.12),
-      0 40px 50px -12px rgba(44, 62, 45, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
   }
 
-  /* Add some texture/variation to make cards look more organic */
-  .feature-card:nth-child(odd) {
-    border-radius: 40% 60% 70% 30% / 60% 30% 70% 40%;
+  /* Image Section */
+  .card-image-wrapper {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
 
-  .feature-card:nth-child(even) {
-    border-radius: 60% 40% 30% 70% / 40% 60% 30% 70%;
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
   }
 
-  .feature-card:nth-child(3n) {
-    border-radius: 30% 70% 60% 40% / 70% 30% 60% 40%;
+  .feature-card:hover .card-image {
+    transform: scale(1.05);
   }
 
-  .feature-card:nth-child(4n) {
-    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+  .card-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      var(--color-mist-light) 0%,
+      var(--color-mist-medium) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
   }
 
-  /* Light glow effect on hover */
-  .feature-card::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    background: linear-gradient(135deg, rgba(74, 124, 89, 0.3), rgba(79, 195, 247, 0.3));
-    filter: blur(20px);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    border-radius: inherit;
-    pointer-events: none;
+  .placeholder-icon {
+    width: 3rem;
+    height: 3rem;
+    color: var(--color-accent-primary);
+    opacity: 0.5;
   }
 
-  .feature-card:hover::after {
-    opacity: 1;
+  .placeholder-text {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+  }
+
+  /* Content Section */
+  .card-content {
+    padding: 1.5rem;
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .card-description {
+    font-size: 0.95rem;
+    color: var(--color-text-body);
+    line-height: 1.7;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 640px) {
+    .card-content {
+      padding: 1.25rem;
+    }
+
+    .card-title {
+      font-size: 1.125rem;
+    }
+
+    .card-description {
+      font-size: 0.875rem;
+    }
   }
 </style>

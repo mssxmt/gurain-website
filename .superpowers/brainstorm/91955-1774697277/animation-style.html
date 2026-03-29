@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(180deg, #f2f8fb 0%, #e8f4f9 100%);
+      min-height: 100vh;
+      padding: 30px 20px;
+    }
+
+    .wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #2d3e4a;
+      margin-bottom: 10px;
+      letter-spacing: 0.05em;
+    }
+    .subtitle {
+      text-align: center;
+      color: #5a7a8e;
+      margin-bottom: 30px;
+      font-size: 0.95rem;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 20px rgba(120, 160, 190, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #2d3e4a;
+      margin-bottom: 15px;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .option {
+      padding: 15px;
+      background: rgba(232, 244, 249, 0.6);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    .option:hover {
+      background: rgba(232, 244, 249, 0.8);
+      transform: translateY(-2px);
+    }
+    .option.selected {
+      border-color: #7ab8d4;
+      background: rgba(232, 244, 249, 0.9);
+    }
+
+    .option-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #2d3e4a;
+      margin-bottom: 6px;
+    }
+    .option-desc {
+      font-size: 0.8rem;
+      color: #5a7a8e;
+      line-height: 1.5;
+    }
+
+    /* Rain demos */
+    .rain-demo {
+      position: relative;
+      height: 120px;
+      background: linear-gradient(180deg, #c8dde8 0%, #d9ecf4 100%);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    /* Subtle rain */
+    .rain-subtle .drop {
+      position: absolute;
+      width: 1px;
+      background: linear-gradient(transparent, rgba(120, 160, 190, 0.25), transparent);
+      animation: fall-subtle 2s linear infinite;
+    }
+    @keyframes fall-subtle {
+      0% { transform: translateY(-120px); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(120px); opacity: 0; }
+    }
+
+    /* Medium rain */
+    .rain-medium .drop {
+      position: absolute;
+      width: 1px;
+      background: linear-gradient(transparent, rgba(120, 160, 190, 0.4), transparent);
+      animation: fall-medium 1.2s linear infinite;
+    }
+    @keyframes fall-medium {
+      0% { transform: translateY(-120px); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(120px); opacity: 0; }
+    }
+
+    /* Rich rain */
+    .rain-rich .drop {
+      position: absolute;
+      width: 1px;
+      background: linear-gradient(transparent, rgba(120, 160, 190, 0.5), transparent);
+      animation: fall-rich 0.8s linear infinite;
+    }
+    .rain-rich .splash {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(150, 185, 215, 0.4);
+      border-radius: 50%;
+      animation: splash 2s ease-in-out infinite;
+    }
+    @keyframes fall-rich {
+      0% { transform: translateY(-120px); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(120px); opacity: 0; }
+    }
+    @keyframes splash {
+      0%, 100% { transform: scale(0.5); opacity: 0; }
+      50% { transform: scale(1.5); opacity: 1; }
+    }
+
+    .summary {
+      background: rgba(122, 184, 212, 0.1);
+      border-left: 4px solid #7ab8d4;
+      border-radius: 0 12px 12px 0;
+      padding: 20px;
+      margin-top: 25px;
+    }
+    .summary-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #2d3e4a;
+      margin-bottom: 12px;
+    }
+    .summary-list {
+      font-size: 0.85rem;
+      color: #3d5a6e;
+      line-height: 1.8;
+    }
+    .summary-list li {
+      margin-bottom: 6px;
+    }
+    .summary-list strong {
+      color: #2d3e4a;
+    }
+
+    .confirm-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      background: linear-gradient(135deg, #7ab8d4, #98c8dc);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    .confirm-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(122, 184, 212, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>アニメーションとエフェクト</h1>
+    <p class="subtitle">最終設定を選択してください</p>
+
+    <!-- Rain Intensity -->
+    <div class="section">
+      <h2 class="section-title">雨の強さ</h2>
+      <div class="option-grid">
+        <div class="option" onclick="selectRain(this, 'subtle')">
+          <div class="option-title">Subtle（控えめ）</div>
+          <div class="option-desc">落ち着いた雨。読みやすさ重視。</div>
+          <div class="rain-demo rain-subtle">
+            <div class="drop" style="left: 20%; animation-delay: 0s;"></div>
+            <div class="drop" style="left: 50%; animation-delay: 0.5s;"></div>
+            <div class="drop" style="left: 80%; animation-delay: 1s;"></div>
+          </div>
+        </div>
+        <div class="option selected" onclick="selectRain(this, 'medium')">
+          <div class="option-title">Medium（標準）</div>
+          <div class="option-desc">バランス良い。雨の美学を演出。</div>
+          <div class="rain-demo rain-medium">
+            <div class="drop" style="left: 15%; animation-delay: 0s;"></div>
+            <div class="drop" style="left: 35%; animation-delay: 0.2s;"></div>
+            <div class="drop" style="left: 55%; animation-delay: 0.4s;"></div>
+            <div class="drop" style="left: 75%; animation-delay: 0.6s;"></div>
+            <div class="drop" style="left: 90%; animation-delay: 0.3s;"></div>
+          </div>
+        </div>
+        <div class="option" onclick="selectRain(this, 'rich')">
+          <div class="option-title">Rich（豊富）</div>
+          <div class="option-desc">雨+しぶき。最もインパクト。</div>
+          <div class="rain-demo rain-rich">
+            <div class="drop" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="drop" style="left: 25%; animation-delay: 0.1s;"></div>
+            <div class="drop" style="left: 40%; animation-delay: 0.2s;"></div>
+            <div class="drop" style="left: 55%; animation-delay: 0.15s;"></div>
+            <div class="drop" style="left: 70%; animation-delay: 0.25s;"></div>
+            <div class="drop" style="left: 85%; animation-delay: 0.05s;"></div>
+            <div class="splash" style="left: 20%; bottom: 20%;"></div>
+            <div class="splash" style="left: 60%; bottom: 30%; animation-delay: 1s;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Animation -->
+    <div class="section">
+      <h2 class="section-title">スクロールアニメーション</h2>
+      <div class="option-grid">
+        <div class="option" onclick="selectScroll(this, 'fade')">
+          <div class="option-title">Fade Up（フェード）</div>
+          <div class="option-desc">下からフェードイン。シンプルで美しい。</div>
+        </div>
+        <div class="option selected" onclick="selectScroll(this, 'parallax')">
+          <div class="option-title">Parallax Fade（パララックス）</div>
+          <div class="option-desc">フェード+視差効果。奥行きを感じる。</div>
+        </div>
+        <div class="option" onclick="selectScroll(this, 'stagger')">
+          <div class="option-title">Stagger（スタガー）</div>
+          <div class="option-desc">順番に表示。リズム感がある。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="summary">
+      <div class="summary-title">デザインサマリー</div>
+      <ul class="summary-list">
+        <li><strong>カラースキーム：</strong>エーテリアル・ミスト（#c8dde8 → #f2f8fb）</li>
+        <li><strong>ヒーロー：</strong>プロダクト・スポットライト + 雨アニメーション + パララックス</li>
+        <li><strong>特徴セクション：</strong>イマーシブカード（半透明カード）</li>
+        <li><strong>マニュアル：</strong>ガラスページ（セクションごとにガラスモーフィズム）</li>
+        <li><strong>タイポグラフィ：</strong>Cormorant + Inter</li>
+        <li><strong>雨の強さ：</strong>Medium（標準）</li>
+        <li><strong>スクロールアニメーション：</strong>Parallax Fade</li>
+      </ul>
+    </div>
+
+    <button class="confirm-btn" onclick="confirmDesign()">このデザインで確定</button>
+  </div>
+
+  <script>
+    function selectRain(element, value) {
+      element.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+      element.classList.add('selected');
+      sessionStorage.setItem('rainIntensity', value);
+    }
+    function selectScroll(element, value) {
+      element.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+      element.classList.add('selected');
+      sessionStorage.setItem('scrollAnimation', value);
+    }
+    function confirmDesign() {
+      const rain = sessionStorage.getItem('rainIntensity') || 'medium';
+      const scroll = sessionStorage.getItem('scrollAnimation') || 'parallax';
+      sessionStorage.setItem('designConfirmed', 'true');
+      alert('デザインが確定しました！\n\n雨の強さ: ' + rain + '\nスクロールアニメーション: ' + scroll + '\n\nターミナルで「確定しました」とお知らせください。');
+    }
+  </script>
+</body>
+</html>

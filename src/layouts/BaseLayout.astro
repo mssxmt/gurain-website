@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 interface Props {
   title: string;
 }
@@ -54,27 +56,27 @@ const navItems = [
   </head>
   <body>
     <!-- Sticky Header with Glass Effect -->
-    <header
-      class="fixed top-0 z-50 glass-card border-b border-blue-deep/20 w-full"
-    >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav class="flex items-center justify-between h-16">
+    <header class="site-header">
+      <div class="header-container">
+        <nav class="header-nav">
           <!-- Logo -->
-          <a href="/" class="flex-shrink-0">
-            <img
+          <a href="/" class="logo-link">
+            <Image
               src="/images/logo.png"
               alt="GuRain Logo"
-              class="h-8 w-8 rounded-lg"
+              width={64}
+              height={64}
+              class="logo-img"
             />
           </a>
 
           <!-- Desktop Navigation -->
-          <div class="hidden md:flex space-x-8">
+          <div class="desktop-nav">
             {
               navItems.map((item) => (
                 <a
                   href={item.href}
-                  class="text-text-primary hover:text-blue-medium transition-colors font-medium"
+                  class="nav-link"
                 >
                   {item.name}
                 </a>
@@ -83,7 +85,7 @@ const navItems = [
             <a
               href="#"
               target="_blank"
-              class="text-text-primary hover:text-blue-medium transition-colors font-medium"
+              class="cta-button"
             >
               購入する
             </a>
@@ -92,12 +94,12 @@ const navItems = [
           <!-- Mobile Menu Button -->
           <button
             id="mobile-menu-button"
-            class="md:hidden p-2 rounded-md text-text-primary hover:text-blue-medium transition-colors"
+            class="mobile-menu-button"
             aria-label="メニューを開く"
             aria-expanded="false"
           >
             <svg
-              class="h-6 w-6"
+              class="hamburger-icon"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -112,13 +114,13 @@ const navItems = [
         </nav>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden pb-4">
-          <div class="flex flex-col space-y-3">
+        <div id="mobile-menu" class="mobile-menu">
+          <div class="mobile-menu-content">
             {
               navItems.map((item) => (
                 <a
                   href={item.href}
-                  class="text-text-primary hover:text-blue-medium transition-colors font-medium py-2"
+                  class="mobile-nav-link"
                 >
                   {item.name}
                 </a>
@@ -127,7 +129,7 @@ const navItems = [
             <a
               href="#"
               target="_blank"
-              class="text-text-primary hover:text-blue-medium transition-colors font-medium py-2"
+              class="mobile-cta-button"
             >
               購入する
             </a>
@@ -137,38 +139,31 @@ const navItems = [
     </header>
 
     <!-- Main Content -->
-    <main class="min-h-screen">
+    <main class="site-main">
       <slot />
     </main>
 
     <!-- Footer -->
-    <footer class="bg-deep-blue text-text-light py-8">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row justify-between items-center">
-          <div class="flex items-center space-x-2 mb-4 md:mb-0">
-            <img
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-main">
+          <div class="footer-logo">
+            <Image
               src="/images/logo.png"
               alt="GuRain Logo"
-              class="h-6 w-6 rounded-lg"
+              width={64}
+              height={64}
+              class="footer-logo-img"
             />
-            <span class="font-heading text-lg font-bold">GuRain</span>
+            <span class="footer-logo-text">GuRain</span>
           </div>
-          <div
-            class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-sm"
-          >
-            <a href="/" class="hover:text-ocean-light transition-colors"
-              >ホーム</a
-            >
-            <a href="/manual" class="hover:text-ocean-light transition-colors"
-              >マニュアル</a
-            >
-            <a
-              href="/disclaimer"
-              class="hover:text-ocean-light transition-colors">免責事項</a
-            >
+          <div class="footer-nav">
+            <a href="/" class="footer-link">ホーム</a>
+            <a href="/manual" class="footer-link">マニュアル</a>
+            <a href="/disclaimer" class="footer-link">免責事項</a>
           </div>
         </div>
-        <div class="mt-8 text-center text-sm opacity-75">
+        <div class="footer-bottom">
           &copy; 2026 GuRain. All rights reserved.
         </div>
       </div>
@@ -184,6 +179,20 @@ const navItems = [
         menuButton.setAttribute("aria-expanded", String(!isExpanded));
         mobileMenu?.classList.toggle("hidden");
       });
+
+      // Intersection Observer for fade-in animations
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      );
+
+      document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>
@@ -192,4 +201,269 @@ const navItems = [
   /* Import global styles */
   @import "../styles/global.css";
   @import "../styles/design-system.css";
+</style>
+
+<style>
+  /* Header Styles */
+  .site-header {
+    position: fixed;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .header-container {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .header-container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  .header-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+  }
+
+  .logo-link {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .logo-link:hover {
+    opacity: 0.8;
+  }
+
+  .logo-img {
+    height: 2rem;
+    width: auto;
+  }
+
+  /* Desktop Navigation - Always visible on desktop */
+  .desktop-nav {
+    display: none;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .desktop-nav {
+      display: flex;
+    }
+  }
+
+  .nav-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--color-accent-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .cta-button {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    background: var(--color-accent-primary);
+    color: var(--color-mist-lightest);
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .cta-button:hover {
+    background: var(--color-accent-soft);
+  }
+
+  /* Mobile Menu Button - Hidden on desktop */
+  .mobile-menu-button {
+    display: block;
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .mobile-menu-button:hover {
+    background: var(--color-mist-light);
+  }
+
+  @media (min-width: 768px) {
+    .mobile-menu-button {
+      display: none;
+    }
+  }
+
+  .hamburger-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  /* Mobile Menu - Hidden on desktop */
+  .mobile-menu {
+    display: block;
+    padding-bottom: 1rem;
+  }
+
+  .mobile-menu.hidden {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-menu {
+      display: none !important;
+    }
+  }
+
+  .mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mobile-nav-link {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    transition: color 0.2s ease;
+  }
+
+  .mobile-nav-link:hover {
+    color: var(--color-accent-primary);
+  }
+
+  .mobile-cta-button {
+    text-align: center;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    background: var(--color-accent-primary);
+    color: var(--color-mist-lightest);
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .mobile-cta-button:hover {
+    background: var(--color-accent-soft);
+  }
+
+  /* Footer Styles */
+  .site-footer {
+    border-top: 1px solid rgba(216, 236, 244, 0.5);
+    background: var(--color-mist-lightest);
+    padding: 3rem 0;
+  }
+
+  .footer-container {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .footer-container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  .footer-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-main {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .footer-logo-img {
+    height: 2rem;
+    width: auto;
+    opacity: 0.8;
+  }
+
+  .footer-logo-text {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  /* Footer navigation - Always horizontal on desktop */
+  .footer-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-nav {
+      flex-direction: row;
+      gap: 1.5rem;
+    }
+  }
+
+  .footer-link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-link:hover {
+    color: var(--color-accent-primary);
+  }
+
+  .footer-bottom {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+  }
+
+  /* Main content with header padding */
+  .site-main {
+    min-height: 100vh;
+    padding-top: 4rem;
+  }
 </style>

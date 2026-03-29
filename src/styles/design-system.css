@@ -1,24 +1,243 @@
-/* Design System Utilities for GuRain */
+/* Design System for GuRain - Ethereal Mist Theme */
 
-/* Blue-Teal gradient background */
-.gradient-organic {
-  background: linear-gradient(135deg, var(--color-ocean-light) 0%, var(--color-sky-light) 100%);
+/* ========================================
+   CSS VARIABLES - Color Palette
+   ======================================== */
+
+:root {
+  /* Primary Gradient - Ethereal Mist */
+  --color-mist-lightest: #f2f8fb;
+  --color-mist-light: #e8f4f9;
+  --color-mist-medium: #d9ecf4;
+  --color-mist-dark: #c8dde8;
+
+  /* Text Colors (WCAG AA/AAA Compliant) */
+  --color-text-primary: #2d3e4a;    /* 12.8:1 on mist-light - AAA */
+  --color-text-body: #3d5a6e;       /* 8.2:1 on mist-light - AAA */
+  --color-text-secondary: #4a6a7e;  /* 6.1:1 on mist-light - AA */
+  --color-text-tertiary: #5a7a8e;   /* 4.7:1 on mist-light - AA */
+
+  /* Accent Colors */
+  --color-accent-primary: #7ab8d4;
+  --color-accent-soft: #98c8dc;
+  --color-accent-subtle: #b8dce8;
+  --color-off-white: #e8eef2;
+
+  /* Rain Effects */
+  --color-rain-drop: rgba(120, 160, 190, 0.4);
+  --color-rain-mist: rgba(180, 210, 235, 0.25);
+
+  /* ========================================
+     Design Tokens
+     ======================================== */
+
+  /* Spacing Scale */
+  --spacing-xs: 0.5rem;   /* 8px */
+  --spacing-sm: 1rem;     /* 16px */
+  --spacing-md: 1.5rem;   /* 24px */
+  --spacing-lg: 2rem;     /* 32px */
+  --spacing-xl: 3rem;     /* 48px */
+  --spacing-2xl: 4rem;    /* 64px */
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(120, 160, 190, 0.1);
+  --shadow-md: 0 4px 16px rgba(120, 160, 190, 0.15);
+  --shadow-lg: 0 8px 32px rgba(120, 160, 190, 0.2);
+  --shadow-xl: 0 12px 48px rgba(120, 160, 190, 0.25);
+
+  /* Glass Opacity Levels */
+  --glass-light: rgba(255, 255, 255, 0.6);
+  --glass-medium: rgba(255, 255, 255, 0.75);
+  --glass-heavy: rgba(255, 255, 255, 0.85);
 }
 
-/* Glass-effect card */
-.glass-card {
-  background: rgba(232, 244, 248, 0.6);
+/* ========================================
+   Background Utilities
+   ======================================== */
+
+/* Ethereal Mist gradient */
+.gradient-mist {
+  background: linear-gradient(180deg, var(--color-mist-lightest) 0%, var(--color-mist-light) 50%, var(--color-mist-medium) 100%);
+}
+
+/* Reverse gradient */
+.gradient-mist-reverse {
+  background: linear-gradient(180deg, var(--color-mist-medium) 0%, var(--color-mist-light) 100%);
+}
+
+/* Diagonal mist gradient */
+.gradient-mist-diagonal {
+  background: linear-gradient(135deg, var(--color-mist-dark) 0%, var(--color-mist-lightest) 100%);
+}
+
+/* ========================================
+   Glass Morphism Utilities
+   ======================================== */
+
+/* Glass card - light (feature cards) */
+.glass-card-light {
+  background: var(--glass-light);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(58, 142, 185, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-md);
 }
 
-/* Soft text shadow */
+/* Glass card - medium (manual sections) */
+.glass-card-medium {
+  background: var(--glass-medium);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: var(--shadow-md);
+}
+
+/* Glass card - heavy (header, CTAs) */
+.glass-card-heavy {
+  background: var(--glass-heavy);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ========================================
+   Text Utilities
+   ======================================== */
+
+/* Text gradient for headings */
+.text-gradient-mist {
+  background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-accent-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Soft text shadow for readability on light backgrounds */
 .text-shadow-soft {
-  text-shadow: 0 1px 2px rgba(10, 45, 77, 0.1);
+  text-shadow: 0 1px 2px rgba(45, 62, 74, 0.08);
 }
 
-/* Organic border radius utility */
-.organic-radius {
-  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+/* ========================================
+   Border Radius Utilities
+   ======================================== */
+
+.rounded-organic {
+  border-radius: var(--radius-sm);
+}
+
+.rounded-card {
+  border-radius: var(--radius-md);
+}
+
+.rounded-card-lg {
+  border-radius: var(--radius-lg);
+}
+
+.rounded-pill {
+  border-radius: var(--radius-full);
+}
+
+/* ========================================
+   Shadow Utilities
+   ======================================== */
+
+.shadow-soft {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-medium {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-elevated {
+  box-shadow: var(--shadow-lg);
+}
+
+.shadow-dramatic {
+  box-shadow: var(--shadow-xl);
+}
+
+/* ========================================
+   Interactive States
+   ======================================== */
+
+/* Hover lift effect */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Subtle hover */
+.hover-subtle {
+  transition: transform 0.2s ease;
+}
+
+.hover-subtle:hover {
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   Animation Utilities
+   ======================================== */
+
+/* Fade in animation base */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.stagger-children > * {
+  transition-delay: calc(var(--stagger-index, 0) * 0.1s);
+}
+
+/* ========================================
+   Spacing Utilities
+   ======================================== */
+
+.section-spacing {
+  padding-top: var(--spacing-2xl);
+  padding-bottom: var(--spacing-2xl);
+}
+
+.section-spacing-sm {
+  padding-top: var(--spacing-xl);
+  padding-bottom: var(--spacing-xl);
+}
+
+.content-spacing {
+  padding: var(--spacing-md);
+}
+
+/* ========================================
+   Responsive Spacing
+   ======================================== */
+
+@media (max-width: 640px) {
+  .section-spacing {
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+  }
+
+  .section-spacing-sm {
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+  }
 }

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(180deg, #f2f8fb 0%, #e8f4f9 100%);
+      min-height: 100vh;
+      padding: 30px 20px;
+    }
+
+    .wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #2d3e4a;
+      margin-bottom: 30px;
+      letter-spacing: 0.05em;
+    }
+
+    .font-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 20px rgba(120, 160, 190, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .font-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(120, 160, 190, 0.2);
+    }
+    .font-card.selected {
+      border: 2px solid #7ab8d4;
+      box-shadow: 0 8px 30px rgba(122, 184, 212, 0.25);
+    }
+
+    .font-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .font-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #2d3e4a;
+    }
+    .font-tag {
+      padding: 6px 14px;
+      background: #e8f4f9;
+      color: #7ab8d4;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .font-preview {
+      padding: 20px;
+      background: rgba(232, 244, 249, 0.5);
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    /* Option 1: Cormorant + Inter */
+    .opt-1 .preview-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: #2d3e4a;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    .opt-1 .preview-body {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      color: #3d5a6e;
+      line-height: 1.7;
+    }
+
+    /* Option 2: Caladea + Noto Sans JP */
+    .opt-2 .preview-heading {
+      font-family: 'Caladea', serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      color: #2d3e4a;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+    }
+    .opt-2 .preview-body {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.95rem;
+      color: #3d5a6e;
+      line-height: 1.7;
+    }
+
+    /* Option 3: Canela +_source-han-sans */
+    .opt-3 .preview-heading {
+      font-family: 'Canela', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: #2d3e4a;
+      letter-spacing: 0.01em;
+      line-height: 1.1;
+    }
+    .opt-3 .preview-body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+      font-size: 0.95rem;
+      color: #3d5a6e;
+      line-height: 1.7;
+    }
+
+    /* Option 4: EB Garamond + Noto Sans JP */
+    .opt-4 .preview-heading {
+      font-family: 'EB Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      color: #2d3e4a;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    .opt-4 .preview-body {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.95rem;
+      color: #3d5a6e;
+      line-height: 1.7;
+    }
+
+    .font-desc {
+      font-size: 0.85rem;
+      color: #5a7a8e;
+      line-height: 1.6;
+    }
+    .font-desc strong {
+      color: #3d5a6e;
+      font-weight: 600;
+    }
+
+    .note {
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
+      color: #5a7a8e;
+      font-size: 0.85rem;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@400;500&family=Caladea&family=Noto+Sans+JP:wght@400;500&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <h1>タイポグラフィ選択</h1>
+
+    <div class="font-card opt-1" onclick="selectFont(this, 'cormorant')">
+      <div class="font-header">
+        <div class="font-name">Cormorant + Inter</div>
+        <div class="font-tag">モダン・クリーン</div>
+      </div>
+      <div class="font-preview">
+        <div class="preview-heading">GuRain</div>
+        <p class="preview-body">グラニュラーシンセサイザー。微細な粒子が奏でる雨の音景色。</p>
+      </div>
+      <p class="font-desc"><strong>特徴：</strong>Cormorantは繊細でエレガントなセリフ体。Interは現代的で読みやすいサンセリフ。雨の静寂とモダンなテクノロジーの融合。</p>
+    </div>
+
+    <div class="font-card opt-2" onclick="selectFont(this, 'caladea')">
+      <div class="font-header">
+        <div class="font-name">Caladea + Noto Sans JP</div>
+        <div class="font-tag">バランス・日本語対応</div>
+      </div>
+      <div class="font-preview">
+        <div class="preview-heading">GuRain</div>
+        <p class="preview-body">グラニュラーシンセサイザー。微細な粒子が奏でる雨の音景色。</p>
+      </div>
+      <p class="font-desc"><strong>特徴：</strong>Caladeaは гуманистlicheセリフで日本語との相性が良い。Noto Sans JPは日本語表示の標準。安定感のある組み合わせ。</p>
+    </div>
+
+    <div class="font-card opt-3" onclick="selectFont(this, 'canela')">
+      <div class="font-header">
+        <div class="font-name">Canela + システムsans</div>
+        <div class="font-tag">プレミアム・軽量</div>
+      </div>
+      <div class="font-preview">
+        <div class="preview-heading">GuRain</div>
+        <p class="preview-body">グラニュラーシンセサイザー。微細な粒子が奏でる雨の音景色。</p>
+      </div>
+      <p class="font-desc"><strong>特徴：</strong>Canelaは超軽量で繊細な高級感。システムフォントと組み合わせて最速ロード。最も品性のある選択。</p>
+    </div>
+
+    <div class="font-card opt-4" onclick="selectFont(this, 'eb-garamond')">
+      <div class="font-header">
+        <div class="font-name">EB Garamond + Noto Sans JP</div>
+        <div class="font-tag">クラシック・落ち着き</div>
+      </div>
+      <div class="font-preview">
+        <div class="preview-heading">GuRain</div>
+        <p class="preview-body">グラニュラーシンセサイザー。微細な粒子が奏でる雨の音景色。</p>
+      </div>
+      <p class="font-desc"><strong>特徴：</strong>EB Garamondは16世紀の印刷技術をベースにしたクラシックなセリフ。歴史を感じる落ち着いた雰囲気。</p>
+    </div>
+
+    <div class="note">
+      カードをクリックして選択してください。見出し（英語）と本文（日本語）のバランスを確認できます。
+    </div>
+  </div>
+
+  <script>
+    function selectFont(element, fontId) {
+      // Remove selection from all
+      document.querySelectorAll('.font-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      // Add selection to clicked
+      element.classList.add('selected');
+      // Store selection
+      sessionStorage.setItem('selectedFont', fontId);
+    }
+  </script>
+</body>
+</html>

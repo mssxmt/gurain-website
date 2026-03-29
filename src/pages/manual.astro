@@ -6,6 +6,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ManualSection from '../components/ManualSection.astro';
 import ManualSubSection from '../components/ManualSubSection.astro';
 import ParameterTable from '../components/ParameterTable.astro';
+import RainEffect from '../components/RainEffect.astro';
 
 const metaDescription = 'GuRainグラニュラシンセサイザーの詳細な使用マニュアル。グローバルパラメータ、グレインエンジン、LFO機能、使用例、トラブルシューティングを網羅。';
 
@@ -121,32 +122,29 @@ const lfoParameters = [
 
 <BaseLayout title="GuRain 使用マニュアル">
   <meta name="description" content={metaDescription} />
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="manual-page relative">
+    <RainEffect />
     <!-- Page Title -->
-    <div class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-heading font-bold text-text-primary text-shadow-soft mb-4">
-        GuRain 使用マニュアル
-      </h1>
-      <p class="text-lg md:text-xl font-body text-text-primary opacity-80">
-        GuRainグラニュラシンセサイザーの詳細な使用ガイド
-      </p>
+    <div class="page-header relative z-10">
+      <h1 class="page-title">GuRain 使用マニュアル</h1>
+      <p class="page-subtitle">GuRainグラニュラシンセサイザーの詳細な使用ガイド</p>
     </div>
 
     <!-- Table of Contents -->
-    <div id="toc-container" class="mb-12 glass-card rounded-lg border border-blue-deep/20 bg-white/60 transition-all duration-300">
+    <div id="toc-container" class="toc-container glass-card-heavy relative z-10">
       <div class="flex items-center justify-between p-4 cursor-pointer" id="toc-header">
-        <h2 id="toc-title" class="text-2xl font-heading font-bold text-text-primary text-shadow-soft">
+        <h2 id="toc-title" class="toc-title">
           目次
         </h2>
-        <button id="toc-toggle" class="text-text-primary hover:text-blue-medium" type="button">
+        <button id="toc-toggle" class="text-text-primary hover:text-accent-primary transition-colors" type="button">
           <svg id="toc-chevron" class="w-6 h-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
         </button>
       </div>
-      <nav id="toc-nav" class="grid grid-cols-1 sm:grid-cols-2 gap-2 px-4 pb-4">
+      <nav id="toc-nav" class="toc-nav">
         {tocSections.map((section) => (
-          <a href={section.href} class="text-text-primary hover:text-blue-medium transition-colors font-body py-2 px-3 rounded hover:bg-blue-deep/10">
+          <a href={section.href} class="toc-link">
             {section.name}
           </a>
         ))}
@@ -203,9 +201,9 @@ const lfoParameters = [
     </script>
 
     <!-- Manual Content -->
-    <article class="space-y-16">
+    <article class="manual-content relative z-10">
       <!-- Section 1: Introduction -->
-      <ManualSection title="はじめに" id="introduction">
+      <ManualSection title="はじめに" id="introduction" sectionNumber={1}>
         <ManualSubSection title="GuRainとは">
           <p>
             GuRainは、iOS/macOS対応の高度なグラニュラシンセサイザーAUv3プラグインです。
@@ -241,7 +239,7 @@ const lfoParameters = [
       </ManualSection>
 
       <!-- Section 2: Interface -->
-      <ManualSection title="インターフェース" id="interface">
+      <ManualSection title="インターフェース" id="interface" sectionNumber={2}>
         <ManualSubSection title="メイン画面">
           <p>
             GuRainのメイン画面は、グローバルパラメータエリアとリージョンエリアで構成されています。
@@ -271,7 +269,7 @@ const lfoParameters = [
       </ManualSection>
 
       <!-- Section 3: Global Parameters -->
-      <ManualSection title="グローバルパラメータ" id="global-parameters">
+      <ManualSection title="グローバルパラメータ" id="global-parameters" sectionNumber={3}>
         <ManualSubSection>
           <p>
             グローバルパラメータは、すべてのリージョンに適用される全体的な設定です。
@@ -283,7 +281,7 @@ const lfoParameters = [
       </ManualSection>
 
       <!-- Section 4: Grain Engine -->
-      <ManualSection title="グレインエンジン" id="grain-engine">
+      <ManualSection title="グレインエンジン" id="grain-engine" sectionNumber={4}>
         <ManualSubSection title="グラニュラ合成の仕組み">
           <p>
             グラニュラ合成は、音源を小さな「グレイン」というセグメント（通常数ミリ秒から数百ミリ秒）に分割し、
@@ -305,7 +303,7 @@ const lfoParameters = [
       </ManualSection>
 
       <!-- Section 5: LFO -->
-      <ManualSection title="LFO機能" id="lfo">
+      <ManualSection title="LFO機能" id="lfo" sectionNumber={5}>
         <ManualSubSection title="LFOとは">
           <p>
             LFO（低周波オシレータ）は、パラメータを周期的に変調するために使用されます。
@@ -338,7 +336,7 @@ const lfoParameters = [
       </ManualSection>
 
       <!-- Section 6: Examples -->
-      <ManualSection title="使用例" id="examples">
+      <ManualSection title="使用例" id="examples" sectionNumber={6}>
         <ManualSubSection title="基本的な使用方法">
           <ol>
             <li>DAWまたはホストアプリでGuRainをインスタンス化します</li>
@@ -371,7 +369,7 @@ const lfoParameters = [
       </ManualSection>
 
       <!-- Section 7: Troubleshooting -->
-      <ManualSection title="トラブルシューティング" id="troubleshooting">
+      <ManualSection title="トラブルシューティング" id="troubleshooting" sectionNumber={7}>
         <ManualSubSection title="音が出ない場合">
           <ul>
             <li>DAWのオーディオ出力がミュートになっていないか確認してください</li>
@@ -417,14 +415,164 @@ const lfoParameters = [
     </article>
 
     <!-- Back to Top Button -->
-    <div class="fixed bottom-8 right-8 z-50">
-      <button
-        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-        class="px-4 py-3 bg-blue-medium text-text-light font-heading font-semibold rounded-lg hover:bg-blue-medium/90 transition-all transform hover:scale-105 shadow-lg"
-        aria-label="トップに戻る"
-      >
-        ↑ トップ
-      </button>
-    </div>
+    <button
+      id="back-to-top"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      class="back-to-top relative z-20"
+      aria-label="トップに戻る"
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
   </div>
 </BaseLayout>
+
+<style>
+  .manual-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md);
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300;
+    color: var(--color-text-primary);
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .page-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+  }
+
+  /* Table of Contents */
+  .toc-container {
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-2xl);
+    transition: all 0.3s ease;
+  }
+
+  .toc-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+  }
+
+  .toc-nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    padding: var(--spacing-md);
+    max-height: 500px;
+    overflow: hidden;
+    opacity: 1;
+    transition: all 0.3s ease;
+  }
+
+  .toc-nav.hidden {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .toc-link {
+    padding: 0.75rem 1rem;
+    color: var(--color-text-body);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+  }
+
+  .toc-link:hover {
+    background: var(--color-mist-light);
+    color: var(--color-accent-primary);
+    text-decoration: none;
+  }
+
+  @media (max-width: 640px) {
+    .toc-nav {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Manual content spacing */
+  .manual-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  /* Back to top button */
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    background: var(--color-accent-primary);
+    color: var(--color-mist-lightest);
+    border: none;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .back-to-top:hover {
+    background: var(--color-accent-soft);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  @media (max-width: 640px) {
+    .manual-page {
+      padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .back-to-top {
+      bottom: 1rem;
+      right: 1rem;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+</style>
+
+<script>
+  // Back to top button visibility
+  const backToTop = document.getElementById('back-to-top');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      backToTop?.classList.add('visible');
+    } else {
+      backToTop?.classList.remove('visible');
+    }
+  });
+</script>

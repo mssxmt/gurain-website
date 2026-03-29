@@ -1,0 +1,95 @@
+<h2>マニュアルページ：デザイン選択</h2>
+<p class="subtitle">目次は既存のまま。コンテンツセクションのデザインを選択してください</p>
+
+<div class="cards">
+  <div class="card" data-choice="glass-pages" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(180deg, #c8dde8 0%, #d9ecf4 50%, #e8f4f9 100%); padding: 20px; position: relative; overflow: hidden; height: 200px;">
+      <!-- Rain effect -->
+      <div style="position: absolute; width: 1px; height: 35px; background: linear-gradient(transparent, rgba(120,160,190,0.3), transparent); left: 25%; top: 0%;"></div>
+      <div style="position: absolute; width: 1px; height: 40px; background: linear-gradient(transparent, rgba(120,160,190,0.25), transparent); left: 65%; top: -10%;"></div>
+
+      <!-- Glass page mockup -->
+      <div style="position: relative; z-index: 1; background: rgba(255,255,255,0.7); backdrop-filter: blur(12px); border-radius: 12px; padding: 15px; box-shadow: 0 4px 24px rgba(120,160,190,0.15); border: 1px solid rgba(255,255,255,0.4); height: 140px; overflow: hidden;">
+        <div style="font-size: 0.75rem; font-weight: 600; color: #2d3e4a; margin-bottom: 8px;">第1章: 基本操作</div>
+        <div style="font-size: 0.6rem; color: #5a7a8e; line-height: 1.6;">
+          GuRainはグラニュラーシンセシスを採用したAUv3プラグインです。サンプルを微細な粒子（グレイン）として...
+        </div>
+        <div style="margin-top: 10px; width: 60px; height: 4px; background: #7ab8d4; border-radius: 2px;"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h4>ガラスページ</h4>
+      <p>各セクションが半透明のガラスカードのように表示される。雨の背景が透けて見える。</p>
+      <ul style="font-size: 0.85rem; color: #5a7a8e; margin-top: 10px; padding-left: 20px;">
+        <li>セクションごとにガラスモーフィズム</li>
+        <li>雨のエフェクトが背景で続く</li>
+        <li>最も雨の美学と一体化</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" data-choice="clean-docs" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #f8fbfd; padding: 20px; position: relative; overflow: hidden; height: 200px;">
+      <!-- Very subtle rain -->
+      <div style="position: absolute; width: 1px; height: 20px; background: linear-gradient(transparent, rgba(120,160,190,0.1), transparent); left: 40%; top: 0%;"></div>
+
+      <!-- Clean doc mockup -->
+      <div style="position: relative; z-index: 1; background: #ffffff; border-radius: 8px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 3px solid #7ab8d4; height: 140px;">
+        <div style="font-size: 0.75rem; font-weight: 600; color: #2d3e4a; margin-bottom: 8px;">第1章: 基本操作</div>
+        <div style="font-size: 0.6rem; color: #5a7a8e; line-height: 1.6;">
+          GuRainはグラニュラーシンセシスを採用したAUv3プラグインです。サンプルを微細な粒子（グレイン）として...
+        </div>
+        <div style="margin-top: 10px; display: flex; gap: 8px;">
+          <div style="width: 40px; height: 20px; background: #e8f4f9; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; color: #7ab8d4;">パラ</div>
+          <div style="width: 50px; height: 20px; background: #e8f4f9; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; color: #7ab8d4;">LFO</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h4>クリーンドキュメント</h4>
+      <p>白い背景にシンプルなテキスト。読みやすさを最優先。雨はヘッダーのみ。</p>
+      <ul style="font-size: 0.85rem; color: #5a7a8e; margin-top: 10px; padding-left: 20px;">
+        <li>読みやすい白い背景</li>
+        <li>アクセントカラーで区切り</li>
+        <li>技術ドキュメントとして最適</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" data-choice="waterfall-sections" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(180deg, #e8f4f9 0%, #d9ecf4 30%, #c8dde8 60%, #b8d0e0 100%); padding: 20px; position: relative; overflow: hidden; height: 200px;">
+      <!-- Cascade effect -->
+      <div style="position: absolute; inset: 0; opacity: 0.3;">
+        <div style="position: absolute; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(120,160,190,0.5), transparent); top: 30%;"></div>
+        <div style="position: absolute; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(120,160,190,0.4), transparent); top: 50%;"></div>
+        <div style="position: absolute; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(120,160,190,0.3), transparent); top: 70%;"></div>
+      </div>
+
+      <!-- Section mockups -->
+      <div style="position: relative; z-index: 1;">
+        <div style="background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); border-radius: 8px; padding: 10px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(120,160,190,0.1);">
+          <div style="font-size: 0.65rem; font-weight: 600; color: #2d3e4a;">第1章: 基本操作</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); border-radius: 8px; padding: 10px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(120,160,190,0.1); transform: translateX(20px);">
+          <div style="font-size: 0.65rem; font-weight: 600; color: #2d3e4a;">第2章: パラメータ</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); border-radius: 8px; padding: 10px; box-shadow: 0 2px 8px rgba(120,160,190,0.1); transform: translateX(40px);">
+          <div style="font-size: 0.65rem; font-weight: 600; color: #2d3e4a;">第3章: テクニック</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h4>ウォーターフォールセクション</h4>
+      <p>セクションが階段状に重なる。滝のように流れるレイアウト。視覚的な動きがある。</p>
+      <ul style="font-size: 0.85rem; color: #5a7a8e; margin-top: 10px; padding-left: 20px;">
+        <li>セクションがオーバーラップ</li>
+        <li>スクロールで滑らかに表示</li>
+        <li>最もユニークなレイアウト</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 25px; padding: 20px; background: rgba(232,244,249,0.5); border-radius: 8px;">
+  <p class="subtitle" style="margin: 0;">マニュアルページはどのデザインがお好みでしょうか？</p>
+</div>

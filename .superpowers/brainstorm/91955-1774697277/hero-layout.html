@@ -1,0 +1,95 @@
+<h2>大型ヒーローヘッダー：レイアウト選択</h2>
+<p class="subtitle">雨の美学を活かした印象的なヒーローセクションのデザイン</p>
+
+<div class="cards">
+  <div class="card" data-choice="atmospheric" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(180deg, #c8dde8 0%, #d9ecf4 40%, #e8f4f9 70%, #f2f8fb 100%); position: relative; overflow: hidden; height: 200px;">
+      <div style="position: absolute; inset: 0;">
+        <!-- Rain effect -->
+        <div style="position: absolute; width: 1px; height: 50px; background: linear-gradient(transparent, rgba(120,160,190,0.4), transparent); left: 15%; top: 0%;"></div>
+        <div style="position: absolute; width: 1px; height: 40px; background: linear-gradient(transparent, rgba(120,160,190,0.35), transparent); left: 35%; top: 10%;"></div>
+        <div style="position: absolute; width: 1px; height: 60px; background: linear-gradient(transparent, rgba(120,160,190,0.3), transparent); left: 55%; top: -5%;"></div>
+        <div style="position: absolute; width: 1px; height: 45px; background: linear-gradient(transparent, rgba(120,160,190,0.4), transparent); left: 75%; top: 5%;"></div>
+        <div style="position: absolute; width: 1px; height: 55px; background: linear-gradient(transparent, rgba(120,160,190,0.35), transparent); left: 90%; top: -10%;"></div>
+        <!-- Title mockup -->
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+          <div style="font-size: 2rem; font-weight: 700; color: #2d3e4a; letter-spacing: 0.05em; text-shadow: 0 2px 10px rgba(45,62,74,0.1);">GuRain</div>
+          <div style="font-size: 0.9rem; color: #3d5a6e; margin-top: 8px;">グラニュラーシンセサイザー</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h4>大気雨景</h4>
+      <p>画面全体に広がる雨のエフェクト。テキストは中央に配置。落ち着いた雰囲気と高級感を演出。</p>
+      <ul style="font-size: 0.85rem; color: #5a7a8e; margin-top: 10px; padding-left: 20px;">
+        <li>CSSアニメーションで雨滴を落下</li>
+        <li>パララックス効果で奥行きを表現</li>
+        <li>最もシンプルでエレガント</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" data-choice="split-cinematic" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(90deg, #c8dde8 0%, #c8dde8 50%, #e8f4f9 50%, #e8f4f9 100%); position: relative; overflow: hidden; height: 200px;">
+      <div style="position: absolute; inset: 0;">
+        <!-- Left side - rain -->
+        <div style="position: absolute; left: 0; top: 0; width: 50%; height: 100%; overflow: hidden;">
+          <div style="position: absolute; width: 2px; height: 80px; background: linear-gradient(transparent, rgba(120,160,190,0.5), transparent); left: 20%; top: 0%; transform: rotate(10deg);"></div>
+          <div style="position: absolute; width: 2px; height: 60px; background: linear-gradient(transparent, rgba(120,160,190,0.4), transparent); left: 40%; top: 10%; transform: rotate(5deg);"></div>
+          <div style="position: absolute; width: 2px; height: 70px; background: linear-gradient(transparent, rgba(120,160,190,0.45), transparent); left: 60%; top: -5%; transform: rotate(8deg);"></div>
+          <div style="position: absolute; width: 2px; height: 50px; background: linear-gradient(transparent, rgba(120,160,190,0.5), transparent); left: 80%; top: 5%; transform: rotate(12deg);"></div>
+        </div>
+        <!-- Right side - content -->
+        <div style="position: absolute; right: 5%; top: 50%; transform: translateY(-50%); text-align: left; width: 40%;">
+          <div style="font-size: 1.8rem; font-weight: 700; color: #2d3e4a;">GuRain</div>
+          <div style="font-size: 0.8rem; color: #3d5a6e; margin-top: 6px;">グラニュラーシンセサイザー</div>
+          <div style="margin-top: 15px; display: flex; gap: 10px;">
+            <div style="padding: 8px 16px; background: #7ab8d4; color: #fff; border-radius: 6px; font-size: 0.75rem;">マニュアル</div>
+            <div style="padding: 8px 16px; background: #e8eef2; color: #2d3e4a; border-radius: 6px; font-size: 0.75rem;">購入</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h4>シネマティック・スプリット</h4>
+      <p>左右分割。左に雨のビジュアル、右にテキストとCTA。映画のワンシーンのような構図。</p>
+      <ul style="font-size: 0.85rem; color: #5a7a8e; margin-top: 10px; padding-left: 20px;">
+        <li>雨のエフェクトを左半分に集中</li>
+        <li>右側はクリアなテキストエリア</li>
+        <li>最も情報を伝えやすいレイアウト</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" data-choice="product-spotlight" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: linear-gradient(180deg, #e8f4f9 0%, #f2f8fb 100%); position: relative; overflow: hidden; height: 200px;">
+      <div style="position: absolute; inset: 0;">
+        <!-- Subtle rain -->
+        <div style="position: absolute; width: 1px; height: 30px; background: linear-gradient(transparent, rgba(120,160,190,0.25), transparent); left: 20%; top: 0%;"></div>
+        <div style="position: absolute; width: 1px; height: 35px; background: linear-gradient(transparent, rgba(120,160,190,0.2), transparent); left: 60%; top: 5%;"></div>
+        <!-- Product mockup placeholder -->
+        <div style="position: absolute; top: 50%; left: 30%; transform: translate(-50%, -50%); width: 140px; height: 100px; background: linear-gradient(135deg, #7ab8d4, #98c8dc); border-radius: 12px; box-shadow: 0 20px 40px rgba(122,184,212,0.3); display: flex; align-items: center; justify-content: center;">
+          <div style="color: #fff; font-size: 0.9rem; font-weight: 600;">Plugin UI</div>
+        </div>
+        <!-- Title beside product -->
+        <div style="position: absolute; top: 50%; right: 10%; transform: translateY(-50%); text-align: right; width: 35%;">
+          <div style="font-size: 1.6rem; font-weight: 700; color: #2d3e4a;">GuRain</div>
+          <div style="font-size: 0.75rem; color: #3d5a6e; margin-top: 6px;">グラニュラーシンセサイザー</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h4>プロダクト・スポットライト</h4>
+      <p>製品のUIモックアップを大きく表示。雨は背景で控えめに。製品を最もアピールできる構成。</p>
+      <ul style="font-size: 0.85rem; color: #5a7a8e; margin-top: 10px; padding-left: 20px;">
+        <li>製品画像をメインに配置</li>
+        <li>雨のエフェクトは控えめに</li>
+        <li>製品認知を最優先する場合に最適</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 25px; padding: 20px; background: rgba(232,244,249,0.5); border-radius: 8px;">
+  <p class="subtitle" style="margin: 0;">お好みのレイアウトはどれでしょうか？または要素を組み合わせたい場合はお知らせください。</p>
+</div>

@@ -1,52 +1,163 @@
 ---
-// Hero Component
-// Large hero section with heading, subheading, and CTA buttons
-// Uses organic gradient background
+// Hero Component - Ethereal Mist Theme
+// Product spotlight with animated rain and parallax effect
 ---
 
-<section class="gradient-organic min-h-screen pt-32 pb-20 px-4">
-  <div class="max-w-7xl mx-auto">
-    <div class="text-center space-y-8">
+<section class="hero-section min-h-screen flex items-center justify-center px-4 pt-16 pb-20 relative overflow-hidden">
+  <!-- Rain Animation Layers -->
+  <div class="rain-container">
+    <div class="rain-layer background" id="rain-background"></div>
+    <div class="rain-layer middle" id="rain-middle"></div>
+    <div class="rain-layer foreground" id="rain-foreground"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto w-full relative z-10">
+    <div class="flex flex-col items-center gap-8 text-center">
       <!-- Main Heading -->
-      <h1 class="text-5xl md:text-7xl font-heading font-bold text-text-primary text-shadow-soft">
-        GuRain - グラニュラシンセサイザー
+      <h1 class="hero-title fade-in">
+        <span class="block text-6xl md:text-7xl lg:text-8xl font-display font-light tracking-tight">
+          GuRain
+        </span>
+        <span class="block text-2xl md:text-3xl lg:text-4xl text-text-secondary mt-4 font-light">
+          グラニュラーシンセイザー
+        </span>
       </h1>
 
       <!-- Sub-heading -->
-      <p class="text-xl md:text-2xl font-body text-text-primary opacity-90 max-w-2xl mx-auto">
-        音の粒で紡ぐ、無限の創造性
+      <p class="hero-subtitle text-lg md:text-xl lg:text-2xl text-text-body max-w-2xl fade-in stagger-1">
+        音の粒で紡ぐ、無限の創造性。<br class="hidden sm:block" />
+        霧雨のような繊細さで、サウンドの風景を描く。
       </p>
 
+      <!-- Product Spotlight Image -->
+      <div class="hero-image fade-in stagger-2">
+        <div class="product-spotlight max-w-6xl w-full mx-auto">
+          <img
+            src="/images/GuRain.png"
+            alt="GuRain Plugin UI Screenshot"
+            class="w-full h-auto object-cover"
+            loading="eager"
+          />
+        </div>
+      </div>
+
       <!-- CTA Buttons -->
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
+      <div class="hero-cta flex flex-col sm:flex-row gap-4 justify-center items-center mt-6 fade-in stagger-3">
         <a
           href="/manual"
-          class="px-8 py-4 bg-blue-medium text-text-light font-heading font-semibold rounded-lg hover:bg-blue-medium/90 transition-all transform hover:scale-105 shadow-lg"
+          class="px-8 py-4 rounded-lg font-medium text-mist-lightest bg-accent-primary hover:bg-accent-soft hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
         >
           マニュアルを見る
         </a>
         <a
           href="#"
           target="_blank"
-          class="px-8 py-4 bg-transparent border-2 border-text-dark text-text-primary font-heading font-semibold rounded-lg hover:bg-text-primary hover:text-ocean-light transition-all transform hover:scale-105"
+          class="px-8 py-4 rounded-lg font-medium text-text-primary bg-off-white hover:bg-mist-light hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
         >
           購入する
         </a>
-      </div>
-    </div>
-
-    <!-- Placeholder Image -->
-    <div class="mt-16 flex justify-center">
-      <div class="w-full max-w-4xl aspect-[2/1] bg-white/50 rounded-2xl flex items-center justify-center border-2 border-dashed border-blue-deep/30">
-        <p class="text-text-primary font-body text-lg opacity-60">画像プレースホルダー (1200x600)</p>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  /* Ensure gradient-organic is applied */
-  .gradient-organic {
-    background: linear-gradient(135deg, var(--color-ocean-light) 0%, var(--color-sky-light) 100%);
+  .hero-section {
+    background: linear-gradient(
+      180deg,
+      var(--color-mist-lightest) 0%,
+      var(--color-mist-light) 50%,
+      var(--color-mist-medium) 100%
+    );
+  }
+
+  .hero-title {
+    text-shadow: 0 2px 10px rgba(45, 62, 74, 0.1);
+  }
+
+  .product-spotlight {
+    /* No additional styles needed */
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 640px) {
+    .hero-title span:first-child {
+      font-size: 2.5rem;
+    }
+
+    .hero-title span:last-child {
+      font-size: 1.25rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+    }
   }
 </style>
+
+<script>
+  // Create rain drops on mount
+  function createRain() {
+    const layers = {
+      background: 15,
+      middle: 25,
+      foreground: 35
+    };
+
+    Object.entries(layers).forEach(([layer, count]) => {
+      const container = document.getElementById(`rain-${layer}`);
+      if (!container) return;
+
+      for (let i = 0; i < count; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'rain-drop animate';
+        drop.style.left = `${Math.random() * 100}%`;
+        drop.style.height = `${30 + Math.random() * 35}px`;
+        drop.style.animationDelay = `${Math.random() * 2}s`;
+        drop.style.animationDuration = `${1 + Math.random() * 0.6}s`;
+        container.appendChild(drop);
+      }
+    });
+  }
+
+  // Parallax effect on scroll
+  let ticking = false;
+  function updateParallax() {
+    const scrollY = window.scrollY;
+
+    const background = document.getElementById('rain-background');
+    const middle = document.getElementById('rain-middle');
+    const foreground = document.getElementById('rain-foreground');
+
+    if (background) background.style.transform = `translateY(${scrollY * 0.1}px)`;
+    if (middle) middle.style.transform = `translateY(${scrollY * 0.25}px)`;
+    if (foreground) foreground.style.transform = `translateY(${scrollY * 0.4}px)`;
+
+    ticking = false;
+  }
+
+  // Initialize on load
+  createRain();
+
+  // Set up parallax on scroll
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Intersection Observer for fade-in animations
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+  );
+
+  document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+</script>
