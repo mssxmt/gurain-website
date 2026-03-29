@@ -25,12 +25,12 @@
 
   .rain-layer.background {
     z-index: 1;
-    opacity: 0.6;
+    opacity: 0.8;
   }
 
   .rain-layer.middle {
     z-index: 2;
-    opacity: 0.8;
+    opacity: 0.9;
   }
 
   .rain-layer.foreground {
@@ -40,7 +40,7 @@
 
   .rain-drop {
     position: absolute;
-    width: 2px;
+    width: 4px;
     background: linear-gradient(
       to bottom,
       transparent,
@@ -78,7 +78,7 @@
   }
 </style>
 
-<script define:vars={{ layers: { background: 25, middle: 40, foreground: 55 } }}>
+<script define:vars={{ layers: { background: 40, middle: 60, foreground: 80 } }}>
   // Create rain drops
   function createRain() {
     Object.entries(layers).forEach(([layer, count]) => {

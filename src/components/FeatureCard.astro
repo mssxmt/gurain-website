@@ -1,7 +1,6 @@
 ---
 // Feature Card Component - Ethereal Mist Theme
 // Immersive glass-morphism card with image support and hover effects
-import { Image } from 'astro:assets';
 
 interface Props {
   title: string;
@@ -22,13 +21,9 @@ const { title, description, imageSrc, imageAlt = '', class: additionalClass = ''
   <!-- Image Section -->
   <div class="card-image-wrapper">
     {imageSrc ? (
-      <Image
+      <img
         src={imageSrc}
         alt={imageAlt}
-        width={1200}
-        height={800}
-        format="webp"
-        quality={85}
         class="card-image"
         loading="lazy"
       />
@@ -88,12 +83,17 @@ const { title, description, imageSrc, imageAlt = '', class: additionalClass = ''
     aspect-ratio: 3 / 2;
     overflow: hidden;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    background: var(--color-mist-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
   }
 
   .card-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transition: transform 0.5s ease;
   }
 

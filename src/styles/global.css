@@ -25,8 +25,8 @@
   --color-off-white: #e8eef2;
 
   /* Rain Effects */
-  --color-rain-drop: rgba(30, 50, 70, 0.95);
-  --color-rain-mist: rgba(150, 180, 210, 0.3);
+  --color-rain-drop: rgba(0, 0, 0, 0.7);
+  --color-rain-mist: rgba(80, 110, 140, 0.2);
 
   /* Custom Fonts */
   --font-display: "Cormorant Garamond", serif;
