@@ -2,120 +2,135 @@
 // Manual Page for GuRain
 // User manual with table of contents and detailed sections
 
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ManualSection from '../components/ManualSection.astro';
-import ManualSubSection from '../components/ManualSubSection.astro';
-import ParameterTable from '../components/ParameterTable.astro';
-import RainEffect from '../components/RainEffect.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ManualSection from "../components/ManualSection.astro";
+import ManualSubSection from "../components/ManualSubSection.astro";
+import ParameterTable from "../components/ParameterTable.astro";
+import RainEffect from "../components/RainEffect.astro";
 
-const metaDescription = 'GuRainグラニュラシンセサイザーの詳細な使用マニュアル。グローバルパラメータ、グレインエンジン、LFO機能、使用例、トラブルシューティングを網羅。';
+const metaDescription =
+  "GuRainグラニュラシンセサイザーの詳細な使用マニュアル。グローバルパラメータ、グレインエンジン、LFO機能、使用例、トラブルシューティングを網羅。";
 
 const tocSections = [
-  { name: 'はじめに', href: '#introduction' },
-  { name: 'インターフェース', href: '#interface' },
-  { name: 'グローバルパラメータ', href: '#global-parameters' },
-  { name: 'グレインエンジン', href: '#grain-engine' },
-  { name: 'LFO機能', href: '#lfo' },
-  { name: '使用例', href: '#examples' },
-  { name: 'トラブルシューティング', href: '#troubleshooting' },
+  { name: "はじめに", href: "#introduction" },
+  { name: "インターフェース", href: "#interface" },
+  { name: "グローバルパラメータ", href: "#global-parameters" },
+  { name: "グレインエンジン", href: "#grain-engine" },
+  { name: "LFO機能", href: "#lfo" },
+  { name: "使用例", href: "#examples" },
+  { name: "プリセット機能", href: "#presets" },
+  { name: "トラブルシューティング", href: "#troubleshooting" },
 ];
 
 const globalParameters = [
   {
-    name: 'gain',
-    range: '0.0 - 1.0',
-    description: 'マスターゲイン。全体的な出力音量を制御します。',
+    name: "gain",
+    range: "0.0 - 1.0",
+    description: "マスターゲイン。全体的な出力音量を制御します。",
   },
   {
-    name: 'grainPitch',
-    range: '-24.0 to +24.0 semitones',
-    description: 'グローバルピッチオフセット。全グレインのピッチをセミトーン単位で調整します。',
+    name: "grainPitch",
+    range: "-24.0 to +24.0 semitones",
+    description:
+      "グローバルピッチオフセット。全グレインのピッチをセミトーン単位で調整します。",
   },
   {
-    name: 'playbackMode',
-    range: '0 = MIDI, 1 = Generative',
-    description: '再生モードの切り替え。MIDIモードではMIDIノートでグレインを生成、Generativeモードでは自動生成します。',
+    name: "playbackMode",
+    range: "0 = MIDI, 1 = Generative",
+    description:
+      "再生モードの切り替え。MIDIモードではMIDIノートでグレインを生成、Generativeモードでは自動生成します。",
   },
   {
-    name: 'attackTime',
-    range: '0.001 - 2.0s',
-    description: 'ADSRエンベロープのアタックタイム。ノートオンから最大音量に達するまでの時間。',
+    name: "attackTime",
+    range: "0.001 - 2.0s",
+    description:
+      "ADSRエンベロープのアタックタイム。ノートオンから最大音量に達するまでの時間。",
   },
   {
-    name: 'decayTime',
-    range: '0.001 - 2.0s',
-    description: 'ADSRエンベロープのディケイタイム。最大音量からサステインレベルに達するまでの時間。',
+    name: "decayTime",
+    range: "0.001 - 2.0s",
+    description:
+      "ADSRエンベロープのディケイタイム。最大音量からサステインレベルに達するまでの時間。",
   },
   {
-    name: 'sustainLevel',
-    range: '0.0 - 1.0',
-    description: 'ADSRエンベロープのサステインレベル。ノートが押されている間の維持音量。',
+    name: "sustainLevel",
+    range: "0.0 - 1.0",
+    description:
+      "ADSRエンベロープのサステインレベル。ノートが押されている間の維持音量。",
   },
   {
-    name: 'releaseTime',
-    range: '0.001 - 5.0s',
-    description: 'ADSRエンベロープのリリースタイム。ノートオフから無音になるまでの時間。',
+    name: "releaseTime",
+    range: "0.001 - 5.0s",
+    description:
+      "ADSRエンベロープのリリースタイム。ノートオフから無音になるまでの時間。",
   },
 ];
 
 const regionParameters = [
   {
-    name: 'grainDensity',
-    range: '0.0 - 1.0',
-    description: 'グレイン密度。グレインの生成頻度を制御します。',
+    name: "grainDensity",
+    range: "0.0 - 1.0",
+    description: "グレイン密度。グレインの生成頻度を制御します。",
   },
   {
-    name: 'grainDuration',
-    range: '0.01 - 2.0s',
-    description: 'グレイン持続時間。各グレインの再生時間を設定します。',
+    name: "grainDuration",
+    range: "0.01 - 2.0s",
+    description: "グレイン持続時間。各グレインの再生時間を設定します。",
   },
   {
-    name: 'grainPosition',
-    range: '0.0 - 1.0',
-    description: 'グレイン位置。オーディオバッファ内の再生位置（0.0 = 先頭、1.0 = 末尾）。',
+    name: "grainPosition",
+    range: "0.0 - 1.0",
+    description:
+      "グレイン位置。オーディオバッファ内の再生位置（0.0 = 先頭、1.0 = 末尾）。",
   },
   {
-    name: 'pitchSpread',
-    range: '0.0 - 2.0 octaves',
-    description: 'ピッチスプレッド。グレインのピッチのばらつき具合をオクターブ単位で設定します。',
+    name: "pitchSpread",
+    range: "0.0 - 2.0 octaves",
+    description:
+      "ピッチスプレッド。グレインのピッチのばらつき具合をオクターブ単位で設定します。",
   },
   {
-    name: 'positionSpread',
-    range: '0.0 - 1.0',
-    description: '位置スプレッド。グレインの開始位置のばらつき具合を設定します。',
+    name: "positionSpread",
+    range: "0.0 - 1.0",
+    description:
+      "位置スプレッド。グレインの開始位置のばらつき具合を設定します。",
   },
   {
-    name: 'panSpread',
-    range: '0.0 - 1.0',
-    description: 'パンスプレッド。グレインのステレオパンのばらつき具合を設定します。',
+    name: "panSpread",
+    range: "0.0 - 1.0",
+    description:
+      "パンスプレッド。グレインのステレオパンのばらつき具合を設定します。",
   },
 ];
 
 const lfoParameters = [
   {
-    name: 'lfoTarget',
-    range: 'off / gain / density / duration / position / pitch / positionSpread / panSpread',
-    description: 'LFO変調ターゲット。LFOで変調するパラメータを選択します。',
+    name: "lfoTarget",
+    range:
+      "off / gain / density / duration / position / pitch / positionSpread / panSpread",
+    description: "LFO変調ターゲット。LFOで変調するパラメータを選択します。",
   },
   {
-    name: 'lfoType',
-    range: '0.0 - 5.0',
-    description: 'LFO波形タイプ。0.0（Sine）から5.0（SineRandom）までの連続的なモーフィングが可能です。',
+    name: "lfoType",
+    range: "0.0 - 5.0",
+    description:
+      "LFO波形タイプ。0.0（Sine）から5.0（SineRandom）までの連続的なモーフィングが可能です。",
   },
   {
-    name: 'lfoBpmSync',
-    range: 'false / true',
-    description: 'BPM同期モード。DAWのテンポに同期するかどうかを設定します。',
+    name: "lfoBpmSync",
+    range: "false / true",
+    description: "BPM同期モード。DAWのテンポに同期するかどうかを設定します。",
   },
   {
-    name: 'lfoDepth',
-    range: '0.0 - 1.0',
-    description: 'LFOデプス。変調の深さを制御します。',
+    name: "lfoDepth",
+    range: "0.0 - 1.0",
+    description: "LFOデプス。変調の深さを制御します。",
   },
   {
-    name: 'lfoFrequency',
-    range: '0.0 - 1.0',
-    description: 'LFO周波数。BPM同期モードでは16thノートから16小節までの範囲になります。',
+    name: "lfoFrequency",
+    range: "0.0 - 1.0",
+    description:
+      "LFO周波数。BPM同期モードでは16thノートから16小節までの範囲になります。",
   },
 ];
 ---
@@ -127,76 +142,111 @@ const lfoParameters = [
     <!-- Page Title -->
     <div class="page-header relative z-10">
       <h1 class="page-title">GuRain 使用マニュアル</h1>
-      <p class="page-subtitle">GuRainグラニュラシンセサイザーの詳細な使用ガイド</p>
+      <p class="page-subtitle">
+        GuRainグラニュラシンセサイザーの詳細な使用ガイド
+      </p>
     </div>
 
     <!-- Table of Contents -->
-    <div id="toc-container" class="toc-container glass-card-heavy relative z-10">
-      <div class="flex items-center justify-between p-4 cursor-pointer" id="toc-header">
-        <h2 id="toc-title" class="toc-title">
-          目次
-        </h2>
-        <button id="toc-toggle" class="text-text-primary hover:text-accent-primary transition-colors" type="button">
-          <svg id="toc-chevron" class="w-6 h-6 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    <div
+      id="toc-container"
+      class="toc-container glass-card-heavy relative z-10"
+    >
+      <div
+        class="flex items-center justify-between p-4 cursor-pointer"
+        id="toc-header"
+      >
+        <h2 id="toc-title" class="toc-title">目次</h2>
+        <button
+          id="toc-toggle"
+          class="text-text-primary hover:text-accent-primary transition-colors"
+          type="button"
+        >
+          <svg
+            id="toc-chevron"
+            class="w-6 h-6 transform transition-transform duration-300"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"></path>
           </svg>
         </button>
       </div>
       <nav id="toc-nav" class="toc-nav">
-        {tocSections.map((section) => (
-          <a href={section.href} class="toc-link">
-            {section.name}
-          </a>
-        ))}
+        {
+          tocSections.map((section) => (
+            <a href={section.href} class="toc-link">
+              {section.name}
+            </a>
+          ))
+        }
       </nav>
     </div>
 
     <script>
       let tocExpanded = false;
       function toggleToc() {
-        const nav = document.getElementById('toc-nav');
-        const chevron = document.getElementById('toc-chevron');
+        const nav = document.getElementById("toc-nav");
+        const chevron = document.getElementById("toc-chevron");
         tocExpanded = !tocExpanded;
-        if(tocExpanded) {
-          nav.style.maxHeight = '500px';
-          nav.style.opacity = '1';
-          nav.classList.remove('hidden');
-          chevron.classList.remove('rotate-180');
-          chevron.classList.remove('hidden');
+        if (tocExpanded) {
+          nav.style.maxHeight = "500px";
+          nav.style.opacity = "1";
+          nav.classList.remove("hidden");
+          chevron.classList.remove("rotate-180");
+          chevron.classList.remove("hidden");
         } else {
-          nav.style.maxHeight = '0';
-          nav.style.opacity = '0';
-          nav.classList.add('hidden');
-          chevron.classList.add('rotate-180');
-          chevron.classList.remove('hidden');
+          nav.style.maxHeight = "0";
+          nav.style.opacity = "0";
+          nav.classList.add("hidden");
+          chevron.classList.add("rotate-180");
+          chevron.classList.remove("hidden");
         }
       }
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const tocHeader = document.getElementById('toc-header');
-        const nav = document.getElementById('toc-nav');
-        const chevron = document.getElementById('toc-chevron');
+      document.addEventListener("DOMContentLoaded", () => {
+        const tocHeader = document.getElementById("toc-header");
+        const nav = document.getElementById("toc-nav");
+        const chevron = document.getElementById("toc-chevron");
 
         // Initial state: collapsed
-        nav.style.maxHeight = '0';
-        nav.style.opacity = '0';
-        nav.classList.add('hidden');
-        chevron.classList.add('rotate-180');
-        chevron.classList.remove('hidden');
+        nav.style.maxHeight = "0";
+        nav.style.opacity = "0";
+        nav.classList.add("hidden");
+        chevron.classList.add("rotate-180");
+        chevron.classList.remove("hidden");
 
         // Attach click handler to header
-        tocHeader.addEventListener('click', (e) => {
+        tocHeader.addEventListener("click", (e) => {
           toggleToc();
         });
       });
 
-      window.addEventListener('scroll', () => {
-        const c = document.getElementById('toc-container');
-        const t = document.getElementById('toc-title');
-        const n = document.getElementById('toc-nav');
-        const ch = document.getElementById('toc-chevron');
-        if(window.scrollY > 100) { c.classList.remove('p-6'); c.classList.add('py-2','px-3'); t.classList.add('text-sm'); t.classList.remove('text-2xl'); n.classList.add('hidden'); ch.classList.add('hidden'); }
-        else { c.classList.add('p-6'); c.classList.remove('py-2','px-3'); t.classList.remove('text-sm'); t.classList.add('text-2xl'); if(tocExpanded) n.classList.remove('hidden'); ch.classList.remove('hidden'); }
+      window.addEventListener("scroll", () => {
+        const c = document.getElementById("toc-container");
+        const t = document.getElementById("toc-title");
+        const n = document.getElementById("toc-nav");
+        const ch = document.getElementById("toc-chevron");
+        if (window.scrollY > 100) {
+          c.classList.remove("p-6");
+          c.classList.add("py-2", "px-3");
+          t.classList.add("text-sm");
+          t.classList.remove("text-2xl");
+          n.classList.add("hidden");
+          ch.classList.add("hidden");
+        } else {
+          c.classList.add("p-6");
+          c.classList.remove("py-2", "px-3");
+          t.classList.remove("text-sm");
+          t.classList.add("text-2xl");
+          if (tocExpanded) n.classList.remove("hidden");
+          ch.classList.remove("hidden");
+        }
       });
     </script>
 
@@ -230,10 +280,7 @@ const lfoParameters = [
 
         <ManualSubSection title="システム要件">
           <ul>
-            <li>iOS 14.0以上</li>
-            <li>iPadOS 14.0以上</li>
-            <li>macOS（Mac Catalyst）</li>
-            <li>AUv3対応のDAWまたはホストアプリ</li>
+            <li>macOS 14以上のApple Silicon搭載Mac（Intel Macは非対応）</li>
           </ul>
         </ManualSubSection>
       </ManualSection>
@@ -269,7 +316,11 @@ const lfoParameters = [
       </ManualSection>
 
       <!-- Section 3: Global Parameters -->
-      <ManualSection title="グローバルパラメータ" id="global-parameters" sectionNumber={3}>
+      <ManualSection
+        title="グローバルパラメータ"
+        id="global-parameters"
+        sectionNumber={3}
+      >
         <ManualSubSection>
           <p>
             グローバルパラメータは、すべてのリージョンに適用される全体的な設定です。
@@ -281,7 +332,11 @@ const lfoParameters = [
       </ManualSection>
 
       <!-- Section 4: Grain Engine -->
-      <ManualSection title="グレインエンジン" id="grain-engine" sectionNumber={4}>
+      <ManualSection
+        title="グレインエンジン"
+        id="grain-engine"
+        sectionNumber={4}
+      >
         <ManualSubSection title="グラニュラ合成の仕組み">
           <p>
             グラニュラ合成は、音源を小さな「グレイン」というセグメント（通常数ミリ秒から数百ミリ秒）に分割し、
@@ -294,9 +349,7 @@ const lfoParameters = [
         </ManualSubSection>
 
         <ManualSubSection title="リージョンパラメータ">
-          <p>
-            各リージョンには以下のパラメータがあり、個別に設定できます：
-          </p>
+          <p>各リージョンには以下のパラメータがあり、個別に設定できます：</p>
         </ManualSubSection>
 
         <ParameterTable parameters={regionParameters} />
@@ -339,10 +392,11 @@ const lfoParameters = [
       <ManualSection title="使用例" id="examples" sectionNumber={6}>
         <ManualSubSection title="基本的な使用方法">
           <ol>
-            <li>DAWまたはホストアプリでGuRainをインスタンス化します</li>
             <li>オーディオファイルをロードします</li>
             <li>グローバルパラメータを調整します（ゲイン、ピッチなど）</li>
-            <li>MIDIキーボードで演奏するか、Generativeモードで自動生成を開始します</li>
+            <li>
+              MIDIキーボードで演奏するか、Generativeモードで自動生成を開始します
+            </li>
             <li>リージョンパラメータを調整してサウンドをカスタマイズします</li>
           </ol>
         </ManualSubSection>
@@ -368,29 +422,63 @@ const lfoParameters = [
         </ManualSubSection>
       </ManualSection>
 
-      <!-- Section 7: Troubleshooting -->
-      <ManualSection title="トラブルシューティング" id="troubleshooting" sectionNumber={7}>
+      <!-- Section 7: Presets -->
+      <ManualSection title="プリセット機能" id="presets" sectionNumber={7}>
+        <ManualSubSection title="プリセットの保存とロード">
+          <p>
+            presetsボタンからプリセットの保存とロードができます。
+            保存されるのはマスターゲイン以外の全ての設定です。
+            音声データも保存されるため、ロードするだけですぐにサウンドを再現できます。
+          </p>
+        </ManualSubSection>
+
+        <ManualSubSection title="エクスポート/インポート機能">
+          <p>
+            作成したプリセットは.gurain拡張子のファイル形式でエクスポートできます。
+            インポート機能を使用することで、他のデバイスとプリセットを共有したり、バックアップとして保存したりすることができます。
+          </p>
+        </ManualSubSection>
+      </ManualSection>
+
+      <!-- Section 8: Troubleshooting -->
+      <ManualSection
+        title="トラブルシューティング"
+        id="troubleshooting"
+        sectionNumber={8}
+      >
         <ManualSubSection title="音が出ない場合">
           <ul>
-            <li>DAWのオーディオ出力がミュートになっていないか確認してください</li>
+            <li>
+              DAWのオーディオ出力がミュートになっていないか確認してください
+            </li>
             <li>マスターゲイン（gain）が0になっていないか確認してください</li>
-            <li>オーディオファイルが正常にロードされているか確認してください</li>
-            <li>MIDIモードの場合、MIDIキーボードまたはDAWからMIDIが送られているか確認してください</li>
+            <li>
+              オーディオファイルが正常にロードされているか確認してください
+            </li>
+            <li>
+              MIDIモードの場合、MIDIキーボードまたはDAWからMIDIが送られているか確認してください
+            </li>
           </ul>
         </ManualSubSection>
 
         <ManualSubSection title="グレインが生成されない場合">
           <ul>
-            <li>Generativeモードの場合、grainDensityが0になっていないか確認してください</li>
+            <li>
+              Generativeモードの場合、grainDensityが0になっていないか確認してください
+            </li>
             <li>MIDIモードの場合、ノートが送られているか確認してください</li>
-            <li>grainDurationが極端に短くないか確認してください（最低0.01秒）</li>
+            <li>
+              grainDurationが極端に短くないか確認してください（最低0.01秒）
+            </li>
           </ul>
         </ManualSubSection>
 
         <ManualSubSection title="サウンドがクリップする場合">
           <ul>
             <li>マスターゲインを下げてください</li>
-            <li>複数のリージョンを使用している場合、各リージョンのゲインを下げてください</li>
+            <li>
+              複数のリージョンを使用している場合、各リージョンのゲインを下げてください
+            </li>
             <li>DAWの出力メーターを確認してください</li>
           </ul>
         </ManualSubSection>
@@ -408,7 +496,9 @@ const lfoParameters = [
           <ul>
             <li>lfoTargetが適切に設定されているか確認してください</li>
             <li>lfoDepthが0になっていないか確認してください</li>
-            <li>BPM同期モードを使用している場合、DAWのテンポが正しく設定されているか確認してください</li>
+            <li>
+              BPM同期モードを使用している場合、DAWのテンポが正しく設定されているか確認してください
+            </li>
           </ul>
         </ManualSubSection>
       </ManualSection>
@@ -421,8 +511,17 @@ const lfoParameters = [
       class="back-to-top relative z-20"
       aria-label="トップに戻る"
     >
-      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      <svg
+        class="w-5 h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
       </svg>
     </button>
   </div>
@@ -566,13 +665,13 @@ const lfoParameters = [
 
 <script>
   // Back to top button visibility
-  const backToTop = document.getElementById('back-to-top');
+  const backToTop = document.getElementById("back-to-top");
 
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     if (window.scrollY > 500) {
-      backToTop?.classList.add('visible');
+      backToTop?.classList.add("visible");
     } else {
-      backToTop?.classList.remove('visible');
+      backToTop?.classList.remove("visible");
     }
   });
 </script>

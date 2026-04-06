@@ -3,7 +3,9 @@
 // Product spotlight with animated rain and parallax effect
 ---
 
-<section class="hero-section min-h-screen flex items-center justify-center px-4 pt-16 pb-20 relative overflow-hidden">
+<section
+  class="hero-section min-h-screen flex items-center justify-center px-4 pt-16 pb-20 relative overflow-hidden"
+>
   <!-- Rain Animation Layers -->
   <div class="rain-container">
     <div class="rain-layer background" id="rain-background"></div>
@@ -15,18 +17,24 @@
     <div class="flex flex-col items-center gap-8 text-center">
       <!-- Main Heading -->
       <h1 class="hero-title fade-in">
-        <span class="block text-6xl md:text-7xl lg:text-8xl font-display font-light tracking-tight brand-title">
+        <span
+          class="block text-6xl md:text-7xl lg:text-8xl font-display font-light tracking-tight brand-title"
+        >
           GuRain
         </span>
-        <span class="block text-2xl md:text-3xl lg:text-4xl text-text-secondary mt-4 font-light">
-          グラニュラーシンセイザー
+        <span
+          class="block text-2xl md:text-3xl lg:text-4xl text-text-secondary mt-4 font-light"
+        >
+          macOSデスクトップグラニュラーシンセイザー
         </span>
       </h1>
 
       <!-- Sub-heading -->
-      <p class="hero-subtitle text-lg md:text-xl lg:text-2xl text-text-body max-w-2xl fade-in stagger-1">
-        音の粒で紡ぐ、無限の創造性。<br class="hidden sm:block" />
-        霧雨のような繊細さで、サウンドの風景を描く。
+      <p
+        class="hero-subtitle text-lg md:text-xl lg:text-2xl text-text-body max-w-2xl fade-in stagger-1"
+      >
+        音の粒で紡ぐ、無限の創造性。<br />
+        降りしきる雨のテクスチャで、音像の断片を風景へと変える。
       </p>
 
       <!-- Product Spotlight Image -->
@@ -42,7 +50,9 @@
       </div>
 
       <!-- CTA Buttons -->
-      <div class="hero-cta flex flex-col sm:flex-row gap-4 justify-center items-center mt-6 fade-in stagger-3">
+      <div
+        class="hero-cta flex flex-col sm:flex-row gap-4 justify-center items-center mt-6 fade-in stagger-3"
+      >
         <a
           href="/manual"
           class="px-8 py-4 rounded-lg font-medium text-mist-lightest bg-accent-primary hover:bg-accent-soft hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
@@ -117,9 +127,9 @@
   // Create rain drops on mount
   function createRain() {
     const layers = {
-      background: 15,
-      middle: 25,
-      foreground: 35
+      background: 40,
+      middle: 60,
+      foreground: 80,
     };
 
     Object.entries(layers).forEach(([layer, count]) => {
@@ -127,8 +137,9 @@
       if (!container) return;
 
       for (let i = 0; i < count; i++) {
-        const drop = document.createElement('div');
-        drop.className = 'rain-drop animate';
+        const drop = document.createElement("div");
+        drop.className = "rain-drop animate";
+        drop.style.width = "2px";
         drop.style.left = `${Math.random() * 100}%`;
         drop.style.height = `${30 + Math.random() * 35}px`;
         drop.style.animationDelay = `${Math.random() * 2}s`;
@@ -143,13 +154,15 @@
   function updateParallax() {
     const scrollY = window.scrollY;
 
-    const background = document.getElementById('rain-background');
-    const middle = document.getElementById('rain-middle');
-    const foreground = document.getElementById('rain-foreground');
+    const background = document.getElementById("rain-background");
+    const middle = document.getElementById("rain-middle");
+    const foreground = document.getElementById("rain-foreground");
 
-    if (background) background.style.transform = `translateY(${scrollY * 0.1}px)`;
+    if (background)
+      background.style.transform = `translateY(${scrollY * 0.1}px)`;
     if (middle) middle.style.transform = `translateY(${scrollY * 0.25}px)`;
-    if (foreground) foreground.style.transform = `translateY(${scrollY * 0.4}px)`;
+    if (foreground)
+      foreground.style.transform = `translateY(${scrollY * 0.4}px)`;
 
     ticking = false;
   }
@@ -158,24 +171,28 @@
   createRain();
 
   // Set up parallax on scroll
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(updateParallax);
-      ticking = true;
-    }
-  }, { passive: true });
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    },
+    { passive: true },
+  );
 
   // Intersection Observer for fade-in animations
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          entry.target.classList.add("visible");
         }
       });
     },
-    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
   );
 
-  document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+  document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
 </script>
