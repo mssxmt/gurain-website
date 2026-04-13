@@ -11,19 +11,16 @@ interface Props {
 const { title, id, sectionNumber } = Astro.props;
 ---
 
-<section
-  class:id={id}
-  class="manual-section fade-in"
->
+<section id={id} class="manual-section fade-in">
   <div class="section-inner">
-    {title && (
-      <div class="section-header">
-        {sectionNumber && (
-          <span class="section-number">{sectionNumber}</span>
-        )}
-        <h2 class="section-title">{title}</h2>
-      </div>
-    )}
+    {
+      title && (
+        <div class="section-header">
+          {sectionNumber && <span class="section-number">{sectionNumber}</span>}
+          <h2 class="section-title">{title}</h2>
+        </div>
+      )
+    }
     <div class="section-content">
       <slot />
     </div>
@@ -33,7 +30,6 @@ const { title, id, sectionNumber } = Astro.props;
 <style>
   .manual-section {
     margin-bottom: var(--spacing-lg);
-    scroll-margin-top: 6rem;
   }
 
   .section-inner {
@@ -57,7 +53,11 @@ const { title, id, sectionNumber } = Astro.props;
     justify-content: center;
     width: 2.5rem;
     height: 2.5rem;
-    background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-soft));
+    background: linear-gradient(
+      135deg,
+      var(--color-accent-primary),
+      var(--color-accent-soft)
+    );
     color: var(--color-mist-lightest);
     border-radius: var(--radius-full);
     font-family: var(--font-display);

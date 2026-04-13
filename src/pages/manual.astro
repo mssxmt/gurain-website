@@ -188,7 +188,7 @@ const lfoParameters = [
       </nav>
     </div>
 
-    <script>
+    <script is:inline>
       let tocExpanded = false;
       function toggleToc() {
         const nav = document.getElementById("toc-nav");
@@ -214,14 +214,12 @@ const lfoParameters = [
         const nav = document.getElementById("toc-nav");
         const chevron = document.getElementById("toc-chevron");
 
-        // Initial state: collapsed
         nav.style.maxHeight = "0";
         nav.style.opacity = "0";
         nav.classList.add("hidden");
         chevron.classList.add("rotate-180");
         chevron.classList.remove("hidden");
 
-        // Attach click handler to header
         tocHeader.addEventListener("click", (e) => {
           toggleToc();
         });
