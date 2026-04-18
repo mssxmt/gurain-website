@@ -16,6 +16,7 @@ const tocSections = [
   { name: "インターフェース", href: "#interface" },
   { name: "グローバルパラメータ", href: "#global-parameters" },
   { name: "グレインエンジン", href: "#grain-engine" },
+  { name: "Generativeモード", href: "#generative-mode" },
   { name: "LFO機能", href: "#lfo" },
   { name: "使用例", href: "#examples" },
   { name: "プリセット機能", href: "#presets" },
@@ -361,8 +362,69 @@ const lfoParameters = [
         <ParameterTable parameters={regionParameters} />
       </ManualSection>
 
-      <!-- Section 5: LFO -->
-      <ManualSection title="LFO機能" id="lfo" sectionNumber={5}>
+      <!-- Section 5: Generative Mode -->
+      <ManualSection
+        title="Generativeモード"
+        id="generative-mode"
+        sectionNumber={5}
+      >
+        <ManualSubSection title="Generativeモードとは">
+          <p>
+            Generativeモードは、MIDI入力なしにグレインを自動的に生成し続ける再生モードです。
+            鍵盤を弾かなくても音が鳴り続けるため、アンビエントなサウンドテクスチャの生成や、
+            サウンドインスタレーション、メディアアートなどの用途に最適です。
+          </p>
+        </ManualSubSection>
+
+        <ManualSubSection title="基本的な使い方">
+          <ol>
+            <li>オーディオファイルをロードします</li>
+            <li>
+              グローバルパラメータのplaybackModeをGenerative（1）に設定します
+            </li>
+            <li>
+              grainDensityを調整してグレインの生成頻度を設定します（低い値で疎な配置、高い値で密な配置）
+            </li>
+            <li>
+              grainDurationで各グレインの長さを調整します（長くするとパッド的な音、短くと粒立ちの良い音になります）
+            </li>
+            <li>
+              positionSpreadやpitchSpreadを調整して音の広がりをコントロールします
+            </li>
+          </ol>
+        </ManualSubSection>
+
+        <ManualSubSection title="LFOとの組み合わせ">
+          <p>
+            GenerativeモードはLFOとの組み合わせが特に強力です。
+            LFOでgrainDensity、grainPosition、grainDurationなどを変調することで、
+            静的なループから脱却し、時間とともに変化し続ける有機的なサウンドを生成できます。
+          </p>
+          <p>おすすめの組み合わせ：</p>
+          <ul>
+            <li>
+              LFO Target: position / 周波数を低めに設定 → 音源の再生位置がゆっくり移動し、サウンドが徐々に変化
+            </li>
+            <li>
+              LFO Target: density / SineRandom波形 → 密度が不規則に変動し、自然な呼吸感のあるサウンド
+            </li>
+            <li>
+              LFO Target: pitch / BPM同期 + 短い周期 → リズミックなピッチ変動
+            </li>
+          </ul>
+        </ManualSubSection>
+
+        <ManualSubSection title="複数リージョンの活用">
+          <p>
+            Generativeモードでは複数のリージョンを同時にアクティブにすることで、
+            異なる音源位置やパラメータ設定のグレインが重なり合い、複雑で豊かなサウンドレイヤーを生成できます。
+            各リージョンで異なるgrainPositionを設定すれば、一つの音源から多様なテクスチャを同時に引き出せます。
+          </p>
+        </ManualSubSection>
+      </ManualSection>
+
+      <!-- Section 6: LFO -->
+      <ManualSection title="LFO機能" id="lfo" sectionNumber={6}>
         <ManualSubSection title="LFOとは">
           <p>
             LFO（低周波オシレータ）は、パラメータを周期的に変調するために使用されます。
@@ -395,7 +457,7 @@ const lfoParameters = [
       </ManualSection>
 
       <!-- Section 6: Examples -->
-      <ManualSection title="使用例" id="examples" sectionNumber={6}>
+      <ManualSection title="使用例" id="examples" sectionNumber={7}>
         <ManualSubSection title="基本的な使用方法">
           <ol>
             <li>オーディオファイルをロードします</li>
@@ -429,7 +491,7 @@ const lfoParameters = [
       </ManualSection>
 
       <!-- Section 7: Presets -->
-      <ManualSection title="プリセット機能" id="presets" sectionNumber={7}>
+      <ManualSection title="プリセット機能" id="presets" sectionNumber={8}>
         <ManualSubSection title="プリセットの保存とロード">
           <p>
             presetsボタンからプリセットの保存とロードができます。
@@ -450,7 +512,7 @@ const lfoParameters = [
       <ManualSection
         title="トラブルシューティング"
         id="troubleshooting"
-        sectionNumber={8}
+        sectionNumber={9}
       >
         <ManualSubSection title="音が出ない場合">
           <ul>
