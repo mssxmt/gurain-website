@@ -83,9 +83,9 @@ const navItems = [
               ))
             }
             <a
-              href="#"
+              href="https://buy.polar.sh/polar_cl_mnTvugsC3aKUzHZNFDkQBV1FQXT8UUumGD2uc43E6lx"
               target="_blank"
-              class="cta-button"
+              class="btn btn-ghost btn-sm"
             >
               購入する
             </a>
@@ -114,7 +114,7 @@ const navItems = [
         </nav>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu">
+        <div id="mobile-menu" class="mobile-menu hidden">
           <div class="mobile-menu-content">
             {
               navItems.map((item) => (
@@ -127,9 +127,9 @@ const navItems = [
               ))
             }
             <a
-              href="#"
+              href="https://buy.polar.sh/polar_cl_mnTvugsC3aKUzHZNFDkQBV1FQXT8UUumGD2uc43E6lx"
               target="_blank"
-              class="mobile-cta-button"
+              class="btn btn-primary btn-sm"
             >
               購入する
             </a>
@@ -282,21 +282,6 @@ const navItems = [
     text-underline-offset: 2px;
   }
 
-  .cta-button {
-    font-size: 0.875rem;
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-md);
-    background: var(--color-accent-primary);
-    color: var(--color-mist-lightest);
-    text-decoration: none;
-    transition: background 0.2s ease;
-  }
-
-  .cta-button:hover {
-    background: var(--color-accent-soft);
-  }
-
   /* Mobile Menu Button - Hidden on desktop */
   .mobile-menu-button {
     display: block;
@@ -356,21 +341,6 @@ const navItems = [
 
   .mobile-nav-link:hover {
     color: var(--color-accent-primary);
-  }
-
-  .mobile-cta-button {
-    text-align: center;
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-md);
-    background: var(--color-accent-primary);
-    color: var(--color-mist-lightest);
-    text-decoration: none;
-    transition: background 0.2s ease;
-  }
-
-  .mobile-cta-button:hover {
-    background: var(--color-accent-soft);
   }
 
   /* Footer Styles */
