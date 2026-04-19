@@ -3,15 +3,35 @@ import { Image } from 'astro:assets';
 
 interface Props {
   title: string;
+  logoSrc?: string;
+  logoText?: string;
+  logoHref?: string;
+  navItems?: Array<{ name: string; href: string }>;
+  footerLinks?: Array<{ name: string; href: string }>;
+  copyrightText?: string;
+  ogDescription?: string;
+  purchaseUrl?: string;
 }
 
-const { title } = Astro.props;
-
-const navItems = [
-  { name: "ホーム", href: "/" },
-  { name: "マニュアル", href: "/manual" },
-  { name: "免責事項", href: "/disclaimer" },
-];
+const {
+  title,
+  logoSrc = "/images/logo.png",
+  logoText = "GuRain",
+  logoHref = "/",
+  navItems = [
+    { name: "ホーム", href: "/gurain/" },
+    { name: "マニュアル", href: "/gurain/manual" },
+    { name: "免責事項", href: "/gurain/disclaimer" },
+  ],
+  footerLinks = [
+    { name: "ホーム", href: "/gurain/" },
+    { name: "マニュアル", href: "/gurain/manual" },
+    { name: "免責事項", href: "/gurain/disclaimer" },
+  ],
+  copyrightText = "2026 GuRain",
+  ogDescription = "macOS対応グラニュラーシンセサイザー。最大128グレイン、MIDI/Generativeモード、ADSRエンベロープ、LFOモーフィング機能。",
+  purchaseUrl = "https://buy.polar.sh/polar_cl_mnTvugsC3aKUzHZNFDkQBV1FQXT8UUumGD2uc43E6lx?discount_code=INTRO2026",
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -19,7 +39,7 @@ const navItems = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} - GuRain</title>
+    <title>{title} - MSSXMTxLAB</title>
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon.png" />
@@ -34,7 +54,7 @@ const navItems = [
     <meta property="og:title" content={title} />
     <meta
       property="og:description"
-      content="iOS/macOS対応グラニュラシンセサイザーAUv3プラグイン。最大128グレイン、MIDI/Generativeモード、ADSRエンベロープ、LFOモーフィング機能。"
+      content={ogDescription}
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
@@ -46,7 +66,7 @@ const navItems = [
     <meta name="twitter:title" content={title} />
     <meta
       name="twitter:description"
-      content="iOS/macOS対応グラニュラシンセサイザーAUv3プラグイン。最大128グレイン、MIDI/Generativeモード、ADSRエンベロープ、LFOモーフィング機能。"
+      content={ogDescription}
     />
     <meta name="twitter:image" content="/images/og-image.png" />
 
@@ -60,10 +80,10 @@ const navItems = [
       <div class="header-container">
         <nav class="header-nav">
           <!-- Logo -->
-          <a href="/" class="logo-link">
+          <a href={logoHref} class="logo-link">
             <Image
-              src="/images/logo.png"
-              alt="GuRain Logo"
+              src={logoSrc}
+              alt={`${logoText} Logo`}
               width={64}
               height={64}
               class="logo-img"
@@ -82,59 +102,66 @@ const navItems = [
                 </a>
               ))
             }
-            <a
-              href="https://buy.polar.sh/polar_cl_mnTvugsC3aKUzHZNFDkQBV1FQXT8UUumGD2uc43E6lx?discount_code=INTRO2026"
-              target="_blank"
-              class="btn btn-ghost btn-sm"
-            >
-              購入する
-            </a>
+            {purchaseUrl && (
+              <a
+                href={purchaseUrl}
+                target="_blank"
+                class="btn btn-ghost btn-sm"
+              >
+                購入する
+              </a>
+            )}
           </div>
-
-          <!-- Mobile Menu Button -->
-          <button
-            id="mobile-menu-button"
-            class="mobile-menu-button"
-            aria-label="メニューを開く"
-            aria-expanded="false"
-          >
-            <svg
-              class="hamburger-icon"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          {navItems.length > 0 && (
+            <!-- Mobile Menu Button -->
+            <button
+              id="mobile-menu-button"
+              class="mobile-menu-button"
+              aria-label="メニューを開く"
+              aria-expanded="false"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </button>
+              <svg
+                class="hamburger-icon"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
+          )}
         </nav>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu hidden">
-          <div class="mobile-menu-content">
-            {
-              navItems.map((item) => (
+        {navItems.length > 0 && (
+          <!-- Mobile Menu -->
+          <div id="mobile-menu" class="mobile-menu hidden">
+            <div class="mobile-menu-content">
+              {
+                navItems.map((item) => (
+                  <a
+                    href={item.href}
+                    class="mobile-nav-link"
+                  >
+                    {item.name}
+                  </a>
+                ))
+              }
+              {purchaseUrl && (
                 <a
-                  href={item.href}
-                  class="mobile-nav-link"
+                  href={purchaseUrl}
+                  target="_blank"
+                  class="btn btn-primary btn-sm"
                 >
-                  {item.name}
+                  購入する
                 </a>
-              ))
-            }
-            <a
-              href="https://buy.polar.sh/polar_cl_mnTvugsC3aKUzHZNFDkQBV1FQXT8UUumGD2uc43E6lx?discount_code=INTRO2026"
-              target="_blank"
-              class="btn btn-primary btn-sm"
-            >
-              購入する
-            </a>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </header>
 
@@ -149,22 +176,22 @@ const navItems = [
         <div class="footer-main">
           <div class="footer-logo">
             <Image
-              src="/images/logo.png"
-              alt="GuRain Logo"
+              src={logoSrc}
+              alt={`${logoText} Logo`}
               width={64}
               height={64}
               class="footer-logo-img"
             />
-            <span class="footer-logo-text">GuRain</span>
+            <span class="footer-logo-text">{logoText}</span>
           </div>
           <div class="footer-nav">
-            <a href="/" class="footer-link">ホーム</a>
-            <a href="/manual" class="footer-link">マニュアル</a>
-            <a href="/disclaimer" class="footer-link">免責事項</a>
+            {footerLinks.map((link) => (
+              <a href={link.href} class="footer-link">{link.name}</a>
+            ))}
           </div>
         </div>
         <div class="footer-bottom">
-          &copy; 2026 GuRain. All rights reserved.
+          &copy; {copyrightText}. All rights reserved.
         </div>
       </div>
     </footer>

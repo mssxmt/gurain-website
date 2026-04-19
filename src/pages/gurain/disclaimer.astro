@@ -2,13 +2,13 @@
 // Disclaimer Page for GuRain
 // Legal disclaimer with simplified content
 
-import BaseLayout from '../layouts/BaseLayout.astro';
-import RainEffect from '../components/RainEffect.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RainEffect from '../../components/RainEffect.astro';
 
 const metaDescription = 'GuRainグラニュラシンセサイザーの免責事項。本ソフトウェアは現状有姿で提供され、使用により生じたいかなる損害についても責任を負いません。';
 ---
 
-<BaseLayout title="免責事項 - GuRain">
+<BaseLayout title="免責事項 - GuRain" ogDescription={metaDescription}>
   <meta name="description" content={metaDescription} />
   <div class="disclaimer-page relative">
     <RainEffect />

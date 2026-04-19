@@ -1,68 +1,112 @@
 ---
-// Landing Page for GuRain
-// Main homepage with Hero, Features, and CTA sections
+// MSSXMTxLAB - Brand Portal Homepage
+// Showcases all products with hero section and product cards
 
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Hero from "../components/Hero.astro";
-import FeatureCards from "../components/FeatureCards.astro";
+
+const topFooterLinks = [
+  { name: "GuRain", href: "/gurain/" },
+];
 
 const metaDescription =
-  "GuRainはiOS/macOS対応グラニュラシンセサイザーAUv3プラグイン。最大128グレイン、MIDI/Generativeモード、ADSRエンベロープ、LFOモーフィング機能。";
+  "MSSXMTxLAB - クリエイティブな音楽制作ツールを開発しています。";
 ---
 
-<BaseLayout title="GuRain - グラニュラシンセサイザー">
+<BaseLayout
+  title="MSSXMTxLAB"
+  logoText="MSSXMTxLAB"
+  logoHref="/"
+  navItems={[]}
+  footerLinks={topFooterLinks}
+  copyrightText="2026 MSSXMTxLAB"
+  ogDescription={metaDescription}
+  purchaseUrl=""
+>
   <meta name="description" content={metaDescription} />
-  <meta
-    name="keywords"
-    content="granular, synthesizer, audio, music production, AUv3, iOS, macOS, MIDI, generative"
-  />
-  <!-- Hero Section -->
-  <Hero />
 
-  <!-- App Overview Section -->
-  <section class="overview-section section-spacing-sm">
-    <div class="container">
-      <div class="overview-content">
-        <h2 class="overview-title">GuRainについて</h2>
-        <p class="overview-text">
-          GuRainは、macOS専用デスクトップグラニュラーシンセサイザーです。DAWを立ち上げることなく、アプリ単体で即座にサウンドデザインを始められます。
-          音源を小さな「グレイン」というセグメントに分割し、それらを重ね合わせて音を生成するグラニュラ合成技法を採用しています。
-          最大128個のグレインを同時再生し、MIDIモードとGenerativeモードの2つの再生モードをサポートしています。
-        </p>
-      </div>
+  <!-- Hero Section -->
+  <section class="portal-hero">
+    <div class="portal-hero-bg">
+      <div class="hero-glow hero-glow-1"></div>
+      <div class="hero-glow hero-glow-2"></div>
+      <div class="hero-glow hero-glow-3"></div>
+    </div>
+    <div class="container portal-hero-content">
+      <h1 class="portal-brand fade-in">
+        <span class="brand-text">MSSXMTxLAB</span>
+      </h1>
+      <p class="portal-tagline fade-in stagger-1">
+        クリエイティブな音楽制作体験を
+      </p>
+      <p class="portal-description fade-in stagger-2">
+        音とテクノロジーの交差点で、新しい表現の可能性を探ります。
+      </p>
     </div>
   </section>
 
-  <!-- Feature Cards Section -->
-  <FeatureCards />
-
-  <!-- System Requirements Section -->
-  <section class="requirements-section section-spacing-sm">
+  <!-- Products Section -->
+  <section class="products-section section-spacing">
     <div class="container">
-      <div class="requirements-content">
-        <h2 class="requirements-title">システム要件</h2>
-        <ul class="requirements-list">
-          <li>macOS 14以上</li>
-          <li>Apple Silicon搭載Mac（Intel Macは非対応）</li>
-        </ul>
+      <div class="section-header">
+        <h2 class="section-title fade-in">Products</h2>
+        <p class="section-subtitle fade-in stagger-1">プロダクト</p>
+      </div>
+
+      <div class="products-grid">
+        <!-- GuRain Product Card -->
+        <a href="/gurain/" class="product-card glass-card-light fade-in stagger-2">
+          <div class="product-image-wrapper">
+            <img
+              src="/images/GuRain.png"
+              alt="GuRain Plugin UI"
+              class="product-image"
+              loading="eager"
+            />
+          </div>
+          <div class="product-content">
+            <h3 class="product-name">GuRain</h3>
+            <p class="product-tagline">グラニュラーシンセサイザー</p>
+            <p class="product-description">
+              音の粒で紡ぐ、無限の創造性。macOS専用デスクトップグラニュラーシンセサイザー。
+            </p>
+            <div class="product-link">
+              詳細を見る
+              <svg class="link-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Coming Soon Card -->
+        <div class="product-card product-card-coming glass-card-light fade-in stagger-3">
+          <div class="product-image-wrapper coming-soon-image">
+            <svg class="coming-soon-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          </div>
+          <div class="product-content">
+            <h3 class="product-name">Coming Soon</h3>
+            <p class="product-description">
+              新しいプロダクトを開発中です。お楽しみに。
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- CTA Section -->
-  <section class="cta-section section-spacing">
+  <section class="portal-cta section-spacing">
     <div class="container">
       <div class="cta-content">
-        <h2 class="cta-title">始めましょう</h2>
-        <p class="cta-subtitle">
-          GuRainの詳細な機能と使用方法をマニュアルで確認してください。
+        <h2 class="cta-title fade-in">プロダクトを探索する</h2>
+        <p class="cta-subtitle fade-in stagger-1">
+          クリエイティブな音楽制作の世界へ
         </p>
-        <div class="cta-buttons">
-          <a href="/manual" class="btn btn-primary btn-lg">
-            マニュアルを見る
-          </a>
-          <a href="https://buy.polar.sh/polar_cl_mnTvugsC3aKUzHZNFDkQBV1FQXT8UUumGD2uc43E6lx?discount_code=INTRO2026" target="_blank" class="btn btn-secondary btn-lg">
-            購入する
+        <div class="cta-buttons fade-in stagger-2">
+          <a href="/gurain/" class="btn btn-primary btn-lg">
+            GuRain を見る
           </a>
         </div>
       </div>
@@ -71,70 +115,252 @@ const metaDescription =
 </BaseLayout>
 
 <style>
-  /* Overview Section */
-  .overview-section {
-    background: var(--color-mist-lightest);
+  /* Hero Section */
+  .portal-hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(
+      180deg,
+      var(--color-mist-lightest) 0%,
+      var(--color-mist-light) 50%,
+      var(--color-mist-medium) 100%
+    );
   }
 
-  .overview-content {
-    max-width: 4xl;
+  .portal-hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+  }
+
+  .hero-glow-1 {
+    width: 600px;
+    height: 600px;
+    background: var(--color-accent-primary);
+    top: -200px;
+    right: -100px;
+    animation: float-glow 8s ease-in-out infinite;
+  }
+
+  .hero-glow-2 {
+    width: 400px;
+    height: 400px;
+    background: var(--color-accent-soft);
+    bottom: -100px;
+    left: -50px;
+    animation: float-glow 10s ease-in-out infinite reverse;
+  }
+
+  .hero-glow-3 {
+    width: 300px;
+    height: 300px;
+    background: var(--color-accent-subtle);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: float-glow 12s ease-in-out infinite;
+  }
+
+  @keyframes float-glow {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(30px, -20px); }
+    66% { transform: translate(-20px, 15px); }
+  }
+
+  .portal-hero-content {
+    position: relative;
+    z-index: 1;
     text-align: center;
+    padding: var(--spacing-2xl) 0;
   }
 
-  .overview-title {
+  .brand-text {
     font-family: var(--font-display);
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-accent-primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+  }
+
+  .portal-tagline {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
     font-weight: 300;
     color: var(--color-text-primary);
     letter-spacing: 0.05em;
-    margin-bottom: var(--spacing-md);
+    margin-top: var(--spacing-md);
   }
 
-  .overview-text {
+  .portal-description {
     font-size: clamp(1rem, 2vw, 1.25rem);
-    color: var(--color-text-body);
+    color: var(--color-text-secondary);
+    max-width: 40rem;
+    margin: var(--spacing-md) auto 0;
     line-height: 1.8;
-    max-width: 60rem;
-    margin: 0 auto;
   }
 
-  /* Requirements Section */
-  .requirements-section {
-    background: var(--color-mist-lightest);
+  /* Products Section */
+  .products-section {
+    background: linear-gradient(
+      180deg,
+      var(--color-mist-medium) 0%,
+      var(--color-mist-light) 100%
+    );
+    position: relative;
   }
 
-  .requirements-content {
-    max-width: 48rem;
-    margin: 0 auto;
+  .section-header {
     text-align: center;
+    margin-bottom: var(--spacing-2xl);
   }
 
-  .requirements-title {
+  .section-title {
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: 400;
-    color: var(--color-text-primary);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300;
     letter-spacing: 0.05em;
-    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
   }
 
-  .requirements-list {
-    list-style: none;
-    padding: 0;
+  .section-subtitle {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.1em;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  /* Product Card */
+  .product-card {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
-    align-items: center;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .requirements-list li {
-    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .product-card-coming {
+    opacity: 0.6;
+  }
+
+  .product-card-coming:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+  }
+
+  .product-image-wrapper {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    background: var(--color-mist-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+  }
+
+  .product-card:hover .product-image {
+    transform: scale(1.05);
+  }
+
+  .coming-soon-image {
+    background: linear-gradient(
+      135deg,
+      var(--color-mist-light) 0%,
+      var(--color-mist-medium) 100%
+    );
+  }
+
+  .coming-soon-icon {
+    width: 4rem;
+    height: 4rem;
+    color: var(--color-accent-primary);
+    opacity: 0.4;
+  }
+
+  .product-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .product-name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+  }
+
+  .product-tagline {
+    font-size: 0.875rem;
+    color: var(--color-accent-primary);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .product-description {
+    font-size: 0.95rem;
     color: var(--color-text-body);
-    line-height: 1.6;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .product-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-accent-primary);
+    margin-top: 0.5rem;
+  }
+
+  .link-arrow {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.2s ease;
+  }
+
+  .product-card:hover .link-arrow {
+    transform: translateX(4px);
   }
 
   /* CTA Section */
-  .cta-section {
+  .portal-cta {
     background: linear-gradient(
       180deg,
       var(--color-mist-medium) 0%,
@@ -144,8 +370,7 @@ const metaDescription =
     overflow: hidden;
   }
 
-  /* Subtle rain in CTA background */
-  .cta-section::before {
+  .portal-cta::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -170,26 +395,40 @@ const metaDescription =
     font-weight: 300;
     color: var(--color-text-primary);
     letter-spacing: 0.05em;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
   }
 
   .cta-subtitle {
     font-size: clamp(1rem, 2vw, 1.25rem);
     color: var(--color-text-body);
-    max-width: 40rem;
-    margin: 0 auto var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
   }
 
   .cta-buttons {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     gap: var(--spacing-sm);
-    align-items: center;
-
-    @media (min-width: 640px) {
-      flex-direction: row;
-      justify-content: center;
-    }
   }
 
+  @media (max-width: 640px) {
+    .portal-hero {
+      min-height: 60vh;
+    }
+  }
 </style>
+
+<script>
+  // Intersection Observer for fade-in animations
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+  );
+
+  document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
+</script>

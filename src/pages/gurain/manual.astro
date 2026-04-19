@@ -2,11 +2,11 @@
 // Manual Page for GuRain
 // User manual with table of contents and detailed sections
 
-import BaseLayout from "../layouts/BaseLayout.astro";
-import ManualSection from "../components/ManualSection.astro";
-import ManualSubSection from "../components/ManualSubSection.astro";
-import ParameterTable from "../components/ParameterTable.astro";
-import RainEffect from "../components/RainEffect.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ManualSection from "../../components/ManualSection.astro";
+import ManualSubSection from "../../components/ManualSubSection.astro";
+import ParameterTable from "../../components/ParameterTable.astro";
+import RainEffect from "../../components/RainEffect.astro";
 
 const metaDescription =
   "GuRainグラニュラシンセサイザーの詳細な使用マニュアル。グローバルパラメータ、グレインエンジン、LFO機能、使用例、トラブルシューティングを網羅。";
@@ -136,7 +136,7 @@ const lfoParameters = [
 ];
 ---
 
-<BaseLayout title="GuRain 使用マニュアル">
+<BaseLayout title="GuRain 使用マニュアル" ogDescription={metaDescription}>
   <meta name="description" content={metaDescription} />
   <div class="manual-page relative">
     <RainEffect />
