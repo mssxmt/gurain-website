@@ -19,6 +19,22 @@ const metaDescription =
   <!-- Hero Section -->
   <Hero />
 
+  <!-- YouTube Video Section -->
+  <section class="video-section section-spacing-sm">
+    <div class="container">
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/iPiemqatJV4"
+          title="GuRain - グラニュラーシンセサイザー"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
   <!-- App Overview Section -->
   <section class="overview-section section-spacing-sm">
     <div class="container">
@@ -71,6 +87,34 @@ const metaDescription =
 </BaseLayout>
 
 <style>
+  /* Video Section */
+  .video-section {
+    background: linear-gradient(
+      180deg,
+      var(--color-mist-medium) 0%,
+      var(--color-mist-lightest) 100%
+    );
+  }
+
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 56rem;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .video-wrapper iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
   /* Overview Section */
   .overview-section {
     background: var(--color-mist-lightest);
