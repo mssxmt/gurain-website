@@ -1,0 +1,196 @@
+---
+// Release Notes Page for GuRain
+// Version history and changelog
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RainEffect from '../../components/RainEffect.astro';
+
+const metaDescription = 'GuRainグラニュラーシンセサイザーのリリースノート。バージョンごとの更新履歴と変更内容。';
+
+const releases = [
+  {
+    version: "v1.1.3",
+    title: "パフォーマンス＆リアルタイム応答性修正",
+    date: "2026年4月20日",
+    changes: [
+      "DSP/メインスレッド競合によるブロッキング解消",
+      "パラメータ変更が即座にビジュアライゼーションに反映",
+      "スライダードラッグ中も雲・雨アニメーションが継続",
+    ],
+  },
+  {
+    version: "v1.1.2",
+    title: "安定性向上",
+    date: "2026年4月",
+    changes: [
+      "オーディオデバイス変更時の復旧処理",
+      "MIDI入力ハンドリング修正",
+    ],
+  },
+  {
+    version: "v1.1.1",
+    title: "MIDI入力ソース選択修正",
+    date: "2026年4月",
+    changes: [
+      "メニューバーからMIDIデバイス切替",
+    ],
+  },
+  {
+    version: "v1.1.0",
+    title: "出力デバイス切替追加",
+    date: "2026年4月",
+    changes: [
+      "メニューバーからオーディオ出力先切替",
+    ],
+  },
+  {
+    version: "v1.0",
+    title: "初期リリース",
+    date: "2026年4月",
+    changes: [],
+  },
+];
+---
+
+<BaseLayout title="リリースノート - GuRain" ogDescription={metaDescription}>
+  <meta name="description" content={metaDescription} />
+  <div class="releases-page relative">
+    <RainEffect />
+    <!-- Page Title -->
+    <div class="page-header relative z-10">
+      <h1 class="page-title">リリースノート</h1>
+      <p class="page-subtitle">GuRainのバージョン更新履歴</p>
+    </div>
+
+    <!-- Release List -->
+    <article class="releases-content relative z-10">
+      {releases.map((release) => (
+        <section class="release-section">
+          <div class="release-header">
+            <h2 class="release-version">{release.version}</h2>
+            <span class="release-date">{release.date}</span>
+          </div>
+          <p class="release-title">{release.title}</p>
+          {release.changes.length > 0 && (
+            <ul class="release-changes">
+              {release.changes.map((change) => (
+                <li>{change}</li>
+              ))}
+            </ul>
+          )}
+        </section>
+      ))}
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .releases-page {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md);
+    min-height: 100vh;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300;
+    color: var(--color-text-primary);
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .page-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+  }
+
+  .releases-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .release-section {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    padding: var(--spacing-lg) var(--spacing-xl);
+  }
+
+  .release-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    flex-wrap: wrap;
+  }
+
+  .release-version {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .release-date {
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .release-title {
+    font-size: 1.125rem;
+    color: var(--color-accent-primary);
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .release-changes {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .release-changes li {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .release-changes li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent-primary);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 640px) {
+    .releases-page {
+      padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .release-section {
+      padding: var(--spacing-md);
+    }
+
+    .release-version {
+      font-size: 1.25rem;
+    }
+  }
+</style>
