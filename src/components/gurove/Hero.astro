@@ -1,0 +1,152 @@
+---
+// Hero — brand mark + tagline + product screenshot.
+// The live generative grid has been swapped for a still hero image
+// (gurove-top.png) per request; GenerativeGrid.astro is retained for reuse.
+---
+
+<section class="g-hero">
+  <!-- ambient: faint step-grid lines, the machine's face -->
+  <div class="g-hero__bg" aria-hidden="true"></div>
+  <div class="g-scanlines" aria-hidden="true"></div>
+
+  <div class="g-container g-hero__inner">
+    <h1 class="g-hero__title g-display g-reveal">GuRove</h1>
+    <p class="g-hero__subtitle g-reveal">
+      ジェネラティブ・パーカッション・シンセサイザー
+    </p>
+
+    <p class="g-lead g-hero__lead g-reveal">
+      8つの声が自律的に歩き回り、9つのアルゴリズムがリズムを紡ぎ出す。<br />
+      ドラムマシンとしても、8マルチティンバーのシンセとしても。
+    </p>
+
+    <p class="g-hero__seed g-mono g-reveal">
+      同じ seed を与えれば、同じ進化が始まる。
+    </p>
+
+    <div class="g-hero__cta g-reveal">
+      <a class="g-btn g-btn--primary g-btn--lg" href="#download">ダウンロード</a>
+      <a class="g-btn g-btn--ghost g-btn--lg" href="#features">機能を見る</a>
+    </div>
+
+    <div class="g-hero__image g-reveal">
+      <img
+        src="/images/gurove-top.png"
+        alt="GuRove — ジェネラティブ・パーカッション・シンセサイザー"
+        loading="eager"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .g-hero {
+    position: relative;
+    overflow: hidden;
+    padding-top: clamp(3rem, 8vw, 6rem);
+    padding-bottom: clamp(4rem, 10vw, 7rem);
+  }
+
+  .g-hero__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 50% at 50% 0%, rgba(239, 161, 60, 0.10), transparent 70%),
+      radial-gradient(50% 40% at 80% 30%, rgba(63, 217, 168, 0.06), transparent 70%);
+  }
+  /* faint vertical step grid — the sequencer columns, barely there */
+  .g-hero__bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent calc(100% / 16 - 1px),
+      rgba(236, 231, 220, 0.02) calc(100% / 16 - 1px),
+      rgba(236, 231, 220, 0.02) calc(100% / 16)
+    );
+    mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+  }
+
+  .g-hero__inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  /* Brand wordmark — large, lit in ember, with a soft halo */
+  .g-hero__title {
+    font-size: clamp(4rem, 12vw, 7.5rem);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    margin: 0.5rem 0 0;
+    color: var(--g-ember);
+    text-shadow: 0 0 60px rgba(239, 161, 60, 0.25);
+  }
+
+  /* Tagline — same display family, lighter weight, dimmer */
+  .g-hero__subtitle {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2.4vw, 1.7rem);
+    font-weight: 300;
+    color: var(--g-bone-dim);
+    letter-spacing: 0.06em;
+    margin: 0;
+  }
+
+  .g-hero__lead {
+    margin-inline: auto;
+    text-align: center;
+    max-width: 34rem;
+  }
+
+  .g-hero__seed {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    color: var(--g-ash);
+  }
+  .g-hero__seed::before { content: "↳ "; color: var(--g-ember); }
+
+  .g-hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  /* Product screenshot — framed like a brushed-metal panel */
+  .g-hero__image {
+    width: 100%;
+    max-width: 72rem;
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+    border: 1px solid var(--g-rule);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+    position: relative;
+  }
+  .g-hero__image::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(236, 231, 220, 0.14), transparent);
+  }
+  .g-hero__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 640px) {
+    .g-hero__subtitle { letter-spacing: 0.03em; }
+  }
+</style>

@@ -1,0 +1,130 @@
+---
+// PresetGallery — all 40 factory presets, grouped into 6 categories.
+// Names are the actual factory lineup (per product spec).
+
+interface Group {
+  label: string
+  variant: 'std' | 'exp'   // std → mycelium dot, exp → ember dot
+  presets: string[]
+}
+
+const groups: Group[] = [
+  {
+    label: 'Init · デフォルト · 1',
+    variant: 'std',
+    presets: ['Init'],
+  },
+  {
+    label: 'Standard Drums · 標準ドラム · 17',
+    variant: 'std',
+    presets: [
+      'Warehouse Techno', 'Detroit Techno', 'Hypnotic Techno',
+      'Classic House', 'Deep House', 'Tech House',
+      'Boom Bap', 'Trap',
+      'Liquid DnB', 'Neuro DnB', 'Big Beat Breaks',
+      'Electro', 'Industrial / EBM', 'IDM / Glitch', 'Ambient Perc',
+      'Gurove Techno', 'Gurove Techno 2',
+    ],
+  },
+  {
+    label: 'Experimental · エクスペリメンタル · 12',
+    variant: 'exp',
+    presets: [
+      'Stochastic Glitch', 'Cellular Drone', 'Chance Music',
+      'Markov Meltdown', 'Turing Field', 'Wolfram Jungle',
+      'Lorenz Drift', 'Granular Mist', 'Brownian Bass',
+      'Conway Pulse', 'Markov Lullaby', 'Entropic Noise',
+    ],
+  },
+  {
+    label: 'Melodious · メロディアス · 2',
+    variant: 'std',
+    presets: ['Kalimba Melody', 'Ambient Drone'],
+  },
+  {
+    label: 'Beatless · ビートレス · 8',
+    variant: 'exp',
+    presets: [
+      'Glass Harp', 'Music Box', 'Starscape', 'Tape Loops',
+      'Forest Bell', 'Tide Drone', 'Crystal Rain', 'Night Garden',
+    ],
+  },
+]
+---
+
+<section class="g-section" id="presets">
+  <div class="g-container">
+    <header class="g-reveal g-presets__head">
+      <p class="g-eyebrow">§07 · Presets</p>
+      <h2 class="g-display g-presets__title">40の<span class="g-strike">音</span></h2>
+      <p class="g-lead g-presets__lead">
+        起動と同時に、鳴らせる状態で届く40種類のファクトリープリセット。
+        それぞれに seed が刻まれており、同じグルーヴをいつでも再現できる。
+      </p>
+    </header>
+
+    <div class="g-presets g-reveal">
+      {groups.map((g) => (
+        <div class="g-presets__group">
+          <p class="g-presets__label"><span class="g-mono">{g.label}</span></p>
+          <div class="g-presets__chips">
+            {g.presets.map((name) => (
+              <span class={`g-chip${g.variant === 'exp' ? ' g-chip--exp' : ''}`}>{name}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <p class="g-mono g-presets__footnote g-reveal">
+      + ユーザープリセット（.gurove）で、あなただけの設定を保存・共有。
+    </p>
+  </div>
+</section>
+
+<style>
+  .g-presets__head {
+    text-align: center;
+    max-width: 42rem;
+    margin: 0 auto clamp(2.5rem, 6vw, 4rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .g-presets__title { font-size: clamp(2.4rem, 7vw, 4.5rem); }
+  .g-presets__lead { text-align: center; }
+
+  .g-presets {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.75rem, 4vw, 2.75rem);
+    max-width: 60rem;
+    margin-inline: auto;
+  }
+  .g-presets__group {
+    border-top: 1px solid var(--g-rule-soft);
+    padding-top: 1.25rem;
+  }
+  .g-presets__label {
+    color: var(--g-ash);
+    font-size: 0.78rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.04em;
+  }
+  .g-presets__label .g-mono {
+    color: var(--g-bone);
+    letter-spacing: 0.12em;
+    font-size: 0.8rem;
+  }
+  .g-presets__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+  .g-presets__footnote {
+    text-align: center;
+    margin-top: clamp(2rem, 4vw, 3rem);
+    font-size: 0.8rem;
+  }
+</style>

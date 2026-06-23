@@ -1,0 +1,163 @@
+---
+// AlgorithmShowcase — the core USP. Nine algorithms, described faithfully
+// against Source/seq/* implementations.
+//
+// Properties (from the C++ source):
+//   Euclidean       — seed ignored, loop ignored. Pure (hits, offset).
+//   ProbDensity     — seed + loopCounter → new pattern every loop.
+//   LFSR            — seed + loopCounter phase advance → endless sequence.
+//   Markov          — seed + loopCounter → different evolution per loop.
+//   CellularAutomaton — seed ignored, but loopCounter advances generation.
+//   RandomWalk      — seed + loopCounter → different path per loop.
+//   Kick/Snare/Hihat — seed % 8 selects one of 8 fixed variants.
+//
+// So only Euclidean is truly static. CA is "evolving" (no seed, but it
+// changes every loop). The rest regenerate every loop. seed is the start
+// of the evolution series, not a frozen pattern.
+
+interface Algo {
+  tag: string
+  name: string
+  pattern: number[]
+  accent: boolean
+  desc: string
+}
+
+const algorithms: Algo[] = [
+  {
+    tag: 'static',
+    name: 'Euclidean',
+    accent: false,
+    pattern: [1,0,0,0,1,0,0,1,0,0,1,0,0,1,0,0],
+    desc: 'Bjorklundの均等分布。hitsとoffsetだけで決まり、seedもループも関係ない、最も公平な配置。',
+  },
+  {
+    tag: 'generative',
+    name: 'ProbDensity',
+    accent: false,
+    pattern: [1,0,1,1,0,1,0,1,0,1,1,0,1,0,1,0],
+    desc: '各ステップが独立した確率で鳴る。ループのたびに、densityに応じた新しいパターンが生まれる。',
+  },
+  {
+    tag: 'generative',
+    name: 'LFSR',
+    accent: false,
+    pattern: [1,0,0,1,1,0,1,1,1,0,0,1,0,1,1,0],
+    desc: 'ガロアLFSRの擬似乱数。ループごとに位相が進み、終わりのないシーケンスが流れる。',
+  },
+  {
+    tag: 'generative',
+    name: 'Markov',
+    accent: false,
+    pattern: [0,1,0,0,1,1,0,1,0,0,1,0,1,1,0,1],
+    desc: '直近Nステップを記憶し、次を予測する。ループごとに、記憶から導かれる違った展開。',
+  },
+  {
+    tag: 'evolving',
+    name: 'Cellular Automaton',
+    accent: true,
+    pattern: [0,0,0,1,1,1,0,1,1,0,1,0,1,0,0,1],
+    desc: 'Wolframの規則で細胞が分裂。seedは要らない — ループごとに世代が進み、ruleだけが形を決める。',
+  },
+  {
+    tag: 'generative',
+    name: 'Random Walk',
+    accent: true,
+    pattern: [0,0,1,0,0,0,1,0,0,1,0,0,0,0,1,0],
+    desc: '歩き回るカーソルが音を置く。ループごとに、違う道を歩く。',
+  },
+  {
+    tag: 'seeded · 8 variants',
+    name: 'Kick',
+    accent: false,
+    pattern: [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
+    desc: '8つのキックパターンから、seedが1つを選ぶ。',
+  },
+  {
+    tag: 'seeded · 8 variants',
+    name: 'Snare',
+    accent: false,
+    pattern: [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+    desc: '8つのスネアパターンから、seedが1つを選ぶ。',
+  },
+  {
+    tag: 'seeded · 8 variants',
+    name: 'Hihat',
+    accent: false,
+    pattern: [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+    desc: '8つのハイハットパターンから、seedが1つを選ぶ。',
+  },
+]
+---
+
+<section class="g-section" id="algorithms">
+  <div class="g-container">
+    <header class="g-showcase__head g-reveal">
+      <p class="g-eyebrow">§02 · Code That Grooves</p>
+      <h2 class="g-display g-showcase__title">9つの<span class="g-strike">算法</span></h2>
+      <p class="g-lead g-showcase__lead">
+        チャンネルごとに異なるアルゴリズムがリズムを生成する。
+        ループのたびにパターンは生まれ変わる — seqSeed はその始点で、同じ seed を与えれば、同じ進化がもう一度始まる。
+      </p>
+    </header>
+
+    <div class="g-showcase__grid">
+      {algorithms.map((algo) => (
+        <article class={`g-algo g-reveal${algo.accent ? ' g-algo--accent' : ''}`}>
+          <p class="g-algo__tag">{algo.tag}</p>
+          <h3 class="g-algo__name">{algo.name}</h3>
+          <div class="g-algo__mini" aria-hidden="true">
+            {algo.pattern.map((v) => (
+              <span class={`g-cell${v ? ' is-on' : ''}${algo.accent ? ' g-cell--accent' : ''}`}></span>
+            ))}
+          </div>
+          <p class="g-algo__desc">{algo.desc}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="g-showcase__note g-reveal">
+      <hr class="g-rule" />
+      <p class="g-mono">
+        seqFreeze で好みのフレーズを固定 / Regenerate で seed を再抽選 — 進化を止め、あるいは別の進化へ。
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .g-showcase__head {
+    text-align: center;
+    max-width: 44rem;
+    margin: 0 auto clamp(2.5rem, 6vw, 4rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .g-showcase__title {
+    font-size: clamp(2.4rem, 7vw, 4.5rem);
+  }
+  .g-showcase__lead { text-align: center; }
+
+  .g-showcase__grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) {
+    .g-showcase__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .g-showcase__grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .g-algo--accent { border-color: rgba(63, 217, 168, 0.25); }
+
+  .g-showcase__note {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    text-align: center;
+  }
+  .g-showcase__note .g-rule { margin-bottom: 1.25rem; max-width: 24rem; margin-inline: auto; }
+  .g-showcase__note p { font-size: 0.82rem; color: var(--g-ash); }
+</style>

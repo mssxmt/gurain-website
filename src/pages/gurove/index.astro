@@ -1,0 +1,246 @@
+---
+// GuRove — product landing page at /gurove/
+// Sibling of /gurain/ on the same domain. Dark "Industrial Groove" theme.
+import GuRoveLayout from "../../layouts/GuRoveLayout.astro";
+import Hero from "../../components/gurove/Hero.astro";
+import AlgorithmShowcase from "../../components/gurove/AlgorithmShowcase.astro";
+import FeatureRow from "../../components/gurove/FeatureRow.astro";
+import PresetGallery from "../../components/gurove/PresetGallery.astro";
+
+const stats = [
+  { num: "8", label: "Channels" },
+  { num: "16", label: "Voices" },
+  { num: "9", label: "Algorithms" },
+  { num: "40", label: "Presets" },
+  { num: "33", label: "Themes" },
+];
+---
+
+<GuRoveLayout title="GuRove — ジェネラティブ・パーカッション・シンセサイザー">
+  <!-- HERO -->
+  <Hero />
+
+  <!-- §01 INTRO + STATS -->
+  <section class="g-section g-section--tight" id="overview">
+    <div class="g-container">
+      <div class="g-intro g-reveal">
+        <p class="g-index">§01</p>
+        <h2 class="g-display g-intro__title">
+          生まれては、<span class="g-strike">変わる。</span>
+        </h2>
+        <p class="g-lead g-intro__lead">
+          1小節ごとに姿を変えるビート。手で打ち込むのではなく、アルゴリズムに任せる。
+          GuRove は、8マルチティンバーのジェネラティブ・シンセサイザーだ。
+          ドラムの骨格から、ベース、メロディ、ドローンまで —
+          8チャンネルの声がそれぞれ独自の算法を持ち、進化し続ける。
+        </p>
+      </div>
+
+      <div class="g-stats g-reveal">
+        {
+          stats.map((s) => (
+            <div class="g-stat">
+              <div class="g-stat__num">{s.num}</div>
+              <div class="g-stat__label">{s.label}</div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <hr class="g-rule" />
+
+  <!-- §02 ALGORITHMS -->
+  <AlgorithmShowcase />
+
+  <hr class="g-rule" />
+
+  <!-- §03–06 FEATURES (zig-zag) -->
+  <section class="g-section" id="features">
+    <div class="g-container g-features">
+      <FeatureRow
+        index="§03"
+        eyebrow="Voice · Synth Engine"
+        title="音を作る"
+        description="PolyBLEP で帯域制限された4波形のオシレータに、FM/AM/RM/Sync の変調、ノイズ、クリック、SVF フィルタ、Drive と Punch を重ねる。1チャンネルが1つの完全なシンセボイス — ドラムのパンチから、ベースのうねり、ドローンの持続まで。"
+        points={[
+          "8マルチティンバー — ドラムにも、メロディ楽器にも",
+          "PolyBLEP オシレータ — sine / tri / saw / square",
+          "FM · AM · RM · Sync 変調（FM/Sync は2× オーバーサンプリング）",
+          "ピッチ AHDC エンベロープ — キックの胴鳴り下降",
+          "SVF ローパス · Drive · Punch トランジェント",
+        ]}
+        placeholderLabel="Oscillator / FM Section"
+        imageSrc="/images/gurove-osc.png"
+      />
+
+      <div class="g-features__gap"></div>
+
+      <FeatureRow
+        index="§04"
+        eyebrow="FX · Effects"
+        title="空間と、刻み"
+        description="チャンネルごとの Stutter と、マスターが一括で刻む Stutter。奥行きは Reverb と Tape-style Delay が担い、最後は Brickwall Limiter が暴走を防ぐ。"
+        points={[
+          "グローバル Reverb · Tape Delay（Sync/Free）",
+          "チャンネル Stutter · マスター Stutter",
+          "Master Brickwall Limiter（アンチクリップ）",
+          "ch 毎 Reverb/Delay Send",
+        ]}
+        placeholderLabel="Reverb / Delay / Stutter"
+        reverse={true}
+        imageSrc="/images/gurove-fx.png"
+      />
+
+      <div class="g-features__gap"></div>
+
+      <FeatureRow
+        index="§05"
+        eyebrow="MIDI · Sync"
+        title="息を合わせる"
+        description="外部の MIDI クロックで走り、ノブはすべて CC/NRPN に割り当てられる。ジェネラティブに生成したシーケンスを、MIDI Out で外の世界へ送ることもできる。"
+        points={[
+          "MIDI Learn — CC / NRPN（全パラメータ）",
+          "外部 MIDI クロック同期（サンプルアキュレート）",
+          "MIDI Note で pitch を演奏 · シーケンス出力",
+          "Virtual MIDI（IAC Driver / Network MIDI）",
+        ]}
+        placeholderLabel="MIDI Panel"
+        imageSrc="/images/gurove-midi.png"
+      />
+
+      <div class="g-features__gap"></div>
+
+      <FeatureRow
+        index="§06"
+        eyebrow="Theme · Color System"
+        title="33の色彩"
+        description="真空管の琥珀から、クリスタルの冷たい青まで。UI のすべての色がテーマとして定義され、ノブひとつでリアルタイムに切り替わる。見た目も、楽器の一部。"
+        points={[
+          "内蔵33テーマ（dark_808 / dark_modern / light_classic …）",
+          "リアルタイム切替 — 再起動不要",
+          "ノブからLEDまで、すべてが調和して切り替わる",
+        ]}
+        placeholderLabel="Theme Selector"
+        reverse={true}
+        imageSrc="/images/gurove-theme.png"
+      />
+    </div>
+  </section>
+
+  <hr class="g-rule" />
+
+  <!-- §07 PRESETS -->
+  <PresetGallery />
+
+  <hr class="g-rule" />
+
+  <!-- DOWNLOAD / SYSTEM -->
+  <section class="g-section" id="download">
+    <div class="g-container">
+      <div class="g-download g-reveal">
+        <p class="g-eyebrow">Get GuRove</p>
+        <h2 class="g-display g-download__title">
+          さあ、<span class="g-strike">鳴らそう</span>。
+        </h2>
+        <p class="g-lead" style="margin-inline:auto;">
+          macOS 14+ · Apple Silicon。DAW を立ち上げずに、アプリ単体で。
+        </p>
+
+        <div class="g-download__cta">
+          <a class="g-btn g-btn--primary g-btn--lg" href="#">ダウンロード</a>
+          <a class="g-btn g-btn--ghost g-btn--lg" href="/gurain/"
+            >前作 GuRain を見る</a
+          >
+        </div>
+
+        <div class="g-download__sys">
+          <span class="g-mono">SYSTEM</span>
+          <span>macOS 14 以上</span>
+          <span>·</span>
+          <span>Apple Silicon（M1 以降）</span>
+          <span>·</span>
+          <span>Standalone</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</GuRoveLayout>
+
+<style>
+  /* §01 intro */
+  .g-intro {
+    text-align: center;
+    max-width: 44rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .g-intro__title {
+    font-size: clamp(2.4rem, 7vw, 4.5rem);
+  }
+  .g-intro__lead {
+    text-align: center;
+  }
+
+  .g-stats {
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 1rem;
+    text-align: center;
+  }
+  @media (min-width: 768px) {
+    .g-stats {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  /* features container spacing between rows */
+  .g-features {
+    display: flex;
+    flex-direction: column;
+  }
+  .g-features__gap {
+    height: clamp(3rem, 7vw, 5.5rem);
+  }
+
+  /* download */
+  .g-download {
+    text-align: center;
+    max-width: 40rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .g-download__title {
+    font-size: clamp(2.4rem, 7vw, 4.5rem);
+  }
+  .g-download__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  .g-download__sys {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.78rem;
+    color: var(--g-ash);
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
+  }
+  .g-download__sys .g-mono {
+    color: var(--g-ember);
+  }
+</style>
