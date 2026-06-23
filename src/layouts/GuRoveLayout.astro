@@ -1,0 +1,314 @@
+---
+// GuRoveLayout — dark "Industrial Groove" chrome for /gurove/*
+// Sibling of BaseLayout (same structure: fixed header + footer +
+// Props-driven nav), transposed onto the drum machine's night palette.
+// Does NOT touch GuRain's BaseLayout or global mist theme.
+//
+// CSS is pulled in via frontmatter imports (Vite's standard module path),
+// not <style is:global>@import — the latter collides with Tailwind v4's
+// postcss pipeline. global.css provides shared utilities; gurove-theme.css
+// is scoped to body.gurove so GuRain pages keep their mist theme.
+import '../styles/global.css';
+import '../styles/gurove-theme.css';
+
+interface NavItem { name: string; href: string }
+
+interface Props {
+  title: string
+  navItems?: NavItem[]
+  footerLinks?: NavItem[]
+  copyrightText?: string
+  ogDescription?: string
+  purchaseUrl?: string
+}
+
+const {
+  title,
+  navItems = [
+    { name: "機能", href: "#features" },
+    { name: "アルゴリズム", href: "#algorithms" },
+    { name: "プリセット", href: "#presets" },
+  ],
+  footerLinks = [
+    { name: "GuRain", href: "/gurain/" },
+    { name: "MSSXMTxLAB", href: "/" },
+  ],
+  copyrightText = "2026 GuRove",
+  ogDescription = "GuRove — 8マルチティンバーのジェネラティブ・シンセサイザー。9つのアルゴリズムが自律的にビートを生成し、seedで完全再現するmacOSネイティブのドラムマシン。",
+  purchaseUrl = "",
+} = Astro.props
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={ogDescription} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={ogDescription} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- GuRove favicons (page-scoped; GuRain keeps its own) -->
+    <link rel="icon" type="image/png" href="/gurove/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/gurove/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" href="/gurove/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/gurove/apple-touch-icon.png" />
+    <link rel="manifest" href="/gurove/site.webmanifest" />
+    <meta name="theme-color" content="#0e1014" />
+    <meta name="msapplication-config" content="/gurove/browserconfig.xml" />
+  </head>
+
+  <body class="gurove">
+    <!-- Sticky header — smoked glass on night -->
+    <header class="gurove-header">
+      <div class="gurove-header__inner">
+        <a href="/gurove/" class="gurove-logo" aria-label="GuRove home">
+          <span class="gurove-logo__mark" aria-hidden="true"></span>
+          <span class="gurove-logo__text">GuRove</span>
+        </a>
+
+        <nav class="gurove-nav" aria-label="Primary">
+          {navItems.map((item) => (
+            <a href={item.href} class="gurove-nav__link">{item.name}</a>
+          ))}
+          {purchaseUrl && (
+            <a href={purchaseUrl} target="_blank" rel="noopener" class="g-btn g-btn--primary gurove-nav__cta">
+              ダウンロード
+            </a>
+          )}
+        </nav>
+
+        <button id="gurove-menu-btn" class="gurove-menu-btn" aria-label="メニュー" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <div id="gurove-mobile-menu" class="gurove-mobile-menu" hidden>
+        {navItems.map((item) => (
+          <a href={item.href} class="gurove-mobile-menu__link">{item.name}</a>
+        ))}
+        {purchaseUrl && (
+          <a href={purchaseUrl} target="_blank" rel="noopener" class="g-btn g-btn--primary">ダウンロード</a>
+        )}
+      </div>
+    </header>
+
+    <main class="gurove-main">
+      <slot />
+    </main>
+
+    <footer class="gurove-footer">
+      <div class="gurove-footer__inner">
+        <div class="gurove-footer__brand">
+          <span class="gurove-logo__mark" aria-hidden="true"></span>
+          <span class="gurove-footer__name">GuRove</span>
+          <span class="gurove-footer__tag">Generative Drum Synthesizer</span>
+        </div>
+        <nav class="gurove-footer__nav" aria-label="Footer">
+          {footerLinks.map((link) => (
+            <a href={link.href} class="gurove-footer__link">{link.name}</a>
+          ))}
+        </nav>
+      </div>
+      <div class="gurove-footer__bottom">
+        &copy; {copyrightText} · MSSXMTxLAB
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu toggle
+      const btn = document.getElementById("gurove-menu-btn");
+      const menu = document.getElementById("gurove-mobile-menu");
+      btn?.addEventListener("click", () => {
+        const open = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", String(!open));
+        if (menu) menu.hidden = open;
+      });
+
+      // Reveal on scroll — scoped to .gurove
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add("is-visible");
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+      document.querySelectorAll(".gurove .g-reveal").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
+
+<style>
+  /* Header — smoked glass, hairline bottom */
+  .gurove-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: rgba(14, 16, 20, 0.72);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--g-rule);
+  }
+  .gurove-header__inner {
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  @media (min-width: 768px) {
+    .gurove-header__inner { padding-inline: 2rem; }
+  }
+
+  /* Logo — a lit cell + wordmark. Text logo (no image) reads more machine. */
+  .gurove-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+  .gurove-logo__mark {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: var(--g-ember);
+    box-shadow: 0 0 10px var(--g-ember-glow);
+  }
+  .gurove-logo__text {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    font-size: 1.15rem;
+    color: var(--g-bone);
+  }
+
+  .gurove-nav {
+    display: none;
+    align-items: center;
+    gap: 2rem;
+  }
+  @media (min-width: 860px) {
+    .gurove-nav { display: flex; }
+  }
+  .gurove-nav__link {
+    font-size: 0.875rem;
+    color: var(--g-bone-dim);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .gurove-nav__link:hover { color: var(--g-ember); }
+  .gurove-nav__cta { padding: 0.55rem 1.25rem; font-size: 0.85rem; }
+
+  .gurove-menu-btn {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  .gurove-menu-btn span {
+    width: 22px;
+    height: 2px;
+    background: var(--g-bone);
+    border-radius: 2px;
+  }
+  @media (min-width: 860px) {
+    .gurove-menu-btn { display: none; }
+  }
+
+  .gurove-mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--g-rule);
+    background: rgba(14, 16, 20, 0.95);
+  }
+  .gurove-mobile-menu[hidden] { display: none; }
+  @media (min-width: 860px) {
+    .gurove-mobile-menu { display: none !important; }
+  }
+  .gurove-mobile-menu__link {
+    color: var(--g-bone-dim);
+    text-decoration: none;
+    font-size: 1rem;
+  }
+
+  /* Main offset for fixed header */
+  .gurove-main { padding-top: 4rem; }
+
+  /* Footer */
+  .gurove-footer {
+    border-top: 1px solid var(--g-rule);
+    background: var(--g-asfalt-2);
+    padding: 3rem 1.25rem 2rem;
+  }
+  .gurove-footer__inner {
+    max-width: 80rem;
+    margin-inline: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 3rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .gurove-footer__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .gurove-footer__name {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--g-bone);
+  }
+  .gurove-footer__tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--g-ash);
+  }
+  .gurove-footer__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+  .gurove-footer__link {
+    color: var(--g-bone-dim);
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+  .gurove-footer__link:hover { color: var(--g-ember); }
+  .gurove-footer__bottom {
+    max-width: 80rem;
+    margin: 2rem auto 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--g-ash);
+    letter-spacing: 0.08em;
+  }
+</style>
