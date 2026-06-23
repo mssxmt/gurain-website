@@ -6,6 +6,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 const topFooterLinks = [
   { name: "GuRain", href: "/gurain/" },
+  { name: "GuRove", href: "/gurove/" },
 ];
 
 const metaDescription =
@@ -78,20 +79,30 @@ const metaDescription =
           </div>
         </a>
 
-        <!-- Coming Soon Card -->
-        <div class="product-card product-card-coming glass-card-light fade-in stagger-3">
-          <div class="product-image-wrapper coming-soon-image">
-            <svg class="coming-soon-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-            </svg>
+        <!-- GuRove Product Card -->
+        <a href="/gurove/" class="product-card glass-card-light fade-in stagger-3">
+          <div class="product-image-wrapper">
+            <img
+              src="/images/gurove-top.png"
+              alt="GuRove UI"
+              class="product-image"
+              loading="lazy"
+            />
           </div>
           <div class="product-content">
-            <h3 class="product-name">Coming Soon</h3>
+            <h3 class="product-name">GuRove</h3>
+            <p class="product-tagline">ジェネラティブ・パーカッション・シンセサイザー</p>
             <p class="product-description">
-              新しいプロダクトを開発中です。お楽しみに。
+              8つの声が自律的に歩き回り、9つのアルゴリズムがリズムを紡ぎ出す。ドラムマシンとしても、8マルチティンバーのシンセとしても。
             </p>
+            <div class="product-link">
+              詳細を見る
+              <svg class="link-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </section>
@@ -107,6 +118,9 @@ const metaDescription =
         <div class="cta-buttons fade-in stagger-2">
           <a href="/gurain/" class="btn btn-primary btn-lg">
             GuRain を見る
+          </a>
+          <a href="/gurove/" class="btn btn-secondary btn-lg">
+            GuRove を見る
           </a>
         </div>
       </div>
