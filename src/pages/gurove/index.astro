@@ -14,11 +14,14 @@ const stats = [
   { num: "40", label: "Presets" },
   { num: "33", label: "Themes" },
 ];
+
+const purchaseUrl =
+  "https://buy.polar.sh/polar_cl_LnE6jpDn8TK3iDlM91ZJ8A0YKFBKlkHQYDWxe3UhPzQ";
 ---
 
-<GuRoveLayout title="GuRove — ジェネラティブ・パーカッション・シンセサイザー">
+<GuRoveLayout title="GuRove — ジェネラティブ・パーカッション・シンセサイザー" purchaseUrl={purchaseUrl}>
   <!-- HERO -->
-  <Hero />
+  <Hero purchaseUrl={purchaseUrl} />
 
   <!-- §01 INTRO + STATS -->
   <section class="g-section g-section--tight" id="overview">
@@ -149,7 +152,7 @@ const stats = [
         </p>
 
         <div class="g-download__cta">
-          <a class="g-btn g-btn--primary g-btn--lg" href="#">ダウンロード</a>
+          <a class="g-btn g-btn--primary g-btn--lg" href={purchaseUrl} target="_blank" rel="noopener">ダウンロード</a>
           <a class="g-btn g-btn--ghost g-btn--lg" href="/gurain/"
             >前作 GuRain を見る</a
           >

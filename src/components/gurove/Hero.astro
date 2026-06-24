@@ -2,6 +2,9 @@
 // Hero — brand mark + tagline + product screenshot.
 // The live generative grid has been swapped for a still hero image
 // (gurove-top.png) per request; GenerativeGrid.astro is retained for reuse.
+
+interface Props { purchaseUrl?: string }
+const { purchaseUrl = "#download" } = Astro.props
 ---
 
 <section class="g-hero">
@@ -25,7 +28,7 @@
     </p>
 
     <div class="g-hero__cta g-reveal">
-      <a class="g-btn g-btn--primary g-btn--lg" href="#download">ダウンロード</a>
+      <a class="g-btn g-btn--primary g-btn--lg" href={purchaseUrl} target="_blank" rel="noopener">ダウンロード</a>
       <a class="g-btn g-btn--ghost g-btn--lg" href="#features">機能を見る</a>
     </div>
 
