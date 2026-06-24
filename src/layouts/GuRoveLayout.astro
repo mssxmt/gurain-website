@@ -35,8 +35,14 @@ const {
   ],
   copyrightText = "2026 GuRove",
   ogDescription = "GuRove — 8マルチティンバーのジェネラティブ・シンセサイザー。9つのアルゴリズムが自律的にビートを生成し、seedで完全再現するmacOSネイティブのドラムマシン。",
+  ogImage = "/images/gurove-top.png",
   purchaseUrl = "",
 } = Astro.props
+
+// Absolute URLs for SEO (canonical, OG, JSON-LD)
+const siteOrigin = Astro.site ?? new URL("https://lab.mssxmt.com");
+const canonicalURL = new URL(Astro.url.pathname, siteOrigin).href;
+const ogImageURL = new URL(ogImage, siteOrigin).href;
 ---
 
 <!DOCTYPE html>
@@ -47,15 +53,33 @@ const {
     <title>{title}</title>
     <meta name="description" content={ogDescription} />
 
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalURL} />
+
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={ogDescription} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content="ja_JP" />
+    <meta property="og:site_name" content="GuRove" />
+    <meta property="og:image" content={ogImageURL} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={ogDescription} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Structured data (rich results) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "GuRove",
+      "applicationCategory": "MusicApplication",
+      "operatingSystem": "macOS 14+, Apple Silicon",
+      "description": ogDescription,
+      "url": canonicalURL,
+      "image": ogImageURL
+    })} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
