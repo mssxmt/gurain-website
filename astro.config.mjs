@@ -3,6 +3,6 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://gurain.example.com',
+  site: 'https://lab.mssxmt.com',
   output: 'static',
 });

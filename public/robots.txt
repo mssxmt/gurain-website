@@ -1,0 +1,12 @@
+# Robots.txt - GuRain Official Website
+# Allow all crawlers
+
+User-agent: *
+Allow: /
+
+# Disallow specific paths if any
+# Disallow: /private/
+# Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://lab.mssxmt.com/sitemap.xml
