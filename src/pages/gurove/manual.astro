@@ -1,0 +1,424 @@
+---
+// GuRove — user manual at /gurove/manual/
+// Three parts (Global Header / Master / Channel), each split into
+// labeled sub-sections. Parameters follow SPECIFICATION v0.5 §4/§5/§8/§9.
+import GuRoveLayout from "../../layouts/GuRoveLayout.astro";
+import ManualSection from "../../components/gurove/ManualSection.astro";
+import ManualSubSection from "../../components/gurove/ManualSubSection.astro";
+import ParameterTable from "../../components/gurove/ParameterTable.astro";
+
+const purchaseUrl =
+  "https://buy.polar.sh/polar_cl_LnE6jpDn8TK3iDlM91ZJ8A0YKFBKlkHQYDWxe3UhPzQ";
+
+const metaDescription =
+  "GuRove マニュアル。グローバルヘッダー、マスターch、チャンネル(Ch1-8)の全機能とパラメータを解説。";
+
+const toc = [
+  {
+    group: "グローバルヘッダー",
+    items: [
+      { name: "Preset Browser", href: "#preset" },
+      { name: "MIDI Panel", href: "#midi" },
+      { name: "Theme Selector", href: "#theme" },
+      { name: "出力ソース切り替え", href: "#output-source" },
+    ],
+  },
+  {
+    group: "マスター ch (Ch9)",
+    items: [
+      { name: "Transport", href: "#transport" },
+      { name: "Output", href: "#master-output" },
+      { name: "Master Stutter", href: "#master-stutter" },
+      { name: "Reverb", href: "#reverb" },
+      { name: "Delay", href: "#delay" },
+    ],
+  },
+  {
+    group: "チャネル (Ch1-8)",
+    items: [
+      { name: "Pitch", href: "#pitch" },
+      { name: "Oscillator", href: "#oscillator" },
+      { name: "FM / Modulation", href: "#fm" },
+      { name: "Noise", href: "#noise" },
+      { name: "Amplitude Envelope", href: "#amp-env" },
+      { name: "Filter", href: "#filter" },
+      { name: "Drive / Punch", href: "#drive" },
+      { name: "Pan", href: "#pan" },
+      { name: "Stutter", href: "#ch-stutter" },
+      { name: "Output", href: "#ch-output" },
+      { name: "Send Level", href: "#send" },
+      { name: "Generative Sequencer", href: "#sequencer" },
+    ],
+  },
+];
+
+// ---- Global Header ----
+const presetParams = [
+  { name: "Factory Presets", range: "40種", description: "内蔵プリセット。Init 1 / 標準ドラム 17 / エクスペリメンタル 12 / メロディアス 2 / ビートレス 8。" },
+  { name: "User Presets", range: ".gurove", description: "ユーザー保存形式。独自の拡張子で保存・読み込み。" },
+  { name: "Save / Load", range: "—", description: "現在の全状態を保存、または一覧から読み込み。" },
+  { name: "Delete / Init", range: "—", description: "ユーザープリセットの削除、または初期状態へのリセット。" },
+  { name: "Import / Export", range: "—", description: "プリセットファイルの書き出し・取り込みで共有可能。" },
+];
+
+const midiParams = [
+  { name: "Input Device", range: "—", description: "MIDI 入力デバイスを選択。Note / CC / NRPN / MIDI Clock を受信。" },
+  { name: "Output Device", range: "—", description: "MIDI 出力デバイス。ジェネラティブシーケンスを外部へ送信。" },
+  { name: "MIDI Learn", range: "—", description: "ノブ右クリック → Learn → MIDI CC/NRPN 入力で割当。Unlearn で解除。マッピングはプリセットに保存。" },
+];
+
+const themeParams = [
+  { name: "Theme", range: "33種", description: "内蔵テーマ（dark_808 / dark_modern / light_classic …）。ノブからリアルタイムに切り替わり、再起動不要。" },
+];
+
+const outputSourceParams = [
+  { name: "Audio Device", range: "—", description: "Standalone のオーディオ出力デバイス（インターフェース）を選択。" },
+  { name: "Output Routing", range: "macOS", description: "Main Stereo(1-2) に加え、Ch1-8 の Direct Out(3-18) を個別に出力可能。iPadOS は Main Stereo のみ。" },
+];
+
+// ---- Master (Ch9) ----
+const transportParams = [
+  { name: "transport", range: "Start / Stop", description: "全チャンネルの再生/停止。" },
+  { name: "bpm", range: "10-300", description: "内部クロックのテンポ。" },
+  { name: "clockSource", range: "Internal / ExternalMIDI", description: "Internal は bpm に従い、External は入力 MIDI Clock に同期。" },
+];
+
+const masterOutputParams = [
+  { name: "masterVol", range: "0-100%", description: "マスター音量。" },
+  { name: "masterLimiterOn", range: "on / off", description: "ブリックウォールリミッターの有効/無効。FM やフィードバック暴走時のクリップを防止。" },
+  { name: "limiterCeiling", range: "-12 ~ 0 dB", description: "リミッターの上限レベル。" },
+];
+
+const masterStutterParams = [
+  { name: "masterStutterOn", range: "on / off", description: "マスター全体の Stutter の有効/無効。" },
+  { name: "masterStutterMode", range: "Sync / Free", description: "Sync はテンポ同期、Free は自由時間。" },
+  { name: "masterStutterSyncRate", range: "1/4 - 1/128", description: "Sync 時のレート（ストレートのみ）。" },
+  { name: "masterStutterFreeRate", range: "1-500ms", description: "Free 時のループ時間。" },
+  { name: "masterStutterDepth", range: "0-100%", description: "ループ音と通過音のミックス率。" },
+];
+
+const reverbParams = [
+  { name: "reverbLevel", range: "0-100%", description: "リバーブの送り返し量。" },
+  { name: "reverbDecay", range: "0.1-10.0s", description: "残響時間。" },
+  { name: "reverbTone", range: "0-100%", description: "dark ↔ bright の音色。" },
+];
+
+const delayParams = [
+  { name: "delayLevel", range: "0-100%", description: "ディレイの送り返し量。" },
+  { name: "delayTime", range: "Sync 1/1-1/128 / Free 1-2000ms", description: "ディレイタイム。" },
+  { name: "delayFeedback", range: "0-100%", description: "フィードバック量（内部で 0.98 上限、発振防止）。" },
+  { name: "delayTone", range: "0-100%", description: "フィードバック経路の Tone（LPF）。" },
+  { name: "delayMode", range: "Sync / Free", description: "テンポ同期か自由時間か。" },
+];
+
+// ---- Channel (Ch1-8) ----
+const pitchParams = [
+  { name: "pitch", range: "MIDI note 0-127", description: "基準ピッチ（C3=48 がデフォルト）。" },
+  { name: "pitchEnvAmount", range: "-48 ~ +48 半音", description: "発音開始時のピッチオフセット量。0 で実質オフ。" },
+  { name: "pitchEnvAttack", range: "0-500ms", description: "ピッチエンベロープの Attack。" },
+  { name: "pitchEnvHold", range: "0-500ms", description: "ピッチエンベロープの Hold。" },
+  { name: "pitchEnvDecay", range: "0-2000ms", description: "基準ピッチへの復帰時間。808 キックの胴鳴り下降はここで作る。" },
+  { name: "pitchEnvCurve", range: "linear / exp / log", description: "復帰カーブ。" },
+];
+
+const oscillatorParams = [
+  { name: "waveform", range: "sine / tri / saw / square", description: "PolyBLEP 帯域制限オシレータの波形。" },
+  { name: "clickLevel", range: "0-100%", description: "短トランジェントのクリック量。アタック強調。" },
+];
+
+const fmParams = [
+  { name: "fmAmount", range: "0-100%", description: "変調量。" },
+  { name: "fmMode", range: "FM / AM / RM / Sync", description: "変調アルゴリズム。FM/Sync かつ fmAmount>0 の voice は 2× オーバーサンプリングでエイリアシング抑制。" },
+];
+
+const noiseParams = [
+  { name: "noiseLevel", range: "0-100%", description: "ノイズレベル。" },
+  { name: "noiseColor", range: "0-100%", description: "white ↔ pink を連続ブレンド。" },
+];
+
+const ampEnvParams = [
+  { name: "attack", range: "0-1000ms", description: "アタック時間。" },
+  { name: "hold", range: "0-1000ms", description: "ホールド時間。" },
+  { name: "decay", range: "0-5000ms", description: "ディケイ時間。" },
+  { name: "decayCurve", range: "linear / exp / log", description: "ディケイカーブ。" },
+];
+
+const filterParams = [
+  { name: "filterCutoff", range: "20-20000 Hz", description: "SVF ローパスのカットオフ。" },
+  { name: "resonance", range: "0-100%", description: "レゾナンス。" },
+];
+
+const driveParams = [
+  { name: "drive", range: "0-100%", description: "ウェーブシェイパーのドライブ量。" },
+  { name: "punch", range: "0-100%", description: "トランジェントエンハンサー。立ち上がり区間のみゲインをブースト。" },
+];
+
+const panParams = [
+  { name: "pan", range: "L64 - R63", description: "constant-power ステレオパン。" },
+];
+
+const chStutterParams = [
+  { name: "stutterOn", range: "on / off", description: "チャンネル単位の Stutter。" },
+  { name: "stutterMode", range: "Sync / Free", description: "テンポ同期か自由時間か。" },
+  { name: "stutterSyncRate", range: "1/4 - 1/128", description: "Sync 時のレート（ストレートのみ）。" },
+  { name: "stutterFreeRate", range: "1-500ms", description: "Free 時のループ時間。" },
+  { name: "stutterDepth", range: "0-100%", description: "ループ音と通過音のミックス率。" },
+];
+
+const chOutputParams = [
+  { name: "vol", range: "0-100%", description: "チャンネル音量。" },
+  { name: "solo", range: "on / off", description: "ソロ。" },
+  { name: "mute", range: "on / off", description: "ミュート。" },
+];
+
+const sendParams = [
+  { name: "reverbSend", range: "0-100%", description: "マスター Reverb への送り量。" },
+  { name: "delaySend", range: "0-100%", description: "マスター Delay への送り量。" },
+];
+
+const sequencerParams = [
+  { name: "seqAlgorithm", range: "Euclidean / ProbDensity / LFSR / Markov / CellularAutomaton / RandomWalk", description: "リズム生成アルゴリズム。固定パターン(Kick/Snare/Hihat)は別途選択。" },
+  { name: "seqSteps", range: "1-64", description: "ステップ数。" },
+  { name: "seqTriggerRate", range: "0-100%", description: "onset ステップの実際の発音率。" },
+  { name: "seqAccentRate", range: "0-100%", description: "発音ステップのアクセント（velocity ×1.3）発生率。" },
+  { name: "seqSeed", range: "0-65535", description: "乱数系アルゴリズムの系列の始点。同じ seed なら同じ進化が再現する。" },
+  { name: "seqFreeze", range: "on / off", description: "on でループ末の再生成を停止し、現在のパターンを固定。" },
+];
+
+const algoSpecificParams = [
+  { name: "hits / offset", range: "1-steps / 0-(steps-1)", description: "Euclidean。Bjorklund の hits 数と回転。" },
+  { name: "density", range: "0-100%", description: "ProbDensity。各ステップの独立発音確率。" },
+  { name: "tapPositions / length", range: "bitmask / 4-64", description: "LFSR。タップ位置とレジスタ長。" },
+  { name: "order / bias", range: "1-4 / 0-100%", description: "Markov。次数と全状態への一様バイアス。" },
+  { name: "rule / rows", range: "1-255 / 1-64", description: "Cellular Automaton。Wolfram 規則と世代数。" },
+  { name: "stepSize / bounds", range: "1-16 / 1-64", description: "Random Walk。移動幅と範囲。" },
+];
+---
+
+<GuRoveLayout
+  title="GuRove マニュアル"
+  ogDescription={metaDescription}
+  navItems={[
+    { name: "トップ", href: "/gurove/" },
+    { name: "機能", href: "/gurove/#features" },
+    { name: "アルゴリズム", href: "/gurove/#algorithms" },
+  ]}
+  purchaseUrl={purchaseUrl}
+>
+  <section class="g-section">
+    <div class="g-container">
+      <header class="g-reveal" style="margin-bottom: clamp(2rem, 5vw, 3rem); text-align: center;">
+        <p class="g-eyebrow" style="justify-content:center;">Manual</p>
+        <h1 class="g-display" style="font-size: clamp(2.4rem, 6vw, 3.5rem);">GuRove マニュアル</h1>
+        <p class="g-lead" style="margin-inline:auto; text-align:center;">
+          グローバルヘッダー、マスター、チャンネル — すべての機能とパラメータ。
+        </p>
+      </header>
+
+      <div class="g-manual">
+        <!-- TOC -->
+        <aside class="g-toc g-reveal">
+          <p class="g-toc__title">目次</p>
+          {toc.map((group) => (
+            <div class="g-toc__group">
+              <p class="g-toc__group-title">{group.group}</p>
+              <ul class="g-toc__list">
+                {group.items.map((item) => (
+                  <li><a class="g-toc__link" href={item.href}>{item.name}</a></li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </aside>
+
+        <!-- Content -->
+        <div class="g-manual__content">
+
+          <!-- §01 Global Header -->
+          <ManualSection id="global" index="§01" title="グローバルヘッダー">
+            <ManualSubSection
+              id="preset"
+              title="Preset Browser"
+              description="ファクトリー40種とユーザープリセットを一覧から選択。ユーザープリセットは .gurove 形式で保存され、seqSeed を含む全状態が再現されます。"
+            >
+              <ParameterTable params={presetParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="midi"
+              title="MIDI Panel"
+              description="MIDI 入出力デバイスの選択と、MIDI Learn の起点。全パラメータを CC / NRPN に割り当てられ、外部コントローラで操作できます。"
+            >
+              <ParameterTable params={midiParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="theme"
+              title="Theme Selector"
+              description="UI の配色テーマ。33種を内蔵し、選ぶだけでリアルタイムに切り替わります（再起動不要）。"
+            >
+              <ParameterTable params={themeParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="output-source"
+              title="出力ソース切り替え"
+              description="オーディオデバイスの選択と、マルチ出力ルーティング。macOS では各チャンネルを個別の出力へ送れます。"
+            >
+              <ParameterTable params={outputSourceParams} />
+            </ManualSubSection>
+          </ManualSection>
+
+          <!-- §02 Master (Ch9) -->
+          <ManualSection id="master" index="§02" title="マスター ch (Ch9)">
+            <ManualSubSection
+              id="transport"
+              title="Transport"
+              description="再生の開始/停止とクロック。External 時は MIDI Clock に同期し、ジッタを Moving Average で平滑化します。"
+            >
+              <ParameterTable params={transportParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="master-output"
+              title="Output"
+              description="マスター音量と、最終段のブリックウォールリミッター。FM やフィードバックの暴走から出力を守ります。"
+            >
+              <ParameterTable params={masterOutputParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="master-stutter"
+              title="Master Stutter"
+              description="ミックス全体を刻むリピートエフェクト。チャンネル Stutter とは独立して動作します。"
+            >
+              <ParameterTable params={masterStutterParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="reverb"
+              title="Reverb"
+              description="グローバルな Send/Return リバーブ。各チャンネルの reverbSend から送られた信号を処理します。"
+            >
+              <ParameterTable params={reverbParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="delay"
+              title="Delay"
+              description="テープ風ディレイ。Feedback 経路に Tone（LPF）を通し、発振を防ぐため内部で 0.98 上限にクランプします。"
+            >
+              <ParameterTable params={delayParams} />
+            </ManualSubSection>
+          </ManualSection>
+
+          <!-- §03 Channel (Ch1-8) -->
+          <ManualSection id="channel" index="§03" title="チャネル (Ch1-8)">
+            <p class="g-lead" style="margin-bottom: 1.5rem;">
+              各チャンネルは ch 毎に最大2ボイス（合計16）を持つ完全なシンセボイス。以下のパラメータは Ch1-8 共通です。
+            </p>
+
+            <ManualSubSection
+              id="pitch"
+              title="Pitch"
+              description="基準ピッチと、AHDC ピッチエンベロープ。発音開始時にオフセットした位置から基準ピッチへ復帰します。"
+            >
+              <ParameterTable params={pitchParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="oscillator"
+              title="Oscillator"
+              description="PolyBLEP で帯域制限された4波形のオシレータ。"
+            >
+              <ParameterTable params={oscillatorParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="fm"
+              title="FM / Modulation"
+              description="4つの変調モード。FM/Sync は 2× オーバーサンプリングでエイリアシングを抑制します。"
+            >
+              <ParameterTable params={fmParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="noise"
+              title="Noise"
+              description="white ↔ pink を連続ブレンドするノイズレイヤー。"
+            >
+              <ParameterTable params={noiseParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="amp-env"
+              title="Amplitude Envelope (AHDC)"
+              description="Attack → Hold → Decay の振幅エンベロープ。ピッチエンベロープと同一エンジンを共用します。"
+            >
+              <ParameterTable params={ampEnvParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="filter"
+              title="Filter"
+              description="State Variable Filter（ローパス）。HPF/BPF は将来拡張。"
+            >
+              <ParameterTable params={filterParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="drive"
+              title="Drive / Punch"
+              description="ウェーブシェイパーと、立ち上がりを強調するトランジェントエンハンサー。"
+            >
+              <ParameterTable params={driveParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="pan"
+              title="Pan"
+              description="constant-power のステレオパン。"
+            >
+              <ParameterTable params={panParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="ch-stutter"
+              title="Stutter"
+              description="チャンネル単位のバッファリピート。Master Stutter とは独立。"
+            >
+              <ParameterTable params={chStutterParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="ch-output"
+              title="Output"
+              description="チャンネルの音量とソロ/ミュート。"
+            >
+              <ParameterTable params={chOutputParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="send"
+              title="Send Level"
+              description="マスター Reverb / Delay への送り量。"
+            >
+              <ParameterTable params={sendParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="sequencer"
+              title="Generative Sequencer"
+              description="チャンネルごとに自律的にリズムを生成するコア。ループのたびにパターンは生まれ変わり、seqSeed がその進化の始点になります。"
+            >
+              <ParameterTable params={sequencerParams} />
+              <h4 class="g-subsec__title" style="font-size:1.05rem; margin-top:1.5rem;">アルゴリズム固有パラメータ</h4>
+              <ParameterTable params={algoSpecificParams} />
+            </ManualSubSection>
+          </ManualSection>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</GuRoveLayout>
