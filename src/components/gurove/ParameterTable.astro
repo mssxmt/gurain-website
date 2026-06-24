@@ -1,0 +1,31 @@
+---
+// ParameterTable — name / range / description rows for one feature.
+interface Param {
+  name: string
+  range: string
+  description: string
+}
+interface Props {
+  params: Param[]
+}
+const { params } = Astro.props
+---
+
+<table class="g-param-table">
+  <thead>
+    <tr>
+      <th>パラメータ</th>
+      <th>範囲</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    {params.map((p) => (
+      <tr>
+        <td class="g-param-table__name"><code>{p.name}</code></td>
+        <td class="g-param-table__range">{p.range}</td>
+        <td>{p.description}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>

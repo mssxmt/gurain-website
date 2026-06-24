@@ -519,3 +519,116 @@ body.gurove .g-reveal.is-visible {
   body.gurove .g-reveal { opacity: 1 !important; transform: none !important; }
   body.gurove .g-cell { transition: none !important; }
 }
+
+/* ----------------------------------------------------------
+   Manual page
+   ---------------------------------------------------------- */
+body.gurove .g-manual {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 6vw, 4rem);
+}
+@media (min-width: 1024px) {
+  body.gurove .g-manual { grid-template-columns: 16rem 1fr; align-items: start; }
+}
+
+body.gurove .g-toc {
+  position: sticky;
+  top: 5rem;
+  border: 1px solid var(--g-rule);
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--g-panel) 0%, var(--g-asfalt-2) 100%);
+  padding: 1.25rem;
+}
+body.gurove .g-toc__title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--g-ash);
+  margin-bottom: 0.85rem;
+}
+body.gurove .g-toc__group { margin-bottom: 1rem; }
+body.gurove .g-toc__group:last-child { margin-bottom: 0; }
+body.gurove .g-toc__group-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--g-bone);
+  margin-bottom: 0.4rem;
+}
+body.gurove .g-toc__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.3rem; }
+body.gurove .g-toc__link { font-size: 0.82rem; color: var(--g-bone-dim); text-decoration: none; transition: color 0.2s ease; }
+body.gurove .g-toc__link:hover { color: var(--g-ember); }
+
+body.gurove .g-manual__content { display: flex; flex-direction: column; gap: clamp(2.5rem, 6vw, 4rem); }
+body.gurove .g-manual__section { scroll-margin-top: 5rem; }
+body.gurove .g-manual__head {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--g-rule);
+}
+body.gurove .g-manual__title { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+
+body.gurove .g-subsec {
+  scroll-margin-top: 5rem;
+  border: 1px solid var(--g-rule);
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--g-panel) 0%, var(--g-asfalt-2) 100%);
+  padding: 1.5rem;
+}
+body.gurove .g-subsec + .g-subsec { margin-top: 1.25rem; }
+body.gurove .g-subsec__title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--g-bone);
+  margin-bottom: 0.5rem;
+}
+body.gurove .g-subsec__desc {
+  font-size: 0.92rem;
+  color: var(--g-bone-dim);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+body.gurove .g-param-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+body.gurove .g-param-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--g-ash);
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--g-rule);
+}
+body.gurove .g-param-table td {
+  padding: 0.7rem 0.75rem;
+  border-bottom: 1px solid var(--g-rule-soft);
+  vertical-align: top;
+  color: var(--g-bone-dim);
+  line-height: 1.6;
+}
+body.gurove .g-param-table tr:last-child td { border-bottom: 0; }
+body.gurove .g-param-table__name code {
+  font-family: var(--font-mono);
+  color: var(--g-ember);
+  font-size: 0.82rem;
+}
+body.gurove .g-param-table__range {
+  font-family: var(--font-mono);
+  color: var(--g-mycelium);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  body.gurove .g-param-table { font-size: 0.78rem; }
+  body.gurove .g-param-table td,
+  body.gurove .g-param-table th { padding: 0.5rem; }
+}

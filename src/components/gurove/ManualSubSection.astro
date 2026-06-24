@@ -1,0 +1,17 @@
+---
+// ManualSubSection — one labeled feature block within a part.
+// Renders a heading, an optional prose description, and a slot
+// (usually a ParameterTable).
+interface Props {
+  id: string
+  title: string
+  description?: string
+}
+const { id, title, description } = Astro.props
+---
+
+<section class="g-subsec g-reveal" id={id}>
+  <h3 class="g-subsec__title">{title}</h3>
+  {description && <p class="g-subsec__desc">{description}</p>}
+  <slot />
+</section>

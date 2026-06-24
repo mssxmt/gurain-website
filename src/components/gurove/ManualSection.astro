@@ -1,0 +1,18 @@
+---
+// ManualSection — a top-level manual part (Global Header / Master / Channel).
+// Holds a numbered title and a slot for ManualSubSections.
+interface Props {
+  id: string
+  index: string
+  title: string
+}
+const { id, index, title } = Astro.props
+---
+
+<section class="g-manual__section" id={id}>
+  <header class="g-manual__head">
+    <span class="g-index">{index}</span>
+    <h2 class="g-display g-manual__title">{title}</h2>
+  </header>
+  <slot />
+</section>
