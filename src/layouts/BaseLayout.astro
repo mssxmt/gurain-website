@@ -10,6 +10,8 @@ interface Props {
   footerLinks?: Array<{ name: string; href: string }>;
   copyrightText?: string;
   ogDescription?: string;
+  metaDescription?: string;
+  ogImage?: string;
   purchaseUrl?: string;
 }
 
@@ -32,8 +34,15 @@ const {
   ],
   copyrightText = "2026 GuRain",
   ogDescription = "macOS対応グラニュラーシンセサイザー。最大128グレイン、MIDI/Generativeモード、ADSRエンベロープ、LFOモーフィング機能。",
+  metaDescription = ogDescription,
+  ogImage = "/images/GuRain.png",
   purchaseUrl = "https://buy.polar.sh/polar_cl_mnTvugsC3aKUzHZNFDkQBV1FQXT8UUumGD2uc43E6lx",
 } = Astro.props;
+
+// Absolute URLs for SEO (canonical, OG, JSON-LD)
+const siteOrigin = Astro.site ?? new URL("https://lab.mssxmt.com");
+const canonicalURL = new URL(Astro.url.pathname, siteOrigin).href;
+const ogImageURL = new URL(ogImage, siteOrigin).href;
 ---
 
 <!DOCTYPE html>
@@ -41,7 +50,16 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
     <title>{title} - MSSXMTxLAB</title>
+    <meta name="description" content={metaDescription} />
+    <meta name="keywords" content="グレニュラーシンセサイザー,AUv3,iOS,macOS,シンセサイザー,音楽制作,DTM" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Favicons -->
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon.png" />
@@ -59,8 +77,9 @@ const {
       content={ogDescription}
     />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:image" content="/images/og-image.png" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content={logoText} />
+    <meta property="og:image" content={ogImageURL} />
     <meta property="og:locale" content="ja_JP" />
 
     <!-- Twitter Card Tags -->
@@ -70,7 +89,19 @@ const {
       name="twitter:description"
       content={ogDescription}
     />
-    <meta name="twitter:image" content="/images/og-image.png" />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Structured data (rich results) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": logoText,
+      "applicationCategory": "MusicApplication",
+      "operatingSystem": "macOS 14+, Apple Silicon",
+      "description": ogDescription,
+      "url": canonicalURL,
+      "image": ogImageURL
+    })} />
 
     <!-- Font Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
