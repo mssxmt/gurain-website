@@ -63,8 +63,9 @@ const presetParams = [
 
 const midiParams = [
   { name: "Input Device", range: "—", description: "MIDI 入力デバイスを選択。Note / CC / NRPN / MIDI Clock を受信。" },
-  { name: "Output Device", range: "—", description: "MIDI 出力デバイス。ジェネラティブシーケンスを外部へ送信。" },
-  { name: "MIDI Learn", range: "—", description: "ノブ右クリック → Learn → MIDI CC/NRPN 入力で割当。Unlearn で解除。マッピングはプリセットに保存。" },
+  { name: "Channel Mapping", range: "MIDI 1-8ch", description: "MIDI Ch 1-8 が GuRove Ch 1-8 に対応。Note On で該当チャンネルをトリガー（ノート番号が pitch を一時上書き）。" },
+  { name: "Output Device", range: "—", description: "MIDI 出力デバイス。GuRove Ch 1-8 のジェネラティブシーケンスを MIDI Ch 1-8 へ送信。" },
+  { name: "MIDI Learn", range: "右クリック", description: "任意のノブ/パラメータを右クリック →「Learn MIDI CC」→ CC/NRPN 入力で割当。「Unlearn MIDI」で解除。全パラメータ対応、マッピングはプリセットに保存。" },
 ];
 
 const themeParams = [
@@ -114,6 +115,8 @@ const delayParams = [
 // ---- Channel (Ch1-8) ----
 const pitchParams = [
   { name: "pitch", range: "MIDI note 0-127", description: "基準ピッチ（C3=48 がデフォルト）。" },
+  { name: "pitchQuantize", range: "on / off", description: "スケールベースのピッチクオンタイズ。on で発音ピッチを pitchScale のスケール音へスナップ。" },
+  { name: "pitchScale", range: "12種", description: "Chromatic(0=無効) / Minor / Major / Pentatonic Min / Pentatonic Maj / Blues / Dorian / Phrygian / Lydian / Mixolydian / Harmonic Min / Melodic Min。" },
   { name: "pitchEnvAmount", range: "-48 ~ +48 半音", description: "発音開始時のピッチオフセット量。0 で実質オフ。" },
   { name: "pitchEnvAttack", range: "0-500ms", description: "ピッチエンベロープの Attack。" },
   { name: "pitchEnvHold", range: "0-500ms", description: "ピッチエンベロープの Hold。" },
@@ -177,21 +180,22 @@ const sendParams = [
 ];
 
 const sequencerParams = [
-  { name: "seqAlgorithm", range: "Euclidean / ProbDensity / LFSR / Markov / CellularAutomaton / RandomWalk", description: "リズム生成アルゴリズム。固定パターン(Kick/Snare/Hihat)は別途選択。" },
+  { name: "seqAlgorithm", range: "9種", description: "Euclidean / ProbDensity / LFSR / Markov / CellularAutomaton / RandomWalk / KickPattern / SnarePattern / HihatPattern。後半3つは固定ドラムパターン。" },
   { name: "seqSteps", range: "1-64", description: "ステップ数。" },
   { name: "seqTriggerRate", range: "0-100%", description: "onset ステップの実際の発音率。" },
   { name: "seqAccentRate", range: "0-100%", description: "発音ステップのアクセント（velocity ×1.3）発生率。" },
-  { name: "seqSeed", range: "0-65535", description: "乱数系アルゴリズムの系列の始点。同じ seed なら同じ進化が再現する。" },
+  { name: "seqSeed", range: "0-65535", description: "乱数系アルゴリズムの系列の始点。同じ seed なら同じ進化が再現する。固定パターンでもバリアント選択に使われる。" },
   { name: "seqFreeze", range: "on / off", description: "on でループ末の再生成を停止し、現在のパターンを固定。" },
 ];
 
 const algoSpecificParams = [
-  { name: "hits / offset", range: "1-steps / 0-(steps-1)", description: "Euclidean。Bjorklund の hits 数と回転。" },
+  { name: "hits / offset", range: "1-steps / 0-(steps-1)", description: "Euclidean。Bjorklund の hits 数と回転。決定的（seed 不要）。" },
   { name: "density", range: "0-100%", description: "ProbDensity。各ステップの独立発音確率。" },
   { name: "tapPositions / length", range: "bitmask / 4-64", description: "LFSR。タップ位置とレジスタ長。" },
   { name: "order / bias", range: "1-4 / 0-100%", description: "Markov。次数と全状態への一様バイアス。" },
-  { name: "rule / rows", range: "1-255 / 1-64", description: "Cellular Automaton。Wolfram 規則と世代数。" },
+  { name: "rule / rows", range: "1-255 / 1-64", description: "Cellular Automaton。Wolfram 規則と世代数。決定的（seed 不要）。" },
   { name: "stepSize / bounds", range: "1-16 / 1-64", description: "Random Walk。移動幅と範囲。" },
+  { name: "(固定パターン)", range: "seed % 8", description: "KickPattern / SnarePattern / HihatPattern。各8バリアントから seed が1つを選択。seed を変えると別パターンに切り替わる。" },
 ];
 ---
 
