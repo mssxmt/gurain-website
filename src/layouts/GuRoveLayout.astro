@@ -336,4 +336,16 @@ const ogImageURL = new URL(ogImage, siteOrigin).href;
     color: var(--g-ash);
     letter-spacing: 0.08em;
   }
+
+  /* Footer — full-width stack on small screens */
+  @media (max-width: 640px) {
+    .gurove-footer { padding: 2.25rem 1.25rem 1.75rem; }
+    .gurove-footer__inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.25rem;
+    }
+    .gurove-footer__brand { justify-content: flex-start; }
+    .gurove-footer__nav { justify-content: space-between; }
+  }
 </style>

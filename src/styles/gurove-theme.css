@@ -525,20 +525,29 @@ body.gurove .g-reveal.is-visible {
    ---------------------------------------------------------- */
 body.gurove .g-manual {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(2.5rem, 6vw, 4rem);
 }
 @media (min-width: 1024px) {
-  body.gurove .g-manual { grid-template-columns: 16rem 1fr; align-items: start; }
+  body.gurove .g-manual { grid-template-columns: 16rem minmax(0, 1fr); align-items: start; }
+  /* Desktop: sticky sidebar TOC, always expanded, toggle hidden */
+  body.gurove .g-toc { position: sticky; top: 5rem; }
+  body.gurove .g-toc__toggle { display: none; }
+  body.gurove .g-toc__body { max-height: none; opacity: 1; margin-top: 0.85rem; }
 }
 
 body.gurove .g-toc {
-  position: sticky;
-  top: 5rem;
   border: 1px solid var(--g-rule);
   border-radius: 10px;
   background: linear-gradient(180deg, var(--g-panel) 0%, var(--g-asfalt-2) 100%);
   padding: 1.25rem;
+}
+/* TOC header — title + collapse toggle (toggle is mobile-only) */
+body.gurove .g-toc__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 body.gurove .g-toc__title {
   font-family: var(--font-mono);
@@ -546,7 +555,41 @@ body.gurove .g-toc__title {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--g-ash);
-  margin-bottom: 0.85rem;
+  margin-bottom: 0;
+}
+body.gurove .g-toc__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--g-rule);
+  border-radius: 6px;
+  color: var(--g-bone-dim);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+body.gurove .g-toc__toggle:hover { color: var(--g-ember); border-color: var(--g-ember); }
+body.gurove .g-toc__chevron {
+  width: 0.95rem;
+  height: 0.95rem;
+  transition: transform 0.25s ease;
+}
+body.gurove .g-toc.is-open .g-toc__chevron { transform: rotate(180deg); }
+/* Collapsible body — hidden on mobile until opened */
+body.gurove .g-toc__body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.25s ease, margin-top 0.3s ease;
+}
+body.gurove .g-toc.is-open .g-toc__body {
+  max-height: 90rem;
+  opacity: 1;
+  margin-top: 1rem;
 }
 body.gurove .g-toc__group { margin-bottom: 1rem; }
 body.gurove .g-toc__group:last-child { margin-bottom: 0; }
@@ -560,12 +603,13 @@ body.gurove .g-toc__list { list-style: none; padding: 0; margin: 0; display: fle
 body.gurove .g-toc__link { font-size: 0.82rem; color: var(--g-bone-dim); text-decoration: none; transition: color 0.2s ease; }
 body.gurove .g-toc__link:hover { color: var(--g-ember); }
 
-body.gurove .g-manual__content { display: flex; flex-direction: column; gap: clamp(2.5rem, 6vw, 4rem); }
-body.gurove .g-manual__section { scroll-margin-top: 5rem; }
+body.gurove .g-manual__content { display: flex; flex-direction: column; gap: clamp(2.5rem, 6vw, 4rem); min-width: 0; }
+body.gurove .g-manual__section { scroll-margin-top: 5rem; min-width: 0; }
 body.gurove .g-manual__head {
   display: flex;
   align-items: baseline;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--g-rule);
@@ -620,6 +664,7 @@ body.gurove .g-param-table__name code {
   font-family: var(--font-mono);
   color: var(--g-ember);
   font-size: 0.82rem;
+  overflow-wrap: anywhere;
 }
 body.gurove .g-param-table__range {
   font-family: var(--font-mono);
@@ -627,8 +672,128 @@ body.gurove .g-param-table__range {
   white-space: nowrap;
 }
 
+/* Code block — shell / TOML / JSON snippets (MCP setup, etc.) */
+body.gurove .g-code {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--g-bone);
+  background: var(--g-asfalt);
+  border: 1px solid var(--g-rule);
+  border-radius: 8px;
+  padding: 0.95rem 1.1rem;
+  margin: 0.4rem 0 1.1rem;
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 2;
+}
+body.gurove .g-code code {
+  font-family: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+/* Small label sitting above a code block */
+body.gurove .g-code__label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--g-ash);
+  margin-top: 0.9rem;
+  margin-bottom: 0.15rem;
+}
+/* Prose container inside a sub-section — styles inline code, links, lists */
+body.gurove .g-prose {
+  font-size: 0.92rem;
+  color: var(--g-bone-dim);
+  line-height: 1.75;
+}
+body.gurove .g-prose > *:last-child { margin-bottom: 0; }
+body.gurove .g-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--g-ember);
+  background: var(--g-asfalt);
+  padding: 0.08em 0.4em;
+  border: 1px solid var(--g-rule-soft);
+  border-radius: 4px;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+body.gurove .g-prose a {
+  color: var(--g-mycelium);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+body.gurove .g-prose ul {
+  padding-left: 1.1rem;
+  margin: 0.5rem 0 1rem;
+}
+body.gurove .g-prose ul li { margin-bottom: 0.35rem; }
+body.gurove .g-prose ul li::marker { color: var(--g-ember); }
+/* Numbered step list */
+body.gurove .g-steps {
+  list-style: none;
+  counter-reset: g-step;
+  padding: 0;
+  margin: 0.5rem 0 1rem;
+}
+body.gurove .g-steps > li {
+  counter-increment: g-step;
+  position: relative;
+  padding-left: 2.4rem;
+  margin-bottom: 0.9rem;
+  color: var(--g-bone-dim);
+  line-height: 1.7;
+  font-size: 0.92rem;
+}
+body.gurove .g-steps > li::before {
+  content: counter(g-step);
+  position: absolute;
+  left: 0;
+  top: 0.05rem;
+  width: 1.55rem;
+  height: 1.55rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--g-ember);
+  border: 1px solid var(--g-rule);
+  border-radius: 50%;
+  background: var(--g-asfalt);
+}
+
+/* Wrap tables so a wide range / long cell scrolls instead of overflowing the page */
+body.gurove .g-param-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Apply fixed table layout for all widths below desktop sidebar breakpoint */
+@media (max-width: 1023px) {
+  body.gurove .g-param-table {
+    table-layout: fixed;
+  }
+  body.gurove .g-param-table th:nth-child(1) { width: 30%; }
+  body.gurove .g-param-table th:nth-child(2) { width: 24%; }
+  body.gurove .g-param-table__range {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
 @media (max-width: 640px) {
-  body.gurove .g-param-table { font-size: 0.78rem; }
+  body.gurove .g-param-table {
+    font-size: 0.78rem;
+  }
   body.gurove .g-param-table td,
   body.gurove .g-param-table th { padding: 0.5rem; }
+  body.gurove .g-subsec { padding: 1rem; }
+  body.gurove .g-manual__title { font-size: 1.5rem; }
 }

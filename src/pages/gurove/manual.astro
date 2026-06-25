@@ -50,6 +50,16 @@ const toc = [
       { name: "Generative Sequencer", href: "#sequencer" },
     ],
   },
+  {
+    group: "MCP 連携 / AI 制御",
+    items: [
+      { name: "概要", href: "#mcp-overview" },
+      { name: "セットアップ", href: "#mcp-setup" },
+      { name: "Claude で使う", href: "#mcp-claude" },
+      { name: "Codex で使う", href: "#mcp-codex" },
+      { name: "使えるツール", href: "#mcp-tools" },
+    ],
+  },
 ];
 
 // ---- Global Header ----
@@ -197,6 +207,52 @@ const algoSpecificParams = [
   { name: "stepSize / bounds", range: "1-16 / 1-64", description: "Random Walk。移動幅と範囲。" },
   { name: "(固定パターン)", range: "seed % 8", description: "KickPattern / SnarePattern / HihatPattern。各8バリアントから seed が1つを選択。seed を変えると別パターンに切り替わる。" },
 ];
+
+// ---- MCP (AI agent control via gurove-mcp) ----
+// Code snippets are kept as plain strings and rendered through {expr} so the
+// curly braces inside JSON/TOML are NOT parsed as Astro template expressions.
+const mcpArchitecture = `You  ←→  Claude / Codex / MCP クライアント
+            │  MCP (stdio)
+            ▼
+       gurove-mcp  ──(OSC UDP)──▶  GuRove app
+                       :9001 受信 / :9002 返信`;
+
+const mcpShellClone = `git clone https://github.com/mssxmt/gurove-mcp.git
+cd gurove-mcp
+npm install`;
+
+const claudeDesktopConfig = `{
+  "mcpServers": {
+    "gurove": {
+      "command": "npx",
+      "args": ["tsx", "/path/to/gurove-mcp/src/index.ts"]
+    }
+  }
+}`;
+
+const claudeCodeAdd = `claude mcp add gurove npx tsx /path/to/gurove-mcp/src/index.ts`;
+
+const codexConfig = `[mcp_servers.gurove]
+command = "npx"
+args = ["tsx", "/path/to/gurove-mcp/src/index.ts"]`;
+
+const mcpToolsParams = [
+  { name: "load_preset", range: "name / index", description: "40種のプリセットを名前または番号でロード。" },
+  { name: "list_presets", range: "—", description: "全プリセット名を一覧取得。" },
+  { name: "transport", range: "0=Stop / 1=Start", description: "シーケンサの再生 / 停止。" },
+  { name: "set_bpm", range: "10-300", description: "テンポ設定。" },
+  { name: "set_param", range: "channel, param, 0-1", description: "パラメータを正規化値（0-1）で設定。channel は master / ch1-8。" },
+  { name: "setraw_param", range: "channel, param, 実値", description: "Hz / ms / MIDI note / 半音など、実値で設定。" },
+  { name: "get_param", range: "channel, param", description: "現在のパラメータ値を取得。" },
+  { name: "trigger_note", range: "ch1-8, velocity", description: "ボイスを試聴。" },
+  { name: "status", range: "—", description: "再生状態 / BPM / 現在のプリセットを取得。" },
+];
+
+const mcpResourcesParams = [
+  { name: "gurove://channels", range: "リソース", description: "8チャンネルガイド。役割・音域・ジャンル別テーブル・失敗パターン。" },
+  { name: "gurove://house-rules", range: "リソース", description: "ドラム解剖学（kick / snare / hat / bass）・ジャンル辞書・トラブル対応のナレッジ。" },
+  { name: "gurove://sound-design", range: "リソース", description: "FM / AM / RM / Sync 理論・フィルタ・エンベロープ・エフェクト・クイックレシピ。" },
+];
 ---
 
 <GuRoveLayout
@@ -220,19 +276,35 @@ const algoSpecificParams = [
       </header>
 
       <div class="g-manual">
-        <!-- TOC -->
-        <aside class="g-toc g-reveal">
-          <p class="g-toc__title">目次</p>
-          {toc.map((group) => (
-            <div class="g-toc__group">
-              <p class="g-toc__group-title">{group.group}</p>
-              <ul class="g-toc__list">
-                {group.items.map((item) => (
-                  <li><a class="g-toc__link" href={item.href}>{item.name}</a></li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        <!-- TOC — collapsible on mobile, sticky on desktop -->
+        <aside class="g-toc g-reveal" id="g-toc">
+          <div class="g-toc__head">
+            <p class="g-toc__title">目次</p>
+            <button
+              class="g-toc__toggle"
+              id="g-toc-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="g-toc-body"
+              aria-label="目次を開閉"
+            >
+              <svg class="g-toc__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="g-toc__body" id="g-toc-body">
+            {toc.map((group) => (
+              <div class="g-toc__group">
+                <p class="g-toc__group-title">{group.group}</p>
+                <ul class="g-toc__list">
+                  {group.items.map((item) => (
+                    <li><a class="g-toc__link" href={item.href}>{item.name}</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </aside>
 
         <!-- Content -->
@@ -421,8 +493,117 @@ const algoSpecificParams = [
             </ManualSubSection>
           </ManualSection>
 
+          <!-- §04 MCP / AI agent control -->
+          <ManualSection id="mcp" index="§04" title="MCP 連携（AI エージェント制御）">
+            <ManualSubSection
+              id="mcp-overview"
+              title="概要"
+              description="オープンソースの MCP サーバー gurove-mcp を使うと、Claude や Codex などの AI アシスタントが GuRove を自然言語で操作できます。マニュアルでノブを回す代わりに「Detroit Techno をロードして、リバーブ5秒、キックをパンチ強めで再生」と伝えるだけで、AI が適切な OSC コマンドに変換します。"
+            >
+              <div class="g-prose">
+                <p><strong>できること</strong></p>
+                <ul>
+                  <li>プリセットのロード、再生 / 停止、BPM 設定</li>
+                  <li>ピッチ・リバーブ・FM・フィルタなど全パラメータの変更</li>
+                  <li>各ドラムボイスの試聴</li>
+                  <li>内蔵のサウンドデザイン知識（ドラム解剖学・ジャンルレシピ・FM 理論）を使った推論</li>
+                </ul>
+                <p style="margin-top:1rem;">gurove-mcp は GuRove の<a href="https://github.com/mssxmt/gurove-mcp" target="_blank" rel="noopener noreferrer">GitHub リポジトリ</a>で公開されています（AGPLv3 / Commercial）。</p>
+                <p class="g-code__label">architecture</p>
+                <pre class="g-code"><code>{mcpArchitecture}</code></pre>
+              </div>
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="mcp-setup"
+              title="セットアップ"
+              description="gurove-mcp は GuRove と AI クライアントを結ぶ Node.js 製のブリッジサーバーです。事前に GuRove と Node.js を用意します。"
+            >
+              <ol class="g-steps">
+                <li><strong>GuRove を起動</strong> — Standalone アプリを立ち上げます。起動するだけで OSC を <code>127.0.0.1:9001</code> で受信し、<code>:9002</code> で応答します。追加の設定は不要です。</li>
+                <li><strong>要件の確認</strong> — Node.js 18+ と npm、および MCP 対応の AI クライアント（Claude Desktop / Claude Code / Codex など）。</li>
+                <li><strong>gurove-mcp の取得</strong> — リポジトリをクローンして依存関係をインストールします。</li>
+              </ol>
+              <p class="g-code__label">shell</p>
+              <pre class="g-code"><code>{mcpShellClone}</code></pre>
+              <div class="g-prose" style="margin-top:0.25rem;">
+                <p>これで GuRove と gurove-mcp の準備は完了です。続けてお使いの AI クライアントを登録してください。</p>
+              </div>
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="mcp-claude"
+              title="Claude で使う"
+              description="Claude Desktop と Claude Code の両方に対応しています。お使いの方の手順に従ってください。"
+            >
+              <h4 class="g-subsec__title" style="font-size:1.05rem;">Claude Desktop の場合</h4>
+              <div class="g-prose">
+                <p>設定ファイル <code>~/Library/Application Support/Claude/claude_desktop_config.json</code> を編集します。</p>
+              </div>
+              <p class="g-code__label">claude_desktop_config.json</p>
+              <pre class="g-code"><code>{claudeDesktopConfig}</code></pre>
+              <div class="g-prose">
+                <p>Claude Desktop を再起動し、プラグアイコン（🔌）で <code>gurove</code> が接続されていることを確認してください。</p>
+              </div>
+
+              <h4 class="g-subsec__title" style="font-size:1.05rem; margin-top:1.75rem;">Claude Code の場合</h4>
+              <div class="g-prose">
+                <p>コマンド一発で登録できます。パスは展開された実際のパスに置き換えてください。</p>
+              </div>
+              <p class="g-code__label">shell</p>
+              <pre class="g-code"><code>{claudeCodeAdd}</code></pre>
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="mcp-codex"
+              title="Codex で使う"
+              description="OpenAI Codex CLI は設定ファイル ~/.codex/config.toml で MCP サーバーを管理します。gurove-mcp は対応する STDIO 型の MCP サーバーです。"
+            >
+              <div class="g-prose">
+                <p><code>~/.codex/config.toml</code> に以下を追記します。ファイルが無い場合は新規作成してください。</p>
+              </div>
+              <p class="g-code__label">~/.codex/config.toml</p>
+              <pre class="g-code"><code>{codexConfig}</code></pre>
+              <div class="g-prose">
+                <p>Codex を（再）起動すれば <code>gurove</code> のツールが利用できます。古いバージョンの Codex では <code>config.toml</code> の MCP 設定が読み込まれない不具合が報告されているため、<strong>Codex 0.34.0 以降</strong>の使用を推奨します。</p>
+              </div>
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="mcp-tools"
+              title="使えるツール・リソース"
+              description="gurove-mcp は GuRove の機能を 9 つのツールとして公開し、さらにサウンドデザインの知識を 3 つの MCP リソースとして提供します。AI はこれらを使って自然言語の指示を解釈します。"
+            >
+              <h4 class="g-subsec__title" style="font-size:1.05rem;">Tools</h4>
+              <ParameterTable params={mcpToolsParams} />
+              <h4 class="g-subsec__title" style="font-size:1.05rem; margin-top:1.75rem;">Resources（ナレッジベース）</h4>
+              <ParameterTable params={mcpResourcesParams} />
+            </ManualSubSection>
+          </ManualSection>
+
         </div>
       </div>
     </div>
+
+    <script>
+      // Responsive TOC — collapsed by default on mobile, always open on desktop.
+      (() => {
+        const toc = document.getElementById("g-toc");
+        const toggle = document.getElementById("g-toc-toggle");
+        if (!toc || !toggle) return;
+        const mq = window.matchMedia("(min-width: 1024px)");
+        const setOpen = (open) => {
+          toc.classList.toggle("is-open", open);
+          toggle.setAttribute("aria-expanded", String(open));
+        };
+        // Desktop = open, mobile = closed; re-sync when crossing the breakpoint.
+        const apply = () => setOpen(mq.matches);
+        apply();
+        mq.addEventListener("change", apply);
+        toggle.addEventListener("click", () => {
+          setOpen(!toc.classList.contains("is-open"));
+        });
+      })();
+    </script>
   </section>
 </GuRoveLayout>
