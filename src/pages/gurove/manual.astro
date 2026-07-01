@@ -1,7 +1,7 @@
 ---
 // GuRove — user manual at /gurove/manual/
 // Three parts (Global Header / Master / Channel), each split into
-// labeled sub-sections. Parameters follow SPECIFICATION v0.5 §4/§5/§8/§9.
+// labeled sub-sections. Parameters follow SPECIFICATION v0.9 §4/§5/§8/§9.
 import GuRoveLayout from "../../layouts/GuRoveLayout.astro";
 import ManualSection from "../../components/gurove/ManualSection.astro";
 import ManualSubSection from "../../components/gurove/ManualSubSection.astro";
@@ -29,6 +29,7 @@ const toc = [
       { name: "Transport", href: "#transport" },
       { name: "Output", href: "#master-output" },
       { name: "Master Stutter", href: "#master-stutter" },
+      { name: "Master LFO", href: "#master-lfo" },
       { name: "Reverb", href: "#reverb" },
       { name: "Delay", href: "#delay" },
     ],
@@ -45,6 +46,7 @@ const toc = [
       { name: "Drive / Punch", href: "#drive" },
       { name: "Pan", href: "#pan" },
       { name: "Stutter", href: "#ch-stutter" },
+      { name: "LFO", href: "#ch-lfo" },
       { name: "Output", href: "#ch-output" },
       { name: "Send Level", href: "#send" },
       { name: "Generative Sequencer", href: "#sequencer" },
@@ -102,10 +104,9 @@ const masterOutputParams = [
 
 const masterStutterParams = [
   { name: "masterStutterOn", range: "on / off", description: "マスター全体の Stutter の有効/無効。" },
-  { name: "masterStutterMode", range: "Sync / Free", description: "Sync はテンポ同期、Free は自由時間。" },
-  { name: "masterStutterSyncRate", range: "1/4 - 1/128", description: "Sync 時のレート（ストレートのみ）。" },
-  { name: "masterStutterFreeRate", range: "1-500ms", description: "Free 時のループ時間。" },
-  { name: "masterStutterDepth", range: "0-100%", description: "ループ音と通過音のミックス率。" },
+  { name: "masterStutterMode", range: "Sync / Free", description: "Sync はテンポ同期、Free は自由時間。モードで1つのノブが切り替わる。" },
+  { name: "masterStutterSyncRate", range: "1/128 - 1/4", description: "Sync 時のレート（時計回り=遅く）。" },
+  { name: "masterStutterFreeRate", range: "1-500 ms", description: "Free 時のループ時間。" },
 ];
 
 const reverbParams = [
@@ -120,6 +121,15 @@ const delayParams = [
   { name: "delayFeedback", range: "0-100%", description: "フィードバック量（内部で 0.98 上限、発振防止）。" },
   { name: "delayTone", range: "0-100%", description: "フィードバック経路の Tone（LPF）。" },
   { name: "delayMode", range: "Sync / Free", description: "テンポ同期か自由時間か。" },
+];
+
+const masterLfoParams = [
+  { name: "masterLfoK_dest", range: "None + 11", description: "変調先。masterVol / limiterCeiling / reverbLevel / reverbDecay / reverbTone / delayLevel / delayTime / delayFeedback / delayTone / masterStutterRate / masterStutterOn。" },
+  { name: "masterLfoK_waveform", range: "13種", description: "Sine / Triangle / SawUp / SawDown / Square / Ramp / SampleHold / SmoothRandom / ExpUp / ExpDown / Pulse / Staircase / Trapezoid。" },
+  { name: "masterLfoK_rateMode", range: "Sync / Free", description: "Sync はテンポ同期、Free は Hz 指定。モードで1つのノブが切り替わる。" },
+  { name: "masterLfoK_syncRate", range: "1/1 - 1/128", description: "Sync 時のレート（時計回り=遅く）。" },
+  { name: "masterLfoK_freeRate", range: "0.01 - 40 Hz", description: "Free 時の周波数。" },
+  { name: "masterLfoK_depth", range: "-1 - +1", description: "変調の深さ（bipolar）。負で位相反転。" },
 ];
 
 // ---- Channel (Ch1-8) ----
@@ -172,16 +182,24 @@ const panParams = [
 
 const chStutterParams = [
   { name: "stutterOn", range: "on / off", description: "チャンネル単位の Stutter。" },
-  { name: "stutterMode", range: "Sync / Free", description: "テンポ同期か自由時間か。" },
-  { name: "stutterSyncRate", range: "1/4 - 1/128", description: "Sync 時のレート（ストレートのみ）。" },
-  { name: "stutterFreeRate", range: "1-500ms", description: "Free 時のループ時間。" },
-  { name: "stutterDepth", range: "0-100%", description: "ループ音と通過音のミックス率。" },
+  { name: "stutterMode", range: "Sync / Free", description: "テンポ同期か自由時間か。モードで1つのノブが切り替わる。" },
+  { name: "stutterSyncRate", range: "1/128 - 1/4", description: "Sync 時のレート（時計回り=遅く）。" },
+  { name: "stutterFreeRate", range: "1-500 ms", description: "Free 時のループ時間。" },
 ];
 
 const chOutputParams = [
   { name: "vol", range: "0-100%", description: "チャンネル音量。" },
   { name: "solo", range: "on / off", description: "ソロ。" },
   { name: "mute", range: "on / off", description: "ミュート。" },
+];
+
+const chLfoParams = [
+  { name: "chN_lfoK_dest", range: "None + 21", description: "変調先。pitch / attack / hold / decay / pitchEnvAmount / clickLevel / noiseLevel / noiseColor / filterCutoff / resonance / drive / punch / fmAmount / fmRatio / pan / vol / reverbSend / delaySend / stutterRate / stutterOn / mute。stutterRate は stutter の Sync/Free モードに自動追従。" },
+  { name: "chN_lfoK_waveform", range: "13種", description: "Sine / Triangle / SawUp / SawDown / Square / Ramp / SampleHold / SmoothRandom / ExpUp / ExpDown / Pulse / Staircase / Trapezoid。" },
+  { name: "chN_lfoK_rateMode", range: "Sync / Free", description: "Sync はテンポ同期、Free は Hz 指定。モードで1つのノブが切り替わる。" },
+  { name: "chN_lfoK_syncRate", range: "1/1 - 1/128", description: "Sync 時のレート（時計回り=遅く）。" },
+  { name: "chN_lfoK_freeRate", range: "0.01 - 40 Hz", description: "Free 時の周波数。" },
+  { name: "chN_lfoK_depth", range: "-1 - +1", description: "変調の深さ（bipolar）。負で位相反転。" },
 ];
 
 const sendParams = [
@@ -366,9 +384,17 @@ const mcpResourcesParams = [
             <ManualSubSection
               id="master-stutter"
               title="Master Stutter"
-              description="ミックス全体を刻むリピートエフェクト。チャンネル Stutter とは独立して動作します。"
+              description="ミックス全体を刻むリピートエフェクト。ON 瞬間の音をキャプチャして固定ループし、rate ノブを回すと即座にループ長が追従します（ドライ音なし）。チャンネル Stutter とは独立して動作します。"
             >
               <ParameterTable params={masterStutterParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="master-lfo"
+              title="Master LFO"
+              description="マスター用の LFO を2系統装備。マスターパラメータ（音量・リバーブ・ディレイ・Stutter 等）をリアルタイムに変調します。LFO の値はメッセージスレッドの Timer（60Hz）でパラメータに書き込まれ、接続先のノブ/スイッチが自動でアニメーションします。"
+            >
+              <ParameterTable params={masterLfoParams} />
             </ManualSubSection>
 
             <ManualSubSection
@@ -461,9 +487,17 @@ const mcpResourcesParams = [
             <ManualSubSection
               id="ch-stutter"
               title="Stutter"
-              description="チャンネル単位のバッファリピート。Master Stutter とは独立。"
+              description="チャンネル単位のバッファリピート。ON 瞬間の音をキャプチャして固定ループし、rate ノブを回すと即座にループ長が追従します（ドライ音なし）。Master Stutter とは独立。"
             >
               <ParameterTable params={chStutterParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="ch-lfo"
+              title="LFO"
+              description="チャンネル用の LFO を2系統装備。ピッチ・フィルタ・FM・パン等のチャンネルパラメータをリアルタイムに変調します。LFO の値はメッセージスレッドの Timer（60Hz）でパラメータに書き込まれ、接続先のノブ/スイッチが自動でアニメーションします。dest を None にすると対象パラメータは元の値に戻ります。"
+            >
+              <ParameterTable params={chLfoParams} />
             </ManualSubSection>
 
             <ManualSubSection
