@@ -124,12 +124,12 @@ const delayParams = [
 ];
 
 const masterLfoParams = [
-  { name: "masterLfoK_dest", range: "None + 11", description: "変調先。masterVol / limiterCeiling / reverbLevel / reverbDecay / reverbTone / delayLevel / delayTime / delayFeedback / delayTone / masterStutterRate / masterStutterOn。" },
-  { name: "masterLfoK_waveform", range: "13種", description: "Sine / Triangle / SawUp / SawDown / Square / Ramp / SampleHold / SmoothRandom / ExpUp / ExpDown / Pulse / Staircase / Trapezoid。" },
-  { name: "masterLfoK_rateMode", range: "Sync / Free", description: "Sync はテンポ同期、Free は Hz 指定。モードで1つのノブが切り替わる。" },
-  { name: "masterLfoK_syncRate", range: "1/1 - 1/128", description: "Sync 時のレート（時計回り=遅く）。" },
-  { name: "masterLfoK_freeRate", range: "0.01 - 40 Hz", description: "Free 時の周波数。" },
-  { name: "masterLfoK_depth", range: "-1 - +1", description: "変調の深さ（bipolar）。負で位相反転。" },
+  { name: "LFO1/2 Dest", range: "None + 11", description: "変調先。masterVol / limiterCeiling / reverbLevel / reverbDecay / reverbTone / delayLevel / delayTime / delayFeedback / delayTone / masterStutterRate / masterStutterOn。" },
+  { name: "LFO1/2 Wave", range: "13種", description: "Sine / Triangle / SawUp / SawDown / Square / Ramp / SampleHold / SmoothRandom / ExpUp / ExpDown / Pulse / Staircase / Trapezoid。" },
+  { name: "LFO1/2 Rate Mode", range: "Sync / Free", description: "Sync はテンポ同期、Free は Hz 指定。モードで1つのノブが切り替わる。" },
+  { name: "LFO1/2 Sync Rate", range: "1/1 - 1/128", description: "Sync 時のレート（時計回り=遅く）。" },
+  { name: "LFO1/2 Free Rate", range: "0.01 - 40 Hz", description: "Free 時の周波数。" },
+  { name: "LFO1/2 Depth", range: "-1 - +1", description: "変調の深さ（bipolar）。負で位相反転。" },
 ];
 
 // ---- Channel (Ch1-8) ----
@@ -194,12 +194,12 @@ const chOutputParams = [
 ];
 
 const chLfoParams = [
-  { name: "chN_lfoK_dest", range: "None + 21", description: "変調先。pitch / attack / hold / decay / pitchEnvAmount / clickLevel / noiseLevel / noiseColor / filterCutoff / resonance / drive / punch / fmAmount / fmRatio / pan / vol / reverbSend / delaySend / stutterRate / stutterOn / mute。stutterRate は stutter の Sync/Free モードに自動追従。" },
-  { name: "chN_lfoK_waveform", range: "13種", description: "Sine / Triangle / SawUp / SawDown / Square / Ramp / SampleHold / SmoothRandom / ExpUp / ExpDown / Pulse / Staircase / Trapezoid。" },
-  { name: "chN_lfoK_rateMode", range: "Sync / Free", description: "Sync はテンポ同期、Free は Hz 指定。モードで1つのノブが切り替わる。" },
-  { name: "chN_lfoK_syncRate", range: "1/1 - 1/128", description: "Sync 時のレート（時計回り=遅く）。" },
-  { name: "chN_lfoK_freeRate", range: "0.01 - 40 Hz", description: "Free 時の周波数。" },
-  { name: "chN_lfoK_depth", range: "-1 - +1", description: "変調の深さ（bipolar）。負で位相反転。" },
+  { name: "LFO1/2 Dest", range: "None + 21", description: "変調先。pitch / attack / hold / decay / pitchEnvAmount / clickLevel / noiseLevel / noiseColor / filterCutoff / resonance / drive / punch / fmAmount / fmRatio / pan / vol / reverbSend / delaySend / stutterRate / stutterOn / mute。stutterRate は stutter の Sync/Free モードに自動追従。" },
+  { name: "LFO1/2 Wave", range: "13種", description: "Sine / Triangle / SawUp / SawDown / Square / Ramp / SampleHold / SmoothRandom / ExpUp / ExpDown / Pulse / Staircase / Trapezoid。" },
+  { name: "LFO1/2 Rate Mode", range: "Sync / Free", description: "Sync はテンポ同期、Free は Hz 指定。モードで1つのノブが切り替わる。" },
+  { name: "LFO1/2 Sync Rate", range: "1/1 - 1/128", description: "Sync 時のレート（時計回り=遅く）。" },
+  { name: "LFO1/2 Free Rate", range: "0.01 - 40 Hz", description: "Free 時の周波数。" },
+  { name: "LFO1/2 Depth", range: "-1 - +1", description: "変調の深さ（bipolar）。負で位相反転。" },
 ];
 
 const sendParams = [
