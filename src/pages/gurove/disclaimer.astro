@@ -1,0 +1,139 @@
+---
+// Disclaimer Page for GuRove
+// Legal disclaimer — same content structure as GuRain's disclaimer page
+
+import GuRoveLayout from '../../layouts/GuRoveLayout.astro';
+
+const metaDescription = 'GuRoveジェネレイティブドラムシンセサイザーの免責事項。本ソフトウェアは現状有姿で提供され、使用により生じたいかなる損害についても責任を負いません。';
+---
+
+<GuRoveLayout title="免責事項 - GuRove" ogDescription={metaDescription}>
+  <meta name="description" content={metaDescription} />
+  <div class="disclaimer-page">
+    <!-- Page Title -->
+    <div class="page-header">
+      <h1 class="page-title">免責事項</h1>
+      <p class="page-subtitle">本ソフトウェアの使用に関する法的な免責事項</p>
+    </div>
+
+    <!-- Disclaimer Content -->
+    <article class="disclaimer-content">
+      <section class="disclaimer-section">
+        <h2>現状有姿での提供</h2>
+        <p>
+          GuRoveジェネレイティブドラムシンセサイザーおよび関連ドキュメントは「現状有姿」で提供されます。
+          完全性や正確性についての保証はいたしません。
+        </p>
+      </section>
+
+      <section class="disclaimer-section">
+        <h2>責任の制限</h2>
+        <p>
+          本ソフトウェアの使用により生じたいかなる損害についても責任を負いません。
+          データの損失、機器の故障、聴覚への影響などを含め、一切の賠償責任を負わないものとします。
+        </p>
+      </section>
+
+      <section class="disclaimer-section">
+        <h2>プライバシー</h2>
+        <p>
+          本ソフトウェアは個人情報を収集・送信しません。
+          プリセットや設定データはすべてローカルに保存されます。
+        </p>
+      </section>
+
+      <section class="disclaimer-section">
+        <h2>準拠法</h2>
+        <p>
+          本免責事項は日本法に準拠します。
+        </p>
+      </section>
+
+      <!-- Last Updated -->
+      <div class="last-updated">
+        <p>最終更新: 2026年6月28日</p>
+      </div>
+    </article>
+  </div>
+</GuRoveLayout>
+
+<style>
+  .disclaimer-page {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md);
+    min-height: 100vh;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300;
+    color: var(--color-text-primary);
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .page-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+  }
+
+  .disclaimer-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+
+  .disclaimer-section {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    padding: var(--spacing-lg) var(--spacing-xl);
+  }
+
+  .disclaimer-section h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .disclaimer-section p {
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+  }
+
+  .last-updated {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+  }
+
+  .last-updated p {
+    color: var(--color-text-tertiary);
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 640px) {
+    .disclaimer-page {
+      padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .disclaimer-section {
+      padding: var(--spacing-md);
+    }
+
+    .disclaimer-section h2 {
+      font-size: 1.25rem;
+    }
+  }
+</style>
