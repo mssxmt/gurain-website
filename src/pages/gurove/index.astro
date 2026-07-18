@@ -162,10 +162,15 @@ const purchaseUrl =
           <span class="g-mono">SYSTEM</span>
           <span>macOS 14 以上（Apple Silicon / M1 以降）</span>
           <span>·</span>
-          <span>Windows 11 以上（64bit / WASAPI）</span>
+          <span>Windows 11 以上（64bit / WASAPI / ASIO 低レイテンシ対応）</span>
           <span>·</span>
           <span>Standalone</span>
         </div>
+
+        <p class="g-download__asio-notice">
+          ASIO is a trademark of Steinberg Media Technologies GmbH, registered
+          in Europe and other countries.
+        </p>
       </div>
     </div>
   </section>
@@ -242,6 +247,16 @@ const purchaseUrl =
     color: var(--g-ash);
     font-family: var(--font-mono);
     letter-spacing: 0.04em;
+  }
+
+  /* Steinberg trademark notice — required by the ASIO SDK Licensing
+     Agreement §3.1.c on any page that mentions "ASIO". */
+  .g-download__asio-notice {
+    margin-top: 1rem;
+    font-size: 0.68rem;
+    color: var(--g-ash);
+    opacity: 0.7;
+    letter-spacing: 0.02em;
   }
   .g-download__sys .g-mono {
     color: var(--g-ember);
