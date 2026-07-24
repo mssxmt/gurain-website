@@ -68,8 +68,8 @@ const toc = [
 const presetParams = [
   { name: "Factory Presets", range: "40種", description: "内蔵プリセット。Init 1 / 標準ドラム 17 / エクスペリメンタル 12 / メロディアス 2 / ビートレス 8。" },
   { name: "User Presets", range: ".gurove", description: "ユーザー保存形式。独自の拡張子で保存・読み込み。" },
-  { name: "Save / Load", range: "—", description: "現在の全状態を保存、または一覧から読み込み。" },
-  { name: "Delete / Init", range: "—", description: "ユーザープリセットの削除、または初期状態へのリセット。" },
+  { name: "Save / Save As", range: "—", description: "Save で現在のプリセットを上書き、Save As で新規保存。全状態を .gurove に保存。" },
+  { name: "Rename / Delete / Init", range: "—", description: "ユーザープリセットのリネーム・削除、または初期状態へのリセット。factory プリセットは保護。" },
   { name: "Import / Export", range: "—", description: "プリセットファイルの書き出し・取り込みで共有可能。" },
 ];
 
@@ -208,7 +208,7 @@ const sendParams = [
 ];
 
 const sequencerParams = [
-  { name: "seqAlgorithm", range: "9種", description: "Euclidean / ProbDensity / LFSR / Markov / CellularAutomaton / RandomWalk / KickPattern / SnarePattern / HihatPattern。後半3つは固定ドラムパターン。" },
+  { name: "seqAlgorithm", range: "10種", description: "Euclidean / ProbDensity / LFSR / Markov / CellularAutomaton / RandomWalk / KickPattern / SnarePattern / HihatPattern / OFF。後半3つは固定ドラムパターン。OFF は内蔵シーケンサを無効化し、その ch を MIDI/OSC 入力のみで発音（ch 毎に seq と手弾きを使い分け）。" },
   { name: "seqSteps", range: "1-64", description: "ステップ数。" },
   { name: "seqTriggerRate", range: "0-100%", description: "onset ステップの実際の発音率。" },
   { name: "seqAccentRate", range: "0-100%", description: "発音ステップのアクセント（velocity ×1.3）発生率。" },
@@ -333,7 +333,7 @@ const mcpResourcesParams = [
             <ManualSubSection
               id="preset"
               title="Preset Browser"
-              description="ファクトリー40種とユーザープリセットを一覧から選択。ユーザープリセットは .gurove 形式で保存され、seqSeed を含む全状態が再現されます。"
+              description="ファクトリー40種とユーザープリセットを一覧から選択。ユーザープリセットは Save（上書き）/ Save As（新規）/ Rename / Delete で管理（factory プリセットは保護）。.gurove 形式で seqSeed を含む全状態が再現されます。"
             >
               <ParameterTable params={presetParams} />
             </ManualSubSection>
