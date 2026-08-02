@@ -32,6 +32,7 @@ const toc = [
       { name: "Master LFO", href: "#master-lfo" },
       { name: "Reverb", href: "#reverb" },
       { name: "Delay", href: "#delay" },
+      { name: "Sidechain", href: "#sidechain" },
     ],
   },
   {
@@ -121,6 +122,14 @@ const delayParams = [
   { name: "delayFeedback", range: "0-100%", description: "フィードバック量（内部で 0.98 上限、発振防止）。" },
   { name: "delayTone", range: "0-100%", description: "フィードバック経路の Tone（LPF）。" },
   { name: "delayMode", range: "Sync / Free", description: "テンポ同期か自由時間か。" },
+];
+
+const sidechainParams = [
+  { name: "sidechainOn", range: "on / off", description: "サイドチェーンダッキングの有効/無効。" },
+  { name: "sidechainTrigger", range: "None / Ch1-8", description: "トリガー元チャンネル。選択チャンネルの Note On（シーケンサー・MIDI・OSC）でダッキングが発生。" },
+  { name: "sidechainDepth", range: "0-100%", description: "ダッキングの深さ。100% でゲインが 0 まで下がる。" },
+  { name: "sidechainAttack", range: "0.1-200 ms", description: "ダッキングの立ち下がり時間。短いほどキック感が強い。" },
+  { name: "sidechainRelease", range: "1-2000 ms", description: "ダッキングからの復帰時間。" },
 ];
 
 const masterLfoParams = [
@@ -411,6 +420,14 @@ const mcpResourcesParams = [
               description="テープ風ディレイ。Feedback 経路に Tone（LPF）を通し、発振を防ぐため内部で 0.98 上限にクランプします。"
             >
               <ParameterTable params={delayParams} />
+            </ManualSubSection>
+
+            <ManualSubSection
+              id="sidechain"
+              title="Sidechain"
+              description="指定チャンネルの Note On に反応してマスター出力を一時的に減衰（ダッキング）させる機能。キックでミックス全体を引き込むクラシックなサイドチェーン効果が得られます。トリガーチャンネル自身はダッキングされません（パンチスルー）。Reverb / Delay のリターン信号は減衰対象外です。"
+            >
+              <ParameterTable params={sidechainParams} />
             </ManualSubSection>
           </ManualSection>
 
