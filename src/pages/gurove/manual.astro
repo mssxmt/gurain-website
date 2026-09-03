@@ -86,7 +86,7 @@ const themeParams = [
 ];
 
 const outputSourceParams = [
-  { name: "Audio Device", range: "—", description: "Standalone のオーディオ出力デバイス（インターフェース）を選択。" },
+  { name: "Audio Device", range: "—", description: "Standalone のオーディオ出力デバイス（インターフェース）を選択。※ Standalone 専用。VST3 では DAW 側の設定を使用。" },
   { name: "Output Routing", range: "macOS", description: "Main Stereo(1-2) に加え、Ch1-8 の Direct Out(3-18) を個別に出力可能。iPadOS は Main Stereo のみ。" },
 ];
 
@@ -126,7 +126,7 @@ const delayParams = [
 
 const sidechainParams = [
   { name: "sidechainOn", range: "on / off", description: "サイドチェーンダッキングの有効/無効。" },
-  { name: "sidechainTrigger", range: "None / Ch1-8", description: "トリガー元チャンネル。選択チャンネルの Note On（シーケンサー・MIDI・OSC）でダッキングが発生。" },
+  { name: "sidechainTrigger", range: "None / Ch1-8", description: "トリガー元チャンネル。選択チャンネルの Note On（シーケンサー・MIDI・OSC）でダッキングが発生。※ OSC トリガーは Standalone 専用。" },
   { name: "sidechainDepth", range: "0-100%", description: "ダッキングの深さ。100% でゲインが 0 まで下がる。" },
   { name: "sidechainAttack", range: "0.1-200 ms", description: "ダッキングの立ち下がり時間。短いほどキック感が強い。" },
   { name: "sidechainRelease", range: "1-2000 ms", description: "ダッキングからの復帰時間。" },
@@ -217,7 +217,7 @@ const sendParams = [
 ];
 
 const sequencerParams = [
-  { name: "seqAlgorithm", range: "10種", description: "Euclidean / ProbDensity / LFSR / Markov / CellularAutomaton / RandomWalk / KickPattern / SnarePattern / HihatPattern / OFF。後半3つは固定ドラムパターン。OFF は内蔵シーケンサを無効化し、その ch を MIDI/OSC 入力のみで発音（ch 毎に seq と手弾きを使い分け）。" },
+  { name: "seqAlgorithm", range: "10種", description: "Euclidean / ProbDensity / LFSR / Markov / CellularAutomaton / RandomWalk / KickPattern / SnarePattern / HihatPattern / OFF。後半3つは固定ドラムパターン。OFF は内蔵シーケンサを無効化し、その ch を MIDI/OSC 入力のみで発音（ch 毎に seq と手弾きを使い分け）。※ OSC 入力は Standalone 専用。" },
   { name: "seqSteps", range: "1-64", description: "ステップ数。" },
   { name: "seqTriggerRate", range: "0-100%", description: "onset ステップの実際の発音率。" },
   { name: "seqAccentRate", range: "0-100%", description: "発音ステップのアクセント（velocity ×1.3）発生率。" },
@@ -549,7 +549,7 @@ const mcpResourcesParams = [
             <ManualSubSection
               id="mcp-overview"
               title="概要"
-              description="オープンソースの MCP サーバー gurove-mcp を使うと、Claude や Codex などの AI アシスタントが GuRove を自然言語で操作できます。マニュアルでノブを回す代わりに「Detroit Techno をロードして、リバーブ5秒、キックをパンチ強めで再生」と伝えるだけで、AI が適切な OSC コマンドに変換します。"
+              description="オープンソースの MCP サーバー gurove-mcp を使うと、Claude や Codex などの AI アシスタントが GuRove を自然言語で操作できます。マニュアルでノブを回す代わりに「Detroit Techno をロードして、リバーブ5秒、キックをパンチ強めで再生」と伝えるだけで、AI が適切な OSC コマンドに変換します。※ OSC サーバーは Standalone 専用です（VST3 ではご利用いただけません）。"
             >
               <div class="g-prose">
                 <p><strong>できること</strong></p>

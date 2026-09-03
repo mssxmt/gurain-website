@@ -29,6 +29,7 @@ const {
     { name: "アルゴリズム", href: "#algorithms" },
     { name: "プリセット", href: "#presets" },
     { name: "マニュアル", href: "/gurove/manual/" },
+    { name: "リリースノート", href: "/gurove/releases/" },
     { name: "免責事項", href: "/gurove/disclaimer" },
   ],
   footerLinks = [
@@ -37,7 +38,7 @@ const {
     { name: "免責事項", href: "/gurove/disclaimer" },
   ],
   copyrightText = "2026 GuRove",
-  ogDescription = "GuRove — 8マルチティンバーのジェネラティブ・シンセサイザー。9つのアルゴリズムが自律的にビートを生成し、seedで完全再現するmacOSネイティブのドラムマシン。",
+  ogDescription = "GuRove — 8マルチティンバーのジェネラティブ・シンセサイザー。9つのアルゴリズムが自律的にビートを生成し、seedで完全再現するドラムマシン。Standalone と VST3 で macOS / Windows 両対応。",
   ogImage = "/images/gurove-top.png",
   purchaseUrl = "",
 } = Astro.props
@@ -78,7 +79,7 @@ const ogImageURL = new URL(ogImage, siteOrigin).href;
       "@type": "SoftwareApplication",
       "name": "GuRove",
       "applicationCategory": "MusicApplication",
-      "operatingSystem": "macOS 14+, Apple Silicon",
+      "operatingSystem": "macOS 14+ (Apple Silicon), Windows 11+ (64bit)",
       "description": ogDescription,
       "url": canonicalURL,
       "image": ogImageURL

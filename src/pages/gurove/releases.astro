@@ -1,0 +1,256 @@
+---
+// GuRove — release notes at /gurove/releases/
+// Version history and changelog. Structure mirrors GuRain's
+// /gurain/releases/ but uses GuRoveLayout + g-* conventions —
+// BaseLayout / RainEffect are GuRain-specific and stay untouched.
+import GuRoveLayout from "../../layouts/GuRoveLayout.astro";
+
+const purchaseUrl =
+  "https://buy.polar.sh/polar_cl_LnE6jpDn8TK3iDlM91ZJ8A0YKFBKlkHQYDWxe3UhPzQ";
+
+const metaDescription =
+  "GuRove ドラムシンセサイザーのリリースノート。バージョンごとの更新履歴と変更内容。";
+
+const releases = [
+  {
+    version: "v1.1.0",
+    title: "VST3対応・マルチ出力",
+    date: "2026年9月3日",
+    changes: [
+      "VST3 プラグインフォーマット対応（macOS / Windows）— DAW 内で動作",
+      "シーケンサー BPM がホストのテンポに同期",
+      "チャンネルごとのパラレル出力（multi-output bus。VST3 のみの機能で、Standalone には表示されません）",
+      "プラグインホスト内でのプリセット読み込みの安定性向上",
+    ],
+  },
+  {
+    version: "v0.13.1",
+    title: "UIレイアウト調整",
+    date: "2026年8月1日",
+    changes: [
+      "マスターパネルレイアウト改善（OUTPUT 半幅・Sidechain 拡幅・Delay 統合）",
+      "トランスポートボタンの行レイアウト化、トグルの高さ統一",
+      "LFO 1 / LFO 2 ラベル追加",
+    ],
+  },
+  {
+    version: "v0.13.0",
+    title: "マスターサイドチェインダック",
+    date: "2026年7月30日",
+    changes: [
+      "任意のチャンネルをトリガーに他チャンネルを ducking",
+      "depth / attack / release パラメータ",
+    ],
+  },
+  {
+    version: "v0.12.0",
+    title: "プリセット管理",
+    date: "2026年7月20日",
+    changes: [
+      "Save / Save As / Rename / Delete 追加、ファクトリープリセットを保護",
+      "チャンネルごとのシーケンサー ON/OFF（MIDI と内蔵シーケンサーの使い分け）",
+    ],
+  },
+  {
+    version: "v0.11.3",
+    title: "Windows ASIO 有効化",
+    date: "2026年7月18日",
+    changes: [
+      "Windows 版で ASIO 低レイテンシ対応（WASAPI / DirectSound に加えて）",
+    ],
+  },
+  {
+    version: "v0.11.2",
+    title: "ASIO 対応・テーマ埋め込み",
+    date: "2026年7月10日",
+    changes: [
+      "ASIO SDK ビルド配線（CI で SDK を取得）",
+      "themes.json をバイナリに埋め込み、Windows で単一ファイル配布に",
+    ],
+  },
+  {
+    version: "v0.11.0",
+    title: "Windows 対応",
+    date: "2026年7月10日",
+    changes: [
+      "Windows 11+（64bit / MSVC 2022）Standalone ビルド",
+      "GitHub Actions CI による Windows ビルド・テスト",
+    ],
+  },
+  {
+    version: "v0.10.1",
+    title: "最小ウィンドウ幅修正",
+    date: "2026年7月6日",
+    changes: [
+      "シーケンサーセクションのノブ折り返し解消（最小幅 1412px）",
+    ],
+  },
+  {
+    version: "v0.10.0",
+    title: "ダークUIリファイン",
+    date: "2026年7月4日",
+    changes: [
+      "Inter / JetBrains Mono タイポグラフィ（埋め込みフォント）",
+      "ノブ描画改良（インセットトラック・目盛り・グローアーク）",
+      "VBlank 駆動のアニメーション基盤（テーマクロスフェード等）",
+    ],
+  },
+  {
+    version: "v0.5.0",
+    title: "初期リリース",
+    date: "2026年6月24日",
+    changes: [],
+  },
+];
+---
+
+<GuRoveLayout
+  title="リリースノート - GuRove"
+  ogDescription={metaDescription}
+  navItems={[
+    { name: "トップ", href: "/gurove/" },
+    { name: "機能", href: "/gurove/#features" },
+    { name: "アルゴリズム", href: "/gurove/#algorithms" },
+    { name: "マニュアル", href: "/gurove/manual/" },
+    { name: "免責事項", href: "/gurove/disclaimer" },
+  ]}
+  purchaseUrl={purchaseUrl}
+>
+  <section class="g-section">
+    <div class="g-container g-releases">
+      <header class="g-releases__head g-reveal">
+        <p class="g-eyebrow">Changelog</p>
+        <h1 class="g-display">リリースノート</h1>
+        <p class="g-lead">GuRove のバージョン更新履歴。</p>
+      </header>
+
+      <div class="g-releases__list">
+        {
+          releases.map((release) => (
+            <section class="g-release g-reveal">
+              <div class="g-release__head">
+                <h2 class="g-release__version">{release.version}</h2>
+                <span class="g-release__date">{release.date}</span>
+              </div>
+              <p class="g-release__title">{release.title}</p>
+              {release.changes.length > 0 && (
+                <ul class="g-release__changes">
+                  {release.changes.map((change) => (
+                    <li>{change}</li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          ))
+        }
+      </div>
+
+      <p class="g-releases__asio-notice">
+        ASIO is a trademark of Steinberg Media Technologies GmbH, registered
+        in Europe and other countries.
+      </p>
+    </div>
+  </section>
+</GuRoveLayout>
+
+<style>
+  .g-releases {
+    max-width: 56rem;
+  }
+
+  .g-releases__head {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  }
+  .g-releases__head .g-display {
+    font-size: clamp(2.4rem, 6vw, 3.5rem);
+  }
+  .g-releases__head .g-eyebrow {
+    justify-content: center;
+  }
+
+  .g-releases__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* Card — same hairline + panel treatment as the algorithm cards */
+  .g-release {
+    border: 1px solid var(--g-rule);
+    border-radius: 10px;
+    background: linear-gradient(180deg, var(--g-panel) 0%, var(--g-asfalt-2) 100%);
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .g-release__head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .g-release__version {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--g-bone);
+  }
+
+  .g-release__date {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    color: var(--g-ash);
+  }
+
+  .g-release__title {
+    margin-top: 0.4rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--g-ember);
+  }
+
+  .g-release__changes {
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .g-release__changes li {
+    position: relative;
+    padding-left: 1.15rem;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--g-bone-dim);
+  }
+
+  .g-release__changes li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--g-ember);
+    opacity: 0.6;
+  }
+
+  /* Steinberg trademark notice — required by the ASIO SDK Licensing
+     Agreement §3.1.c on any page that mentions "ASIO". */
+  .g-releases__asio-notice {
+    margin-top: 2rem;
+    font-size: 0.68rem;
+    color: var(--g-ash);
+    opacity: 0.7;
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+</style>
