@@ -154,8 +154,9 @@ const pitchParams = [
 ];
 
 const oscillatorParams = [
+  { name: "oscGain", range: "0-100%", description: "オシレータ（FM / AM / RM / Sync を含む）とクリックの音量。ノイズには影響せず、0% でノイズレイヤーだけを残せる。" },
   { name: "waveform", range: "sine / tri / saw / square", description: "PolyBLEP 帯域制限オシレータの波形。" },
-  { name: "clickLevel", range: "0-100%", description: "短トランジェントのクリック量。アタック強調。" },
+  { name: "clickLevel", range: "0-100%", description: "短トランジェントのクリック量。アタック強調。最終的な音量は oscGain の影響を受ける。" },
 ];
 
 const fmParams = [
@@ -448,7 +449,7 @@ const mcpResourcesParams = [
             <ManualSubSection
               id="oscillator"
               title="Oscillator"
-              description="PolyBLEP で帯域制限された4波形のオシレータ。"
+              description="PolyBLEP で帯域制限された4波形のオシレータ。OSC Gain は変調後のオシレータとクリックをまとめて減衰し、ノイズレイヤーには影響しません。"
             >
               <ParameterTable params={oscillatorParams} />
             </ManualSubSection>

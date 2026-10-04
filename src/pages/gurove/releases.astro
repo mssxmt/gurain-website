@@ -13,6 +13,24 @@ const metaDescription =
 
 const releases = [
   {
+    version: "v1.2.0",
+    title: "OSC Gain・ノイズレイヤー分離",
+    date: "2026年10月4日",
+    changes: [
+      "各チャンネルの OSC セクションに Gain を追加。オシレータ（FM / AM / RM / Sync を含む）と Click をまとめて 0〜100% で調整",
+      "OSC Gain を 0% にすると、Noise だけを残した音作りが可能",
+      "既存プリセットでは OSC Gain を自動的に 100% として読み込み、従来の音色を維持",
+    ],
+  },
+  {
+    version: "v1.1.1",
+    title: "Stutterのステレオ保持・配布情報改善",
+    date: "2026年10月3日",
+    changes: [
+      "チャンネル／マスター Stutter の通過音とループ再生で、Pan と Reverb のステレオ幅を保持",
+    ],
+  },
+  {
     version: "v1.1.0",
     title: "VST3対応・マルチ出力",
     date: "2026年9月3日",
